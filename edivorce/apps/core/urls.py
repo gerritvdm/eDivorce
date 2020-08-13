@@ -26,6 +26,7 @@ urlpatterns = [
     # url(r'^headers$', system.headers),
 
     url(r'^pdf-form(?P<form_number>[0-9]{1,3}(_we|_claimant1|_claimant2)?)$', pdf.form, name="pdf_form"),
+    url(r'^pdf-form-submit(?P<form_number>[0-9]{1,3}(_we|_claimant1|_claimant2)?)$', pdf.submit, name="pdf_form_submit"),
     url(r'^prequalification/step_(?P<step>[0-9]{2})$', main.prequalification, name="prequalification"),
     url(r'^question/(?P<step>.*)/(?P<sub_step>.*)/$', main.question, name="question_steps"),
     url(r'^question/(?P<step>.*)$', main.question, name="question_steps"),

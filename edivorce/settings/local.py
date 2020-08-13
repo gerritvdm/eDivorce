@@ -16,8 +16,8 @@ CSRF_COOKIE_AGE = None
 SESSION_COOKIE_AGE = 3600
 TEMPLATES[0]["OPTIONS"]["debug"] = True
 
-WEASYPRINT_URL = 'http://localhost:5005'
-WEASYPRINT_CSS_LOOPBACK = 'http://10.200.10.1:8000'
+WEASYPRINT_URL = 'http://localhost:5001'
+WEASYPRINT_CSS_LOOPBACK = 'http://localhost:8000'
 
 DEPLOYMENT_TYPE = 'localdev'
 REGISTER_URL = '#'

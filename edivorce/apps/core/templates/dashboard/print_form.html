@@ -29,6 +29,14 @@
 
 <p>&nbsp;</p>
 
+{% if messages %}
+<ul class="alert alert-danger">
+    {% for message in messages %}
+    <div{% if message.tags %} class="{{ message.tags }}"{% endif %}>{{ message }}</div>
+    {% endfor %}
+</ul>
+{% endif %}
+
 <h3>Print These Forms</h3>
 
 <p>
@@ -48,6 +56,10 @@
         <a href="{% url 'pdf_form' '1' %}" class="btn btn-primary spinner"
             target="_blank"><i class="fa fa-print" aria-hidden="true"></i>
             Review and Print
+        </a>
+        <a href="{% url 'pdf_form_submit' '1' %}" class="btn btn-primary spinner">
+            <i class="fa fa-print" aria-hidden="true"></i>
+            Submit Form
         </a>
     </p>
     <div class="clearfix"> </div>
@@ -78,6 +90,10 @@
             target="_blank"><i class="fa fa-print" aria-hidden="true"></i>
             Review and Print
         </a>
+        <a href="{% url 'pdf_form_submit' '35' %}" class="btn btn-primary spinner">
+            <i class="fa fa-print" aria-hidden="true"></i>
+            Submit Form
+        </a>
     </p>
     <div class="clearfix"> </div>
     <div class="collapse" id="collapseF35">
@@ -102,6 +118,10 @@
         <a href="{% url 'pdf_form' '52' %}" class="btn btn-primary spinner"
             target="_blank"><i class="fa fa-print" aria-hidden="true"></i>
             Review and Print
+        </a>
+        <a href="{% url 'pdf_form_submit' '52' %}" class="btn btn-primary spinner">
+            <i class="fa fa-print" aria-hidden="true"></i>
+            Submit Form
         </a>
     </p>
     <div class="clearfix"> </div>
@@ -146,6 +166,10 @@
         <a href="{% url 'pdf_form' '36' %}" class="btn btn-primary spinner"
             target="_blank"><i class="fa fa-print" aria-hidden="true"></i>
             Review and Print
+        </a>
+        <a href="{% url 'pdf_form_submit' '36' %}" class="btn btn-primary spinner">
+            <i class="fa fa-print" aria-hidden="true"></i>
+            Submit Form
         </a>
     </p>
     <div class="clearfix"> </div>

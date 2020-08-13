@@ -411,3 +411,6 @@ ASALocalRun/
 
 # MFractors (Xamarin productivity tool) working folder
 .mfractor/
+
+.python-version
+edivorce/share/
