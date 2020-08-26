@@ -26,11 +26,12 @@ jobs:
         pip install bandit
         pip install radon
         pip install prospector
-    - name: Run Code Quality Checks
+    - name: Run Bandit Checks
       run: |
-        echo "Running Bandit checks --------------------------- "
         bandit -r edivorce
-        echo "Running Radon CC checks --------------------------- "
+    - name: Run Radon Checks
+      run: |
         radon cc edivorce
-        echo "Running Prospector checks --------------------------- "
+    - name: Run Prospector Checks
+      run: |
         prospector --profile prospector-profile.yml
