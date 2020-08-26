@@ -46,5 +46,5 @@ jobs:
         STEPS_CONTEXT: ${{ toJson(steps) }}
       run: echo "$$STEPS_CONTEXT"
     - name: Validate errors
-      if: steps.bandit.outputs.status == 'failure' || steps.radon.outputs.status == 'failure' || steps.prospector.outputs.status == 'failure'
+      if: steps.bandit.outcome == 'failure' || steps.radon.outcome == 'failure' || steps.prospector.outcome == 'failure'
       run: exit 1
