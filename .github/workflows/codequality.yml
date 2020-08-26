@@ -27,11 +27,24 @@ jobs:
         pip install radon
         pip install prospector
     - name: Run Bandit Checks
+      id: bandit
       run: |
         bandit -r edivorce
+      continue-on-error: true
     - name: Run Radon Checks
+      id: radon
       run: |
         radon cc edivorce
+      continue-on-error: true
     - name: Run Prospector Checks
+      id: prospector
       run: |
         prospector --profile prospector-profile.yml
+      continue-on-error: true
+    - name: Dump output
+      env:
+        STEPS_CONTEXT: ${{ toJson(steps) }}
+      run: echo "$$STEPS_CONTEXT"
+    - name: Validate errors
+      if: steps.bandit.outputs.status == 'failure' || steps.radon.outputs.status == 'failure' || steps.prospector.outputs.status == 'failure'
+      run: exit 1
