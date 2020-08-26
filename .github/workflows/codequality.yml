@@ -26,6 +26,7 @@ jobs:
         pip install bandit
         pip install radon
         pip install prospector
+        pip install safety
     - name: Run Bandit Checks
       id: bandit
       run: |
@@ -41,10 +42,15 @@ jobs:
       run: |
         prospector --profile prospector-profile.yml
       continue-on-error: true
+    - name: Run Safety Checks
+      id: safety
+      run: |
+        safety check --full-report
+      continue-on-error: true
     - name: Dump output
       env:
         STEPS_CONTEXT: ${{ toJson(steps) }}
       run: echo "$$STEPS_CONTEXT"
     - name: Validate errors
-      if: steps.bandit.outcome == 'failure' || steps.radon.outcome == 'failure' || steps.prospector.outcome == 'failure'
+      if: steps.bandit.outcome == 'failure' || steps.radon.outcome == 'failure' || steps.prospector.outcome == 'failure' || steps.safety.outcome == 'failure'
       run: exit 1
