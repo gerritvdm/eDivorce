@@ -28,6 +28,9 @@ jobs:
         pip install prospector
     - name: Run Code Quality Checks
       run: |
-        bandit -r edivorcec
+        echo "Running Bandit checks --------------------------- "
+        bandit -r edivorce
+        echo "Running Radon CC checks --------------------------- "
         radon cc edivorce
+        echo "Running Prospector checks --------------------------- "
         prospector --profile prospector-profile.yml
