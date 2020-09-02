@@ -1,7 +1,6 @@
 {% extends 'base.html' %}
 {% load input_field %}
 {% load static %}
-{% load compress %}
 
 {% block title %}{{ block.super }}: Overview{% endblock %}
 
@@ -56,19 +55,13 @@
 {% endblock %}
 
 {% block extra_css %}
-    {% compress css %}
     <link rel="preload" as="style" href="{% static 'dist/vue/css/finalFiling.css' %}"/>
     <link rel="stylesheet" type="text/css" href="{% static 'dist/vue/css/finalFiling.css' %}"/>
-    {% endcompress %}
-    {% compress js %}
     <link rel="preload" as="script" href="{% static 'dist/vue/js/chunk-vendors.js' %}"/>
     <link rel="preload" as="script" href="{% static 'dist/vue/js/finalFiling.js' %}"/>
-    {% endcompress %}    
 {% endblock %}
 
 {% block extra_js %}
-    {% compress js %}
     <script type="text/javascript" src="{% static 'dist/vue/js/chunk-vendors.js' %}"></script>
     <script type="text/javascript" src="{% static 'dist/vue/js/finalFiling.js' %}"></script>
-    {% endcompress %}
 {% endblock %}
