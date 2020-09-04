@@ -12,7 +12,8 @@ if __name__ == "__main__":
     else:
         os.environ.setdefault("DJANGO_SETTINGS_MODULE", "edivorce.settings.openshift")
 
-        # run npm when collectstatic is called in the S2I assemble script
+        # run npm_build (custom management command) when collectstatic is called in 
+        # the S2I assemble script
         if sys.argv[1] == 'collectstatic':
             execute_from_command_line(['manage.py','npm_build'])
 

@@ -7,13 +7,13 @@ module.exports = {
       entry: 'src/pages/initial-filing/main.js',
       template: 'public/initial-filing.html',
       filename: 'index.html',
-      chunks: ['chunk-vendors', 'initialFiling']
+      chunks: ['chunk-vendors', 'chunk-common', 'initialFiling']
     },
     finalFiling: {
       entry: 'src/pages/final-filing/main.js',
       template: 'public/final-filing.html',
       filename: 'final-filing.html',
-      chunks: ['chunk-vendors', 'finalFiling']
+      chunks: ['chunk-vendors', 'chunk-common', 'finalFiling']
     }
   }
 }

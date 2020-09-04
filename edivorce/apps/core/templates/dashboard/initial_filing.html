@@ -63,10 +63,12 @@
     <link rel="preload" as="style" href="{% static 'dist/vue/css/initialFiling.css' %}"/>
     <link rel="stylesheet" type="text/css" href="{% static 'dist/vue/css/initialFiling.css' %}"/>
     <link rel="preload" as="script" href="{% static 'dist/vue/js/chunk-vendors.js' %}"/>
+    <link rel="preload" as="script" href="{% static 'dist/vue/js/chunk-common.js' %}"/>
     <link rel="preload" as="script" href="{% static 'dist/vue/js/initialFiling.js' %}"/>
 {% endblock %}
 
 {% block extra_js %}
     <script type="text/javascript" src="{% static 'dist/vue/js/chunk-vendors.js' %}"></script>
+    <script type="text/javascript" src="{% static 'dist/vue/js/chunk-common.js' %}"></script>
     <script type="text/javascript" src="{% static 'dist/vue/js/initialFiling.js' %}"></script>
 {% endblock %}
