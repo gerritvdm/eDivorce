@@ -31,6 +31,9 @@ class BceidUser(models.Model):
     has_accepted_terms = models.BooleanField(default=False)
     """ Flag for accepting terms of service """
 
+    is_bcsc = models.BooleanField(default=False)
+    """ Flag to identify BC Services Card users """
+
     def is_authenticated(self):
         return True
 
