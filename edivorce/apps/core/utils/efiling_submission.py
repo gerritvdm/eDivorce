@@ -31,7 +31,11 @@ class EFilingSubmission:
 
         url = f'{self.token_base_url}/auth/realms/{self.token_realm}/protocol/openid-connect/token'
 
-        response = requests.post(url, headers=headers, data=payload)
+        try:
+            response = requests.post(url, headers=headers, data=payload)
+        except:
+            return False
+
         logging.debug(f'EFH - Get Token {response.status_code}')
         if response.status_code == 200:
             response = json.loads(response.text)
@@ -148,7 +152,11 @@ class EFilingSubmission:
 
         url = f'{self.api_base_url}/submission/documents'
         print('DEBUG: ' + url)
-        response = self._get_api(request, url, transaction_id, bce_id, headers={}, files=files)
+        try:
+            response = self._get_api(request, url, transaction_id, bce_id, headers={}, files=files)
+        except:
+            return settings.FORCE_SCRIPT_NAME + "dashboard/initial_filing?no_connection=1", None
+
         if response.status_code == 200:
             response = json.loads(response.text)
 
@@ -171,9 +179,11 @@ class EFilingSubmission:
                 response = json.loads(response.text)
 
                 if 'details' in response and len(response['details']) > 0:
-                    message = f"<p>{response['message']}</p>"
-                    details = f"<ul><li>{'</li><li>'.join(response['details'])}</li></ul>"
-                    return None, message + details
+                    details = ' '.join(response['details'])
+                    # clean up the message to make it presentable
+                    details = details.replace('[', '').replace(']', '').replace(
+                        'FileNumber', 'File number')
+                    return None, details
 
                 return None, f"{response['error']} - {response['message']}"
 
