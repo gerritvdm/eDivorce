@@ -60,7 +60,16 @@
       }
     ],
     "client": {
-      "edivorce-app": [],
+      "edivorce-app": [
+        {
+          "id": "0b6857a9-66a6-46a6-8927-195af642ed10",
+          "name": "efiling_early_access",
+          "composite": false,
+          "clientRole": true,
+          "containerId": "d2c2bdf9-7388-4dad-8704-5fdfb5f91a0d",
+          "attributes": {}
+        }
+      ],
       "realm-management": [
         {
           "id": "3297cef3-9d80-4fd4-841d-027b6b2902ec",
@@ -658,6 +667,22 @@
             "access.token.claim": "true",
             "claim.name": "preferred_username",
             "jsonType.label": "String"
+          }
+        },
+        {
+          "id": "c6641bfc-e8c4-48cf-b201-a30ddad769b4",
+          "name": "client roles",
+          "protocol": "openid-connect",
+          "protocolMapper": "oidc-usermodel-client-role-mapper",
+          "consentRequired": false,
+          "config": {
+            "multivalued": "true",
+            "userinfo.token.claim": "true",
+            "user.attribute": "foo",
+            "access.token.claim": "true",
+            "claim.name": "roles",
+            "jsonType.label": "String",
+            "usermodel.clientRoleMapping.clientId": "edivorce-app"
           }
         },
         {
@@ -1377,14 +1402,14 @@
         "subComponents": {},
         "config": {
           "allowed-protocol-mapper-types": [
-            "oidc-sha256-pairwise-sub-mapper",
-            "oidc-usermodel-attribute-mapper",
-            "oidc-address-mapper",
-            "saml-user-attribute-mapper",
             "saml-user-property-mapper",
+            "oidc-sha256-pairwise-sub-mapper",
+            "saml-role-list-mapper",
+            "saml-user-attribute-mapper",
             "oidc-full-name-mapper",
+            "oidc-usermodel-attribute-mapper",
             "oidc-usermodel-property-mapper",
-            "saml-role-list-mapper"
+            "oidc-address-mapper"
           ]
         }
       },
@@ -1451,14 +1476,14 @@
         "subComponents": {},
         "config": {
           "allowed-protocol-mapper-types": [
-            "saml-role-list-mapper",
-            "oidc-address-mapper",
-            "saml-user-attribute-mapper",
-            "oidc-usermodel-attribute-mapper",
             "oidc-full-name-mapper",
+            "saml-user-attribute-mapper",
+            "saml-user-property-mapper",
             "oidc-usermodel-property-mapper",
+            "oidc-usermodel-attribute-mapper",
+            "oidc-address-mapper",
             "oidc-sha256-pairwise-sub-mapper",
-            "saml-user-property-mapper"
+            "saml-role-list-mapper"
           ]
         }
       }
