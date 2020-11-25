@@ -78,7 +78,7 @@ def get_other_name_tags(json_list):
         return format_html_join(
             '\n',
             '<li>{} {} {} {} {}</li>',
-            ((alias_type, last_name, given1, given2, given3) for alias_type, last_name, given1, given2, given3 in json_list if last_name))
+            ((alias_type, given1, given2, given3, last_name) for alias_type, last_name, given1, given2, given3 in json_list if last_name))
     else:
         # old json format with unfielded names
         return format_html_join(
