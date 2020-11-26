@@ -7,9 +7,9 @@ import re
 from django.conf import settings
 from django.urls import reverse
 
-from edivorce.apps.core.models import Document
-from edivorce.apps.core.utils.question_step_mapping import list_of_registries
-from edivorce.apps.core.views.pdf import images_to_pdf, pdf_form
+from ..models import Document
+from ..views.pdf import images_to_pdf, pdf_form
+from .efiling_court_locations import EFilingCourtLocations
 
 logger = logging.getLogger(__name__)
 
@@ -24,7 +24,7 @@ PACKAGE_DOCUMENT_FORMAT = {
 
 PACKAGE_PARTY_FORMAT = {
     "partyType": "IND",
-    "roleType": "CLA",
+    "roleType": "CLA1",
     "firstName": "FirstName",
     "middleName": "",
     "lastName": "LastName",
@@ -105,10 +105,10 @@ class EFilingPackaging:
     def __init__(self, initial_filing):
         self.initial_filing = initial_filing
 
-    def format_package(self, request, responses, files, documents):
+    def format_package(self, request, responses, documents):
         package = PACKAGE_FORMAT.copy()
         package['filingPackage']['documents'] = documents
-        package['filingPackage']['court']['location'] = self._get_location(responses)
+        package['filingPackage']['court']['location'] = self._get_location(request, responses)
         package['filingPackage']['parties'] = self._get_parties(responses)
         file_number = self._get_file_number(responses)
         if file_number:
@@ -146,31 +146,30 @@ class EFilingPackaging:
         slug = re.sub('[^0-9a-zA-Z]+', '-', form_name).strip('-')
         if party_code == 0:
             return slug + ".pdf"
-        elif party_code == 1:
+        if party_code == 1:
             return slug + "--Claimant1.pdf"
-        else:
-            return slug + "--Claimant2.pdf"
+        return slug + "--Claimant2.pdf"
+
+    def _format_date(self, s):
+        try:
+            return datetime.datetime.strptime(s, '%b %d, %Y').strftime('%Y-%m-%d')
+        except Exception:
+            return ''
+
+    def _get_aliases(self, s):
+        aliases = []
+        names = json.loads(s)
+        for name in names:
+            if len(name) == 5 and name[1] != '' and name[2] != '':
+                alias = NJF_ALIAS_FORMAT.copy()
+                alias["surname"] = name[1]
+                alias["given1"] = name[2]
+                alias["given2"] = name[3]
+                alias["given3"] = name[4]
+                aliases.append(alias)
+        return aliases
 
     def _get_json_data(self, responses):
-
-        def format_date(str):
-            try:
-                return datetime.datetime.strptime(str, '%b %d, %Y').strftime('%Y-%m-%d')
-            except:
-                return ''
-
-        def get_aliases(str):
-            aliases = []
-            names = json.loads(str)
-            for name in names:
-                if len(name) == 5 and name[1] != '' and name[2] != '':
-                    alias = NJF_ALIAS_FORMAT.copy()
-                    alias["surname"] = name[1]
-                    alias["given1"] = name[2]
-                    alias["given2"] = name[3]
-                    alias["given3"] = name[4]
-                    aliases.append(alias)
-            return aliases
 
         r = responses
         d = NJF_JSON_FORMAT.copy()
@@ -190,7 +189,7 @@ class EFilingPackaging:
         party1["given1"] = r.get('given_name_1_you', '')
         party1["given2"] = r.get('given_name_2_you', '')
         party1["given3"] = r.get('given_name_3_you', '')
-        party1["birthDate"] = format_date(r.get('birthday_you'))
+        party1["birthDate"] = self._format_date(r.get('birthday_you'))
         party1["surnameAtBirth"] = r.get('last_name_born_you', '')
         party1["surnameBeforeMarriage"] = r.get('last_name_before_married_you', '')
         email = r.get('email_you', '')
@@ -199,14 +198,14 @@ class EFilingPackaging:
         party1["email"] = email
         party1["signingVirtually"] = signing_location_you == 'Virtual'
         if r.get('any_other_name_you') == 'YES':
-            party1["aliases"] = get_aliases(r.get('other_name_you'))
+            party1["aliases"] = self._get_aliases(r.get('other_name_you'))
 
         party2 = d["parties"][1]
         party2["surname"] = r.get('last_name_spouse', '')
         party2["given1"] = r.get('given_name_1_spouse', '')
         party2["given2"] = r.get('given_name_2_spouse', '')
         party2["given3"] = r.get('given_name_3_spouse', '')
-        party2["birthDate"] = format_date(r.get('birthday_spouse'))
+        party2["birthDate"] = self._format_date(r.get('birthday_spouse'))
         party2["surnameAtBirth"] = r.get('last_name_born_spouse', '')
         party2["surnameBeforeMarriage"] = r.get('last_name_before_married_spouse', '')
         email = r.get('email_spouse', '')
@@ -215,9 +214,9 @@ class EFilingPackaging:
         party2["email"] = email
         party2["signingVirtually"] = signing_location_spouse == 'Virtual'
         if r.get('any_other_name_spouse') == 'YES':
-            party2["aliases"] = get_aliases(r.get('other_name_spouse'))
+            party2["aliases"] = self._get_aliases(r.get('other_name_spouse'))
 
-        d["dateOfMarriage"] = format_date(r.get('when_were_you_married'))
+        d["dateOfMarriage"] = self._format_date(r.get('when_were_you_married'))
         d["placeOfMarriage"]["country"] = r.get('where_were_you_married_country', '')
         d["placeOfMarriage"]["province"] = r.get('where_were_you_married_prov', '')
         d["placeOfMarriage"]["city"] = r.get('where_were_you_married_city', '')
@@ -256,8 +255,7 @@ class EFilingPackaging:
     def _get_absolute_url(self, request, path):
         if settings.PROXY_BASE_URL:
             return settings.PROXY_BASE_URL + path
-        else:
-            return request.build_absolute_uri(path)
+        return request.build_absolute_uri(path)
 
     # -- EFILING HUB INTERFACE --
     def get_files(self, request, responses, uploaded, generated):
@@ -293,6 +291,7 @@ class EFilingPackaging:
         parties = []
 
         party1 = PACKAGE_PARTY_FORMAT.copy()
+        party1['roleType'] = "CLA1"
         party1['firstName'] = responses.get('given_name_1_you', '')
         party1['middleName'] = (responses.get('given_name_2_you', '') +
                                 ' ' +
@@ -301,6 +300,7 @@ class EFilingPackaging:
         parties.append(party1)
 
         party2 = PACKAGE_PARTY_FORMAT.copy()
+        party2['roleType'] = "CLA2"
         party2['firstName'] = responses.get('given_name_1_spouse', '')
         party2['middleName'] = (responses.get('given_name_2_spouse', '') +
                                 ' ' +
@@ -310,13 +310,13 @@ class EFilingPackaging:
 
         return parties
 
-    def _get_location(self, responses):
+    def _get_location(self, request, responses):
         location_name = responses.get('court_registry_for_filing', '')
-        return list_of_registries.get(location_name,
-                                      {'location_id': '0000'}).get('location_id')
+        court_locations = EFilingCourtLocations().courts(request)
+        return court_locations.get(location_name,
+                                   {'location_id': '0000'}).get('location_id')
 
     def _get_file_number(self, responses):
         if not self.initial_filing:
             return responses.get('court_file_number', '')
-        else:
-            return ''
+        return ''

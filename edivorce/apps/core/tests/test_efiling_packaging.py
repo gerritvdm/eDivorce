@@ -1,3 +1,5 @@
+from unittest import mock
+
 from django.contrib.sessions.middleware import SessionMiddleware
 from django.test import TransactionTestCase
 from django.test.client import RequestFactory
@@ -18,6 +20,7 @@ class EFilingPackagingTests(TransactionTestCase):
         self.request.session.save()
 
         self.packaging = EFilingPackaging(initial_filing=True)
+        # court_locations={"Vancouver": {"location_id": "6011"}}
 
     def test_format_package(self):
         files = []
@@ -37,7 +40,7 @@ class EFilingPackagingTests(TransactionTestCase):
             'given_name_1_spouse': 'Party 1'
         }
 
-        package = self.packaging.format_package(self.request, responses, files, documents)
+        package = self.packaging.format_package(self.request, responses, documents)
 
         self.assertTrue(package)
         self.assertEqual(package['filingPackage']['documents'][0]['name'], 'form_0.pdf')
@@ -45,22 +48,29 @@ class EFilingPackagingTests(TransactionTestCase):
         self.assertEqual(package['filingPackage']['parties'][0]['firstName'], 'Party 0')
         self.assertEqual(package['filingPackage']['parties'][1]['firstName'], 'Party 1')
 
-    def test_get_location_success(self):
+    @mock.patch('edivorce.apps.core.utils.efiling_court_locations.EFilingCourtLocations.courts')
+    def test_get_location_success(self, mock_courts):
+        mock_courts.return_value = {"Vancouver": {"location_id": "6011"}}
         responses = {
             "court_registry_for_filing": "Vancouver"
         }
-        location = self.packaging._get_location(responses)
+        # pylint: disable=protected-access
+        location = self.packaging._get_location(None, responses)
         self.assertEqual(location, '6011')
 
-    def test_get_location_fail(self):
+    @mock.patch('edivorce.apps.core.utils.efiling_court_locations.EFilingCourtLocations.courts')
+    def test_get_location_fail(self, mock_courts):
+        mock_courts.return_value = {"Vancouver": {"location_id": "6011"}}
         responses = {
             "court_registry_for_filing": "Tokyo"
         }
-        location = self.packaging._get_location(responses)
+        # pylint: disable=protected-access
+        location = self.packaging._get_location(None, responses)
         self.assertEqual(location, '0000')
 
         responses = {}
-        location = self.packaging._get_location(responses)
+        # pylint: disable=protected-access
+        location = self.packaging._get_location(None, responses)
         self.assertEqual(location, '0000')
 
     def test_get_json_data_signing_location(self):
@@ -70,6 +80,7 @@ class EFilingPackagingTests(TransactionTestCase):
             'signing_location': 'Virtual'
         }
 
+        # pylint: disable=protected-access
         json = self.packaging._get_json_data(responses)
 
         self.assertEqual(json['parties'][0]["signingVirtually"], True)
@@ -109,6 +120,7 @@ class EFilingPackagingTests(TransactionTestCase):
             'address_to_send_official_document_email_spouse': 'spouse2@gmail.com',
         }
 
+        # pylint: disable=protected-access
         json = self.packaging._get_json_data(responses)
 
         self.assertEqual(json['parties'][0]['surname'], 'Smith')
@@ -137,6 +149,7 @@ class EFilingPackagingTests(TransactionTestCase):
             'any_other_name_spouse': 'NO'
         }
 
+        # pylint: disable=protected-access
         json = self.packaging._get_json_data(responses)
 
         self.assertEqual(json['parties'][0]["aliases"][0]["surname"], "Smith")

@@ -830,6 +830,7 @@ $(function () {
     });
 
     $('.question-well.step-review.error span.table-error').parent('td').addClass('contains-error');
+    $('.question-well.step-review.error span.table-error').closest('tr').addClass('row-contains-error');
 });
 
 
@@ -1212,7 +1213,6 @@ var date_picker = function (selector, showOnFocus) {
         endDate: endDate,
         autoclose: true,
         todayHighlight: true,
-        immediateUpdates: true,
         showOnFocus: showOnFocus,
         startView: 'decade',
         clearBtn: true
@@ -1242,12 +1242,6 @@ $(".more_information-link a").click(function () {
         $(moreInfoLink).removeClass("active");
         $(contentColumn).removeClass("no-margin-right").addClass("margin-right");
     }
-});
-$("a.more_information-close").click(function () {
-    var moreInfo = $(".more_information-column");
-    $(moreInfo).removeClass("on-canvas").addClass("off-canvas");
-    $(moreInfoLink).removeClass("active");
-    $(contentColumn).removeClass("no-margin-right").addClass("margin-right");
 });
 
 // Change border color on well when child has focus
