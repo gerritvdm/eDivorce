@@ -1,9 +1,7 @@
 import json
 import logging
 import requests
-import uuid
 
-from django.conf import settings
 from django.core.cache import cache
 from django.core.exceptions import PermissionDenied
 
@@ -19,7 +17,7 @@ class EFilingCourtLocations(EFilingHubCallerBase):
         self.refresh_token = None
         EFilingHubCallerBase.__init__(self)
 
-    def _get_api(self, request, url, bceid_guid, headers={}):
+    def _get_api(self, request, url, bceid_guid, headers):
         # make sure we have an access token
         if not self.access_token:
             if not self._get_token(request):
@@ -27,14 +25,14 @@ class EFilingCourtLocations(EFilingHubCallerBase):
 
         headers = self._set_headers(headers, bceid_guid, self.access_token)
         response = requests.get(url, headers=headers)
-        logging.debug(f'EFH - Get Locations {response.status_code} {response.text}')
+        logging.debug('EFH - Get Locations %d %s', response.status_code, response.text)
 
         if response.status_code == 401:
             # not authorized .. try refreshing token
             if self._refresh_token(request):
                 headers = self._set_headers(headers, bceid_guid, self.access_token)
                 response = requests.get(url, headers=headers)
-                logging.debug(f'EFH - Get Locations Retry {response.status_code} {response.text}')
+                logging.debug('EFH - Get Locations Retry %d %s', response.status_code, response.text)
 
         return response
 

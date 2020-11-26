@@ -33,11 +33,14 @@ class EFilingSubmission(EFilingHubCallerBase):
             request.session['transaction_id'] = guid
         return guid
 
-    def _get_api(self, request, url, bceid_guid, headers={}, data=None, transaction_id=None, files=None):
+    def _get_api(self, request, url, bceid_guid, headers=None, data=None, transaction_id=None, files=None):
         # make sure we have an access token
         if not self.access_token:
             if not self._get_token(request):
                 raise Exception('EFH - Unable to get API Token')
+
+        if not headers:
+            headers = {}
 
         headers = self._set_headers(headers, bceid_guid, self.access_token, transaction_id)
 
@@ -45,7 +48,7 @@ class EFilingSubmission(EFilingHubCallerBase):
             data = {}
 
         response = requests.post(url, headers=headers, data=data, files=files)
-        logging.debug(f'EFH - Get API {response.status_code} {response.text}')
+        logging.debug('EFH - Get API %d %s', response.status_code, response.text)
 
         if response.status_code == 401:
             # not authorized .. try refreshing token
@@ -53,11 +56,11 @@ class EFilingSubmission(EFilingHubCallerBase):
                 headers = self._set_headers(headers, bceid_guid, self.access_token, transaction_id)
 
                 response = requests.post(url, headers=headers, data=data, files=files)
-                logging.debug(f'EFH - Get API Retry {response.status_code} {response.text}')
+                logging.debug('EFH - Get API Retry %d %s', response.status_code, response.text)
 
         return response
 
-    def upload(self, request, responses, files, documents=None, parties=None):
+    def upload(self, request, responses, files, documents=None):
         """
         Does an initial upload of documents and gets the generated eFiling Hub url.
         :param parties:
@@ -80,7 +83,7 @@ class EFilingSubmission(EFilingHubCallerBase):
         try:
             response = self._get_api(request, url, bceid_guid, headers={},
                                      transaction_id=transaction_id, files=files)
-        except:
+        except Exception:
             if self.initial_filing:
                 error_route = 'initial_filing'
             else:
@@ -96,7 +99,7 @@ class EFilingSubmission(EFilingHubCallerBase):
                 headers = {
                     'Content-Type': 'application/json'
                 }
-                package_data = self.packaging.format_package(request, responses, files, documents)
+                package_data = self.packaging.format_package(request, responses, documents)
                 url = f"{self.api_base_url}/submission/{response['submissionId']}/generateUrl"
                 print('DEBUG: ' + url)
                 data = json.dumps(package_data)

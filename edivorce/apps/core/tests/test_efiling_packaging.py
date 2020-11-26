@@ -1,4 +1,3 @@
-import json
 from unittest import mock
 
 from django.contrib.sessions.middleware import SessionMiddleware
@@ -41,7 +40,7 @@ class EFilingPackagingTests(TransactionTestCase):
             'given_name_1_spouse': 'Party 1'
         }
 
-        package = self.packaging.format_package(self.request, responses, files, documents)
+        package = self.packaging.format_package(self.request, responses, documents)
 
         self.assertTrue(package)
         self.assertEqual(package['filingPackage']['documents'][0]['name'], 'form_0.pdf')
@@ -55,6 +54,7 @@ class EFilingPackagingTests(TransactionTestCase):
         responses = {
             "court_registry_for_filing": "Vancouver"
         }
+        # pylint: disable=protected-access
         location = self.packaging._get_location(None, responses)
         self.assertEqual(location, '6011')
 
@@ -64,10 +64,12 @@ class EFilingPackagingTests(TransactionTestCase):
         responses = {
             "court_registry_for_filing": "Tokyo"
         }
+        # pylint: disable=protected-access
         location = self.packaging._get_location(None, responses)
         self.assertEqual(location, '0000')
 
         responses = {}
+        # pylint: disable=protected-access
         location = self.packaging._get_location(None, responses)
         self.assertEqual(location, '0000')
 
@@ -78,6 +80,7 @@ class EFilingPackagingTests(TransactionTestCase):
             'signing_location': 'Virtual'
         }
 
+        # pylint: disable=protected-access
         json = self.packaging._get_json_data(responses)
 
         self.assertEqual(json['parties'][0]["signingVirtually"], True)
@@ -117,6 +120,7 @@ class EFilingPackagingTests(TransactionTestCase):
             'address_to_send_official_document_email_spouse': 'spouse2@gmail.com',
         }
 
+        # pylint: disable=protected-access
         json = self.packaging._get_json_data(responses)
 
         self.assertEqual(json['parties'][0]['surname'], 'Smith')
@@ -145,6 +149,7 @@ class EFilingPackagingTests(TransactionTestCase):
             'any_other_name_spouse': 'NO'
         }
 
+        # pylint: disable=protected-access
         json = self.packaging._get_json_data(responses)
 
         self.assertEqual(json['parties'][0]["aliases"][0]["surname"], "Smith")

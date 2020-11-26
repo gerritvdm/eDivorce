@@ -67,6 +67,7 @@ class EFilingSubmissionTests(TransactionTestCase):
         mock_request_post.return_value = self._mock_response(
             text=json.dumps(SAMPLE_TOKEN_RESPONSE))
 
+        # pylint: disable=protected-access
         self.assertTrue(self.hub._get_token(self.request))
         self.assertEqual(self.hub.access_token, SAMPLE_TOKEN_RESPONSE['access_token'])
 
@@ -75,6 +76,7 @@ class EFilingSubmissionTests(TransactionTestCase):
         mock_request_post.return_value = self._mock_response(
             text=json.dumps(SAMPLE_TOKEN_RESPONSE), status=401)
 
+        # pylint: disable=protected-access
         self.assertFalse(self.hub._get_token(self.request))
         self.assertFalse("access_token" in self.request.session)
 
@@ -84,6 +86,7 @@ class EFilingSubmissionTests(TransactionTestCase):
             text=json.dumps(SAMPLE_TOKEN_RESPONSE))
         self.hub.refresh_token = 'alskdfjadlfads'
 
+        # pylint: disable=protected-access
         self.assertTrue(self.hub._refresh_token(self.request))
         self.assertEqual(self.hub.access_token, SAMPLE_TOKEN_RESPONSE['access_token'])
 
@@ -93,6 +96,7 @@ class EFilingSubmissionTests(TransactionTestCase):
         mock_request_post.return_value = self._mock_response(
             text=json.dumps(SAMPLE_TOKEN_RESPONSE))
 
+        # pylint: disable=protected-access
         self.assertFalse(self.hub._refresh_token(self.request))
         self.assertFalse("access_token" in self.request.session)
 
@@ -102,6 +106,7 @@ class EFilingSubmissionTests(TransactionTestCase):
             text=json.dumps(SAMPLE_TOKEN_RESPONSE), status=401)
         self.hub.refresh_token = 'alskdfjadlfads'
 
+        # pylint: disable=protected-access
         self.assertTrue(self.hub._refresh_token(self.request))
         self.assertEqual(self.hub.access_token, SAMPLE_TOKEN_RESPONSE['access_token'])
 
@@ -111,6 +116,7 @@ class EFilingSubmissionTests(TransactionTestCase):
             text=json.dumps(INITIAL_DOC_UPLOAD_RESPONSE))
         self.hub.access_token = 'aslkfjadskfjd'
 
+        # pylint: disable=protected-access
         response = self.hub._get_api(
             self.request, 'https://somewhere.com', 'alksdjfa')
 
@@ -131,6 +137,7 @@ class EFilingSubmissionTests(TransactionTestCase):
             self._mock_response(text=json.dumps(INITIAL_DOC_UPLOAD_RESPONSE))
         ]
 
+        # pylint: disable=protected-access
         response = self.hub._get_api(
             self.request, 'https://somewhere.com', 'alksdjfa')
 
@@ -145,29 +152,34 @@ class EFilingSubmissionTests(TransactionTestCase):
             text=json.dumps(INITIAL_DOC_UPLOAD_RESPONSE))
 
         with self.assertRaises(Exception):
-            response = self.hub._get_api(
+            # pylint: disable=protected-access
+            _ = self.hub._get_api(
                 self.request, 'https://somewhere.com', 'alksdjfa', 'kasdkfd', {})
 
     def test_transaction_id_current(self):
         self.request.session['transaction_id'] = 'alksdjflaskdjf'
+        # pylint: disable=protected-access
         guid = self.hub._get_transaction(self.request)
 
         self.assertEqual(guid, 'alksdjflaskdjf')
 
     def test_transaction_id_empty(self):
         self.assertFalse('transaction_id' in self.request.session)
-        guild = self.hub._get_transaction(self.request)
+        # pylint: disable=protected-access
+        _ = self.hub._get_transaction(self.request)
 
         self.assertTrue('transaction_id' in self.request.session)
 
     def test_bceid_get_current(self):
         self.request.session['bcgov_userguid'] = '70fc9ce1-0cd6-4170-b842-bbabb88452a9'
         with self.settings(DEPLOYMENT_TYPE='prod'):
+            # pylint: disable=protected-access
             bceid = self.hub._get_bceid(self.request)
             self.assertEqual(bceid, '70fc9ce1-0cd6-4170-b842-bbabb88452a9')
 
     def test_bceid_anonymous_user(self):
         with self.settings(DEPLOYMENT_TYPE='prod'):
+            # pylint: disable=protected-access
             bceid = self.hub._get_bceid(self.request)
             self.assertFalse(bceid)
 
@@ -196,7 +208,7 @@ class EFilingSubmissionTests(TransactionTestCase):
                 self._mock_response(text=json.dumps(INITIAL_DOC_UPLOAD_RESPONSE), status=401),
                 self._mock_response(text=json.dumps(GENERATE_URL_RESPONSE))
             ]
-            redirect, msg = self.hub.upload(self.request, {}, {})
+            redirect, _ = self.hub.upload(self.request, {}, {})
 
             self.assertFalse(redirect)
 
@@ -211,6 +223,6 @@ class EFilingSubmissionTests(TransactionTestCase):
             ]
             mock_get_location.return_value = "0000"
 
-            redirect, msg = self.hub.upload(self.request, {}, {})
+            redirect, _ = self.hub.upload(self.request, {}, {})
 
             self.assertFalse(redirect)
