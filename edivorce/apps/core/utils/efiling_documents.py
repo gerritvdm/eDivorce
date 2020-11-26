@@ -83,9 +83,18 @@ def forms_to_file(responses_dict, initial=False):
             # at least one party has signed with a commissioner and Filing Online
             generated.append({'doc_type': 'RFO', 'form_number': 35})
             generated.append({'doc_type': 'RCP', 'form_number': 36})
-            if has_children:
-                uploaded.append({'doc_type': 'CSA', 'party_code': 0})
-            uploaded.append({'doc_type': 'AFDO', 'party_code': 0})
+
+            if how_to_sign == 'Together':
+                if has_children:
+                    uploaded.append({'doc_type': 'CSA', 'party_code': 0})
+                uploaded.append({'doc_type': 'AFDO', 'party_code': 0})
+            else:
+                if has_children:
+                    uploaded.append({'doc_type': 'CSA', 'party_code': 1})
+                    uploaded.append({'doc_type': 'CSA', 'party_code': 2})
+                uploaded.append({'doc_type': 'AFDO', 'party_code': 1})
+                uploaded.append({'doc_type': 'AFDO', 'party_code': 2})
+
             uploaded.append({'doc_type': 'OFI', 'party_code': 0})
             uploaded.append({'doc_type': 'EFSS2', 'party_code': 1})
             uploaded.append({'doc_type': 'EFSS2', 'party_code': 2})
