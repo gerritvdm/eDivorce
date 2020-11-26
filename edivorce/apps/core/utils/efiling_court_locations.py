@@ -23,14 +23,14 @@ class EFilingCourtLocations(EFilingHubCallerBase):
             if not self._get_token(request):
                 raise Exception('EFH - Unable to get API Token')
 
-        headers = self._set_headers(headers, bceid_guid, self.access_token)
+        headers = self._set_headers(headers, bceid_guid)
         response = requests.get(url, headers=headers)
         logging.debug('EFH - Get Locations %d %s', response.status_code, response.text)
 
         if response.status_code == 401:
             # not authorized .. try refreshing token
             if self._refresh_token(request):
-                headers = self._set_headers(headers, bceid_guid, self.access_token)
+                headers = self._set_headers(headers, bceid_guid)
                 response = requests.get(url, headers=headers)
                 logging.debug('EFH - Get Locations Retry %d %s', response.status_code, response.text)
 

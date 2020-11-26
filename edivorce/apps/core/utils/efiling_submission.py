@@ -42,7 +42,7 @@ class EFilingSubmission(EFilingHubCallerBase):
         if not headers:
             headers = {}
 
-        headers = self._set_headers(headers, bceid_guid, self.access_token, transaction_id)
+        headers = self._set_headers(headers, bceid_guid, transaction_id)
 
         if not data:
             data = {}
@@ -53,7 +53,7 @@ class EFilingSubmission(EFilingHubCallerBase):
         if response.status_code == 401:
             # not authorized .. try refreshing token
             if self._refresh_token(request):
-                headers = self._set_headers(headers, bceid_guid, self.access_token, transaction_id)
+                headers = self._set_headers(headers, bceid_guid, transaction_id)
 
                 response = requests.post(url, headers=headers, data=data, files=files)
                 logging.debug('EFH - Get API Retry %d %s', response.status_code, response.text)

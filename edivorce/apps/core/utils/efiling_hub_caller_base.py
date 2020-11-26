@@ -27,7 +27,7 @@ class EFilingHubCallerBase:
         url = f'{self.token_base_url}/auth/realms/{self.token_realm}/protocol/openid-connect/token'
 
         response = requests.post(url, headers=headers, data=payload)
-        logging.debug(f'EFH - Get Token {response.status_code}')
+        logging.debug('EFH - Get Token %d', response.status_code)
         if response.status_code == 200:
             response = json.loads(response.text)
 
@@ -50,7 +50,7 @@ class EFilingHubCallerBase:
         url = f'{self.token_base_url}/auth/realms/{self.token_realm}/protocol/openid-connect/token'
 
         response = requests.post(url, headers=headers, data=payload)
-        logging.debug(f'EFH - Get Refresh Token {response.status_code}')
+        logging.debug('EFH - Get Refresh Token %d', response.status_code)
 
         response = json.loads(response.text)
 
@@ -79,7 +79,7 @@ class EFilingHubCallerBase:
             return str(uuid.UUID(guid))
         return guid
 
-    def _set_headers(self, headers, bceid_guid, access_token, transaction_id=None):
+    def _set_headers(self, headers, bceid_guid, transaction_id=None):
         if transaction_id:
             headers.update({
                 'X-User-Id': bceid_guid,
