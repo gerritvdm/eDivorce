@@ -4,7 +4,6 @@ import requests
 import uuid
 
 from django.conf import settings
-from django.core.exceptions import PermissionDenied
 
 logger = logging.getLogger(__name__)
 
@@ -20,7 +19,7 @@ class EFilingHubCallerBase:
         self.access_token = None
         self.refresh_token = None
 
-    def _get_token(self, request):
+    def _get_token(self):
         payload = f'client_id={self.client_id}&grant_type=client_credentials&client_secret={self.client_secret}'
         headers = {'Content-Type': 'application/x-www-form-urlencoded'}
 
@@ -40,7 +39,7 @@ class EFilingHubCallerBase:
                 return True
         return False
 
-    def _refresh_token(self, request):
+    def _refresh_token(self):
         if not self.refresh_token:
             return False
 

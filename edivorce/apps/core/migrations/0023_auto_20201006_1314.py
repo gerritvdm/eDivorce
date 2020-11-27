@@ -2,7 +2,7 @@
 
 from django.db import migrations
 
-def migrate_name_forward(apps, schema_editor):
+def migrate_name_forward(apps, _schema_editor):
     UserResponse = apps.get_model('core', 'UserResponse')
     name_you_responses = UserResponse.objects.filter(question_id='name_you')
     print(f"Converting {name_you_responses.count()} name_you responses")
@@ -16,7 +16,7 @@ def migrate_name_forward(apps, schema_editor):
         response.save()
 
 
-def migrate_name_backwards(apps, schema_editor):
+def migrate_name_backwards(apps, _schema_editor):
     UserResponse = apps.get_model('core', 'UserResponse')
     last_name_you_responses = UserResponse.objects.filter(question_id='last_name_you')
     print(f"Converting {last_name_you_responses.count()} last_name_you responses")

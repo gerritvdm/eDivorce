@@ -1,7 +1,7 @@
 from django.conf import settings
 
 
-def settings_processor(request):
+def settings_processor(_request):
     """ Add settings data to context to make visible in debug toolbar """
     return {
         'gtm_id': settings.GTM_ID,

@@ -36,6 +36,6 @@ if platform_name == "Windows":
 
 # load the Question fixture
 if not is_local:
-	execute_from_command_line(['manage.py', 'loaddata', question_fixture_path])
+    execute_from_command_line(['manage.py', 'loaddata', question_fixture_path])
 
 application = get_wsgi_application()

@@ -181,6 +181,7 @@ def fact_sheet_b_error(responses, derived):
                  'your_spouse_child_support_paid_b']
     if derived['show_fact_sheet_b']:
         return _any_question_errors(responses, questions)
+    return False
 
 
 def show_fact_sheet_c(responses, derived):
@@ -195,6 +196,7 @@ def fact_sheet_c_error(responses, derived):
     questions = ['your_spouse_child_support_paid_c', 'your_child_support_paid_c']
     if derived['show_fact_sheet_c']:
         return _any_question_errors(responses, questions)
+    return False        
 
 
 def show_fact_sheet_d(responses, derived):
@@ -214,6 +216,7 @@ def fact_sheet_d_error(responses, derived):
     ]
     if derived['show_fact_sheet_d']:
         return _any_question_errors(responses, questions)
+    return False
 
 
 def show_fact_sheet_e(responses, derived):
@@ -373,8 +376,7 @@ def guideline_amounts_difference_total(responses, derived):
 
     if payor_b == payor_c:
         return amount_b + amount_c
-    else:
-        return abs(amount_b - amount_c)
+    return abs(amount_b - amount_c)
 
 
 def schedule_1_amount(responses, derived):
@@ -383,8 +385,7 @@ def schedule_1_amount(responses, derived):
     try:
         if derived['show_fact_sheet_b'] or derived['show_fact_sheet_c']:
             return derived['guideline_amounts_difference_total']
-        else:
-            return float(responses.get('payor_monthly_child_support_amount', 0))
+        return float(responses.get('payor_monthly_child_support_amount', 0))
     except ValueError:
         return 0
 
@@ -477,7 +478,7 @@ def payor_section_seven_expenses(responses, derived):
 
     if derived['child_support_payor'] == 'Claimant 1':
         return derived['claimant_1_share']
-    elif derived['child_support_payor'] == 'Claimant 2':
+    if derived['child_support_payor'] == 'Claimant 2':
         return derived['claimant_2_share']
     return derived['total_section_seven_expenses']
 

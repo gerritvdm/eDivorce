@@ -66,8 +66,7 @@ def success(request):
     if complete:
         if request.user.is_authenticated:
             return redirect(reverse('overview'))
-        else:
-            return render(request, 'success.html', context={'register_url': settings.REGISTER_BCEID_URL, 'register_sc_url': settings.REGISTER_BCSC_URL})
+        return render(request, 'success.html', context={'register_url': settings.REGISTER_BCEID_URL, 'register_sc_url': settings.REGISTER_BCSC_URL})
     return redirect(reverse('incomplete'))
 
 
@@ -121,7 +120,7 @@ def after_login(request):
     return redirect(settings.PROXY_BASE_URL + settings.FORCE_SCRIPT_NAME[:-1] + '/overview')
 
 
-def after_logout(request):
+def after_logout(_request):
     response = HttpResponseRedirect(settings.PROXY_BASE_URL + settings.FORCE_SCRIPT_NAME)
     response.delete_cookie(key="SMSESSION", domain=".gov.bc.ca", path="/")
     return response
@@ -185,7 +184,7 @@ def _add_court_registry_address(request, responses_dict):
 
     locations = EFilingCourtLocations().courts(request)
 
-    if not filing_registry in locations.keys():
+    if filing_registry not in locations.keys():
         return
 
     location = locations[filing_registry]
@@ -265,7 +264,7 @@ def question(request, step, sub_step=None):
     return render(request, template_name=template, context=responses_dict)
 
 
-def page_not_found(request, exception, template_name='404.html'):
+def page_not_found(request, _exception, template_name='404.html'):
     """
     404 Error Page
     """

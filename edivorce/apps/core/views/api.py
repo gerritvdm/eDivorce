@@ -45,7 +45,7 @@ class UserResponseHandler(APIView):
                     setattr(request.user, question_key, value == 'true')
                     request.user.save()
                     user_attribute_updated = True
-        except Exception as e:
+        except Exception:
             if question is None and not user_attribute_updated:
                 return Response(data="Question: '%s' does not exist" % question_key,
                                 status=status.HTTP_400_BAD_REQUEST)
@@ -68,11 +68,12 @@ class DocumentView(RetrieveUpdateDestroyAPIView):
         doc = Document.objects.filter(bceid_user=self.request.user, **self.kwargs).first()
         if not doc:
             raise Http404("Document not found")
-        elif not doc.file_exists():
+
+        if not doc.file_exists():
             doc.get_documents_in_form().delete()
             raise Http404("Document no longer exists")
-        else:
-            return doc
+
+        return doc
 
     def retrieve(self, request, *args, **kwargs):
         """ Return the file instead of meta data """
@@ -88,7 +89,7 @@ class DocumentView(RetrieveUpdateDestroyAPIView):
         return HttpResponse(file_contents, content_type=content_type)
 
 
-def get_document_file_by_key(request, file_key, rotation):
+def get_document_file_by_key(_request, file_key, rotation):
     file = Document.get_file(file_key)
     if not file:
         return HttpResponseNotFound()
@@ -115,17 +116,15 @@ def get_document_file_by_key(request, file_key, rotation):
 
 def __get_file_extension(file):
     extension = re.split(r'[\._]', file.name.upper())[-1]
-    if extension == "JPG" or extension == "JPE":
-        return "JPEG"
+    if extension in ['JPG', 'JPE']:
+        return 'JPEG'
     return extension
 
 
 def __rotate_image(file, rotation):
     im = Image.open(file)
-
     if rotation == 90:
         return im.transpose(Image.ROTATE_270)
-    elif rotation == 270:
+    if rotation == 270:
         return im.transpose(Image.ROTATE_90)
-    else:
-        return im.transpose(Image.ROTATE_180)
+    return im.transpose(Image.ROTATE_180)

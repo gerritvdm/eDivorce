@@ -35,19 +35,19 @@ class BasicAuthMiddleware(MiddlewareMixin):
         if not settings.BASICAUTH_ENABLED:
             return None
 
-        if not 'HTTP_AUTHORIZATION' in request.META:
+        if 'HTTP_AUTHORIZATION' not in request.META:
             return self.__not_authorized()
-        else:
-            authentication = request.META['HTTP_AUTHORIZATION']
-            (authmeth, auth) = authentication.split(' ', 1)
-            if 'basic' != authmeth.lower():
-                return self.__not_authorized()
-            auth = base64.b64decode(auth.strip()).decode('utf-8')
-            username, password = auth.split(':', 1)
-            if username == settings.BASICAUTH_USERNAME and password == settings.BASICAUTH_PASSWORD:
-                return None
+        
+        authentication = request.META['HTTP_AUTHORIZATION']
+        (authmeth, auth) = authentication.split(' ', 1)
+        if authmeth.lower() != 'basic':
+            return self.__not_authorized()
+        auth = base64.b64decode(auth.strip()).decode('utf-8')
+        username, password = auth.split(':', 1)
+        if username == settings.BASICAUTH_USERNAME and password == settings.BASICAUTH_PASSWORD:
+            return None
 
-            return self.__not_authorized()
+        return self.__not_authorized()
 
     def __not_authorized(self):
         auth_template = render_to_string('401.html')

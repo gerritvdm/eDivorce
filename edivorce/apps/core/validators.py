@@ -31,16 +31,16 @@ def file_scan_validation(file):
     scanner = clamd.ClamdNetworkSocket(settings.CLAMAV_HOST, settings.CLAMAV_PORT)
     try:
         result = scanner.instream(file)
-    except:
+    except Exception:
         # it doesn't really matter what the actual error is .. log it and raise validation error
-        logger.error('Error occurred while trying to scan file. "{}"'.format(sys.exc_info()[0]))
+        logger.error('Error occurred while trying to scan file. %s', sys.exc_info()[0])
         raise ValidationError('Unable to scan file.', code='scanerror')
     finally:
         # reset file stream
         file.seek(0)
 
     if result and result['stream'][0] == 'FOUND':
-        logger.warning('Virus found: {}'.format(file.name))
+        logger.warning('Virus found: %s', file.name)
         raise ValidationError('Infected file found.', code='infected')
 
 

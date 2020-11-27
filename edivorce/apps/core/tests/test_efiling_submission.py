@@ -68,7 +68,7 @@ class EFilingSubmissionTests(TransactionTestCase):
             text=json.dumps(SAMPLE_TOKEN_RESPONSE))
 
         # pylint: disable=protected-access
-        self.assertTrue(self.hub._get_token(self.request))
+        self.assertTrue(self.hub._get_token())
         self.assertEqual(self.hub.access_token, SAMPLE_TOKEN_RESPONSE['access_token'])
 
     @mock.patch('requests.post')
@@ -77,7 +77,7 @@ class EFilingSubmissionTests(TransactionTestCase):
             text=json.dumps(SAMPLE_TOKEN_RESPONSE), status=401)
 
         # pylint: disable=protected-access
-        self.assertFalse(self.hub._get_token(self.request))
+        self.assertFalse(self.hub._get_token())
         self.assertFalse("access_token" in self.request.session)
 
     @mock.patch('requests.post')
@@ -87,7 +87,7 @@ class EFilingSubmissionTests(TransactionTestCase):
         self.hub.refresh_token = 'alskdfjadlfads'
 
         # pylint: disable=protected-access
-        self.assertTrue(self.hub._refresh_token(self.request))
+        self.assertTrue(self.hub._refresh_token())
         self.assertEqual(self.hub.access_token, SAMPLE_TOKEN_RESPONSE['access_token'])
 
     @mock.patch('requests.post')
@@ -97,7 +97,7 @@ class EFilingSubmissionTests(TransactionTestCase):
             text=json.dumps(SAMPLE_TOKEN_RESPONSE))
 
         # pylint: disable=protected-access
-        self.assertFalse(self.hub._refresh_token(self.request))
+        self.assertFalse(self.hub._refresh_token())
         self.assertFalse("access_token" in self.request.session)
 
     @mock.patch('requests.post')
@@ -107,7 +107,7 @@ class EFilingSubmissionTests(TransactionTestCase):
         self.hub.refresh_token = 'alskdfjadlfads'
 
         # pylint: disable=protected-access
-        self.assertTrue(self.hub._refresh_token(self.request))
+        self.assertTrue(self.hub._refresh_token())
         self.assertEqual(self.hub.access_token, SAMPLE_TOKEN_RESPONSE['access_token'])
 
     @mock.patch('requests.post')

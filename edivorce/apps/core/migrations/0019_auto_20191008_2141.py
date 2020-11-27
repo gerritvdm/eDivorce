@@ -4,7 +4,7 @@ from __future__ import unicode_literals
 
 from django.db import migrations
 
-def string_to_json(apps, schema_editor):
+def string_to_json(apps, _schema_editor):
     Responses = apps.get_model('core', 'UserResponse')
     for response in Responses.objects.filter(question_id='child_support_act'):
         if not (response.value.startswith('["') and response.value.endswith('"]')):

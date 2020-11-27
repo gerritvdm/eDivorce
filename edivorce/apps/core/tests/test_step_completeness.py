@@ -1,7 +1,7 @@
 import json
 
 from django.test import TestCase
-from edivorce.apps.core.models import UserResponse, Question, BceidUser
+from edivorce.apps.core.models import UserResponse, BceidUser
 from edivorce.apps.core.utils.derived import get_derived_data
 from edivorce.apps.core.utils.step_completeness import Status, get_error_dict, get_step_completeness, is_complete
 
@@ -469,9 +469,15 @@ class ChildrenStepCompletenessTestCase(TestCase):
 
     def setUp(self):
         self.user = BceidUser.objects.create(user_guid='1234')
-        self.child_live_with_you = {"child_name": "Child with you", "child_birth_date": "Dec 30, 2018", "child_live_with": "Lives with you", "child_relationship_to_you": "Natural child", "child_relationship_to_spouse": "Natural child", "child_live_with_other_details": ""}
-        self.child_live_with_spouse = {"child_name": "Child with spouse", "child_birth_date": "Jan 4, 2009", "child_live_with": "Lives with spouse", "child_relationship_to_you": "Adopted child", "child_relationship_to_spouse": "Adopted child", "child_live_with_other_details": ""}
-        self.child_live_with_both = {"child_name": "Child with both", "child_birth_date": "Jan 4, 2009", "child_live_with": "Lives with both", "child_relationship_to_you": "Adopted child", "child_relationship_to_spouse": "Adopted child", "child_live_with_other_details": ""}
+        self.child_live_with_you = {"child_name": "Child with you", "child_birth_date": "Dec 30, 2018", "child_live_with": "Lives with you",
+                                    "child_relationship_to_you": "Natural child", "child_relationship_to_spouse": "Natural child", 
+                                    "child_live_with_other_details": ""}
+        self.child_live_with_spouse = {"child_name": "Child with spouse", "child_birth_date": "Jan 4, 2009", "child_live_with": "Lives with spouse",
+                                       "child_relationship_to_you": "Adopted child", "child_relationship_to_spouse": "Adopted child", 
+                                       "child_live_with_other_details": ""}
+        self.child_live_with_both = {"child_name": "Child with both", "child_birth_date": "Jan 4, 2009", "child_live_with": "Lives with both",
+                                     "child_relationship_to_you": "Adopted child", "child_relationship_to_spouse": "Adopted child", 
+                                     "child_live_with_other_details": ""}
         self.create_response('children_of_marriage', 'YES')
         self.create_response('has_children_under_19', 'YES')
 

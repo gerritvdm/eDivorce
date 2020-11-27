@@ -10,7 +10,6 @@ from django.contrib.auth.decorators import login_required
 
 from ..decorators import prequal_completed
 from ..models import Document, UserResponse
-from ..utils.efiling_court_locations import EFilingCourtLocations
 from ..utils.efiling_documents import forms_to_file
 from ..utils.efiling_packaging import EFilingPackaging
 from ..utils.efiling_submission import EFilingSubmission
@@ -142,7 +141,7 @@ def _after_submit_files(request, initial=False):
     _save_response(user, f'{prefix}_filing_submitted', 'True')
 
     if not initial:
-        _save_response(user, f'final_filing_status', 'Submitted')
+        _save_response(user, 'final_filing_status', 'Submitted')
 
     package_number = _get_package_number(request)
 
@@ -179,15 +178,15 @@ def _get_package_number(request):
         parts = message.split('=')
         if len(parts) == 2:
             return parts[1]
-    else:
-        # Generate a random string in format 000-000-000
-        package_number_parts = []
+
+    # Generate a random string in format 000-000-000
+    package_number_parts = []
+    for _ in range(3):
+        num = ''
         for _ in range(3):
-            num = ''
-            for _ in range(3):
-                num += str(random.randint(0, 9))
-            package_number_parts.append(num)
-        return '-'.join(package_number_parts)
+            num += str(random.randint(0, 9))
+        package_number_parts.append(num)
+    return '-'.join(package_number_parts)
 
 
 def _save_response(user, question, value):

@@ -36,7 +36,7 @@ class EFilingSubmission(EFilingHubCallerBase):
     def _get_api(self, request, url, bceid_guid, headers=None, data=None, transaction_id=None, files=None):
         # make sure we have an access token
         if not self.access_token:
-            if not self._get_token(request):
+            if not self._get_token():
                 raise Exception('EFH - Unable to get API Token')
 
         if not headers:
@@ -52,7 +52,7 @@ class EFilingSubmission(EFilingHubCallerBase):
 
         if response.status_code == 401:
             # not authorized .. try refreshing token
-            if self._refresh_token(request):
+            if self._refresh_token():
                 headers = self._set_headers(headers, bceid_guid, transaction_id)
 
                 response = requests.post(url, headers=headers, data=data, files=files)

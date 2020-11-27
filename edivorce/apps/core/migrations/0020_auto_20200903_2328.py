@@ -3,12 +3,11 @@
 from django.db import migrations
 
 
-def migrate_number_children_questions_forward(apps, schema_editor):
+def migrate_number_children_questions_forward(apps, _schema_editor):
     def _convert_value(value):
-        if int(response.value) > 0:
+        if int(value) > 0:
             return 'YES'
-        else:
-            return'NO'
+        return'NO'
 
     UserResponse = apps.get_model('core', 'UserResponse')
     under_19_responses = UserResponse.objects.filter(question_id='number_children_under_19')
@@ -27,7 +26,7 @@ def migrate_number_children_questions_forward(apps, schema_editor):
         response.save()
 
 
-def migrate_number_children_questions_backwards(apps, schema_editor):
+def migrate_number_children_questions_backwards(apps, _schema_editor):
     UserResponse = apps.get_model('core', 'UserResponse')
     under_19_responses = UserResponse.objects.filter(question_id='has_children_under_19')
     print(f"Converting {under_19_responses.count()} under 19 responses")

@@ -134,7 +134,7 @@ def _is_question_required(question, questions_dict, responses_by_key):
     question_dict = questions_dict[question]
     if question_dict['question__required'] == 'Required':
         return REQUIRED
-    elif question_dict['question__required'] == 'Conditional':
+    if question_dict['question__required'] == 'Conditional':
         target = question_dict.get('question__conditional_target')
         reveal_response = question_dict.get('question__reveal_response')
         if not target or not reveal_response:
@@ -144,23 +144,21 @@ def _is_question_required(question, questions_dict, responses_by_key):
             # Look for the right function to evaluate conditional logic
             derived_condition = getattr(conditional_logic, target)
             if not derived_condition:
-                raise NotImplemented(target)
+                raise NotImplementedError(target)
             result = derived_condition(responses_by_key)
             if result and _condition_met(result, reveal_response):
                 return REQUIRED
-            else:
-                return HIDDEN
-        elif target in questions_dict:
+            return HIDDEN
+        if target in questions_dict:
             target_question_requirement = _is_question_required(target, questions_dict, responses_by_key)
             if target_question_requirement == REQUIRED:
                 target_response = responses_by_key.get(target)
                 if target_response and _condition_met(target_response, reveal_response):
                     return REQUIRED
             return HIDDEN
-        else:
-            raise KeyError(f"Invalid conditional target '{target}' for question '{question}'")
-    else:
-        return OPTIONAL
+        
+        raise KeyError(f"Invalid conditional target '{target}' for question '{question}'")
+    return OPTIONAL
 
 
 def get_responses_from_session(request):

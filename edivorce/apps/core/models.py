@@ -207,6 +207,7 @@ class Document(models.Model):
     def get_file(file_key):
         if redis.RedisStorage().exists(file_key):
             return redis.RedisStorage().open(file_key)
+        return None
 
     def file_exists(self):
         return redis.RedisStorage().exists(self.file.name)

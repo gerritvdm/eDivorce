@@ -1,7 +1,11 @@
 from django.urls import reverse
 
 from edivorce.apps.core.models import Question
-from edivorce.apps.core.utils.question_step_mapping import children_substep_question_mapping, page_step_mapping, pre_qual_step_question_mapping, question_step_mapping
+from edivorce.apps.core.utils.question_step_mapping import (
+    children_substep_question_mapping,
+    page_step_mapping,
+    pre_qual_step_question_mapping,
+    question_step_mapping)
 from edivorce.apps.core.utils.conditional_logic import get_cleaned_response_value
 
 
@@ -28,13 +32,13 @@ def evaluate_numeric_condition(target, reveal_response):
 
     if reveal_response.startswith('>='):
         return float(target) >= float(reveal_response[2:])
-    elif reveal_response.startswith('<='):
+    if reveal_response.startswith('<='):
         return float(target) <= float(reveal_response[2:])
-    elif reveal_response.startswith('=='):
+    if reveal_response.startswith('=='):
         return float(target) == float(reveal_response[2:])
-    elif reveal_response.startswith('<'):
+    if reveal_response.startswith('<'):
         return float(target) < float(reveal_response[1:])
-    elif reveal_response.startswith('>'):
+    if reveal_response.startswith('>'):
         return float(target) > float(reveal_response[1:])
 
     return None
@@ -57,7 +61,8 @@ def get_step_completeness(questions_by_step):
     reversed_substeps = list(children_substep_question_mapping.keys())[::-1]
     for substep in reversed_substeps:
         substep_questions = children_substep_question_mapping[substep]
-        question_dicts = [question_data for question_data in questions_by_step['your_children'] if question_data['question_id'] in substep_questions]
+        question_dicts = [question_data for question_data in questions_by_step['your_children']
+                          if question_data['question_id'] in substep_questions]
         status, has_responses = _get_step_status(question_dicts, has_responses)
         status_dict[f'children__{substep}'] = status
 
@@ -138,7 +143,8 @@ def get_error_dict(questions_by_step, step=None, substep=None):
 
     if substep:
         substep_questions = children_substep_question_mapping[substep]
-        step_questions = list(filter(lambda question_dict: question_dict['question_id'] in substep_questions, step_questions))
+        step_questions = list(
+            filter(lambda question_dict: question_dict['question_id'] in substep_questions, step_questions))
 
     show_section_errors = step_started(step_questions) and not is_complete(step_questions)
     if show_section_errors or children_substep_and_step_started:

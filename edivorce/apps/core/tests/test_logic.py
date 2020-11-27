@@ -15,9 +15,15 @@ class ConditionalLogicTestCase(TestCase):
 
     def setUp(self):
         self.user = BceidUser.objects.create(user_guid='1234')
-        self.child_live_with_you = {"child_name": "Child with you", "child_birth_date": "Dec 30, 2018", "child_live_with": "Lives with you", "child_relationship_to_you": "Natural child", "child_relationship_to_spouse": "Natural child", "child_live_with_other_details": ""}
-        self.child_live_with_spouse = {"child_name": "Child with spouse", "child_birth_date": "Jan 4, 2009", "child_live_with": "Lives with spouse", "child_relationship_to_you": "Adopted child", "child_relationship_to_spouse": "Adopted child", "child_live_with_other_details": ""}
-        self.child_live_with_both = {"child_name": "Child with both", "child_birth_date": "Jan 4, 2009", "child_live_with": "Lives with both", "child_relationship_to_you": "Adopted child", "child_relationship_to_spouse": "Adopted child", "child_live_with_other_details": ""}
+        self.child_live_with_you = {"child_name": "Child with you", "child_birth_date": "Dec 30, 2018", "child_live_with": "Lives with you",
+                                    "child_relationship_to_you": "Natural child", "child_relationship_to_spouse": "Natural child", 
+                                    "child_live_with_other_details": ""}
+        self.child_live_with_spouse = {"child_name": "Child with spouse", "child_birth_date": "Jan 4, 2009", "child_live_with": "Lives with spouse",
+                                       "child_relationship_to_you": "Adopted child", "child_relationship_to_spouse": "Adopted child", 
+                                       "child_live_with_other_details": ""}
+        self.child_live_with_both = {"child_name": "Child with both", "child_birth_date": "Jan 4, 2009", "child_live_with": "Lives with both",
+                                     "child_relationship_to_you": "Adopted child", "child_relationship_to_spouse": "Adopted child", 
+                                     "child_live_with_other_details": ""}
 
     def create_response(self, question, value):
         response, _ = UserResponse.objects.get_or_create(bceid_user=self.user, question_id=question)

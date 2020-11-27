@@ -6,14 +6,14 @@ from django.db import migrations, models
 import django.utils.timezone
 
 
-def set_username(apps, schema_editor):
+def set_username(apps, _schema_editor):
     Series = apps.get_model('core', 'bceiduser')
     for series in Series.objects.all().iterator():
         series.username = 'user' + str(series.id)
         series.save()
 
 
-def reverse_func(apps, schema_editor):
+def reverse_func(_apps, _schema_editor):
     pass  # code for reverting migration, if any
 
 
@@ -48,12 +48,21 @@ class Migration(migrations.Migration):
         migrations.AddField(
             model_name='bceiduser',
             name='groups',
-            field=models.ManyToManyField(blank=True, help_text='The groups this user belongs to. A user will get all permissions granted to each of their groups.', related_name='user_set', related_query_name='user', to='auth.Group', verbose_name='groups'),
+            field=models.ManyToManyField(
+                blank=True,
+                help_text='The groups this user belongs to. A user will get all permissions granted to each of their groups.',
+                related_name='user_set',
+                related_query_name='user',
+                to='auth.Group',
+                verbose_name='groups'),
         ),
         migrations.AddField(
             model_name='bceiduser',
             name='is_superuser',
-            field=models.BooleanField(default=False, help_text='Designates that this user has all permissions without explicitly assigning them.', verbose_name='superuser status'),
+            field=models.BooleanField(
+                default=False,
+                help_text='Designates that this user has all permissions without explicitly assigning them.',
+                verbose_name='superuser status'),
         ),
         migrations.AddField(
             model_name='bceiduser',
@@ -69,7 +78,13 @@ class Migration(migrations.Migration):
         migrations.AddField(
             model_name='bceiduser',
             name='user_permissions',
-            field=models.ManyToManyField(blank=True, help_text='Specific permissions for this user.', related_name='user_set', related_query_name='user', to='auth.Permission', verbose_name='user permissions'),
+            field=models.ManyToManyField(
+                blank=True,
+                help_text='Specific permissions for this user.',
+                related_name='user_set',
+                related_query_name='user',
+                to='auth.Permission',
+                verbose_name='user permissions'),
         ),
         migrations.AddField(
             model_name='bceiduser',
@@ -81,13 +96,20 @@ class Migration(migrations.Migration):
         migrations.AlterField(
             model_name='bceiduser',
             name='username',
-            field=models.CharField(default='', error_messages={'unique': 'A user with that username already exists.'}, help_text='Required. 150 characters or fewer. Letters, digits and @/./+/-/_ only.', max_length=150, unique=True, validators=[django.contrib.auth.validators.UnicodeUsernameValidator()], verbose_name='username'),
+            field=models.CharField(
+                default='',
+                error_messages={'unique': 'A user with that username already exists.'},
+                help_text='Required. 150 characters or fewer. Letters, digits and @/./+/-/_ only.',
+                max_length=150,
+                unique=True,
+                validators=[django.contrib.auth.validators.UnicodeUsernameValidator()], verbose_name='username'),
             preserve_default=False,
         ),
         migrations.AlterField(
             model_name='bceiduser',
             name='date_joined',
-            field=models.DateTimeField(default=django.utils.timezone.now, verbose_name='date joined'),
+            field=models.DateTimeField(default=django.utils.timezone.now,
+                                       verbose_name='date joined'),
         ),
         migrations.AlterField(
             model_name='bceiduser',
@@ -97,6 +119,9 @@ class Migration(migrations.Migration):
         migrations.AddField(
             model_name='bceiduser',
             name='is_staff',
-            field=models.BooleanField(default=False, help_text='Designates whether the user can log into this admin site.', verbose_name='staff status'),
+            field=models.BooleanField(
+                default=False,
+                help_text='Designates whether the user can log into this admin site.',
+                verbose_name='staff status'),
         ),
     ]
