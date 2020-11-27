@@ -17,7 +17,7 @@ class EFilingCourtLocations(EFilingHubCallerBase):
         self.refresh_token = None
         EFilingHubCallerBase.__init__(self)
 
-    def _get_api(self, request, url, bceid_guid, headers):
+    def _get_api(self, url, bceid_guid, headers):
         # make sure we have an access token
         if not self.access_token:
             if not self._get_token():
@@ -50,7 +50,7 @@ class EFilingCourtLocations(EFilingHubCallerBase):
         url = f'{self.api_base_url}/courts?courtLevel=S'
         print('DEBUG: ' + url)
 
-        response = self._get_api(request, url, bceid_guid, headers={})
+        response = self._get_api(url, bceid_guid, headers={})
 
         if response.status_code == 200:
             cso_locations = json.loads(response.text)

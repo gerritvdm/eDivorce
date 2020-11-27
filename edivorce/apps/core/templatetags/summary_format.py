@@ -353,8 +353,8 @@ def combine_address(source):
     return tags
 
 
-@register.simple_tag(takes_context=True)
-def marriage_tag(_context, source):
+@register.simple_tag(takes_context=False)
+def marriage_tag(source):
     tags = ''
     marriage_location = []
     marriage_country_is_other = False
