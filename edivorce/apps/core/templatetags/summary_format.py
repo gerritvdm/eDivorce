@@ -134,7 +134,7 @@ def reformat_textarea(source, as_ul=True):
                 '<p>{0}<p/>',
                 ((value, '') for value in text_list))
         return tag
-    
+
     return text_list.pop()
 
 
@@ -313,7 +313,6 @@ def combine_address(source):
     address_spouse = []
     address_spouse_name = "What is the best address to send your spouse official court documents?"
     address_spouse_error = False
-    take_effect_on_item = None
 
     for item in source:
         q_id = item['question_id']
@@ -343,10 +342,10 @@ def combine_address(source):
                     tags = format_table_data(tags, address_spouse_name, process_json_list(q_id, address_spouse))
                 continue
         elif q_id == 'divorce_take_effect_on':
-            take_effect_on_item = item
             if item['value'] == 'specific date':
                 continue
         elif q_id == 'divorce_take_effect_on_specific_date':
+            take_effect_on_item = next((x for x in source if x['question_id'] == 'divorce_take_effect_on'), None)
             item['question__name'] = take_effect_on_item['question__name']
         tags = format_question_for_table(tags, item)
 

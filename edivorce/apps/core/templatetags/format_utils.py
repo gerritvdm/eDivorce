@@ -21,7 +21,7 @@ def linebreaksli(value):
     value = re.sub(r'\r\n|\r|\n', '\n', value.strip())  # normalize newlines
     lines = re.split('\n', value)
     lines = ['<li>%s</li>' % line for line in lines if line and not line.isspace()]
-    return mark_safe('\n'.join(lines)) # nosec
+    return mark_safe('\n'.join(lines))  # nosec
 
 
 @register.filter
@@ -92,8 +92,7 @@ def checkbox(context, *args, **kwargs):
             kwargs_list.append(str(value) in str(dict_with_question[question]))
     kwargs_pass = all(kwargs_list)
 
-    
-    return mark_safe('<i class="fa fa%s-square-o" aria-hidden="true"></i>' % # nosec
+    return mark_safe('<i class="fa fa%s-square-o" aria-hidden="true"></i>' %  # nosec
                      ('-check' if args_pass and kwargs_pass else ''))
 
 
@@ -102,9 +101,9 @@ def claimantize(value):
     """ Summarize 'lives with' as Claimant 1, 2, or both """
     if 'you' in value:
         return 'Claimant 1'
-    elif 'spouse' in value:
+    if 'spouse' in value:
         return 'Claimant 2'
-    elif 'both' in value:
+    if 'both' in value:
         return 'Claimant 1 & Claimant 2'
     return value
 
@@ -192,8 +191,7 @@ def agreed_child_support_amount(context, claimant_id, line_breaks=True):
     """Return the agree amount for the specific claimant fact sheet table."""
     if not line_breaks:
         return context.get('amount_income_over_high_income_limit_{}'.format(claimant_id), '')
-    else:
-        return linebreaksli(context.get('amount_income_over_high_income_limit_{}'.format(claimant_id), ''))
+    return linebreaksli(context.get('amount_income_over_high_income_limit_{}'.format(claimant_id), ''))
 
 
 @register.filter
@@ -204,12 +202,12 @@ def name_you(responses):
     given_name_3 = responses.get('given_name_3_you')
     last_name = responses.get('last_name_you')
     names = [given_name_1, given_name_2, given_name_3, last_name]
-    return ' '.join(filter(None, names))    
+    return ' '.join(filter(None, names))
 
 
 @register.filter
 def name_spouse(responses):
-    """ Gets and formats given_name_1_spouse, given_name_2_spouse, given_name_3_spouse, last_name_spouse from responses """    
+    """ Gets and formats given_name_1_spouse, given_name_2_spouse, given_name_3_spouse, last_name_spouse from responses """
     given_name_1 = responses.get('given_name_1_spouse')
     given_name_2 = responses.get('given_name_2_spouse')
     given_name_3 = responses.get('given_name_3_spouse')
@@ -218,17 +216,15 @@ def name_spouse(responses):
     return ' '.join(filter(None, names))
 
 
-@register.simple_tag(takes_context=True)    
+@register.simple_tag(takes_context=True)
 def you_name(context, if_blank='you'):
     if name_you(context):
         return name_you(context)
-    else:
-        return if_blank
-    
+    return if_blank
+
 
 @register.simple_tag(takes_context=True)
 def spouse_name(context, if_blank='your spouse'):
     if name_spouse(context):
         return name_spouse(context)
-    else:
-        return if_blank
+    return if_blank

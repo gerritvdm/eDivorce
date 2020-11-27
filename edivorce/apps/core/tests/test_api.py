@@ -31,6 +31,7 @@ class MockRedis:
         result = '' if key not in MockRedis.fake_redis else MockRedis.fake_redis[key]
         return result
 
+    # pylint: disable=unused-argument
     def set(self, name, value, *args, **kwargs):
         MockRedis.fake_redis[name] = value
         return name
