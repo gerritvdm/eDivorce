@@ -1,4 +1,4 @@
-# pylint: disable=W0613,C0103
+# pylint: disable=unused-argument,invalid-name
 """Values derived from a user's responses.
 
 This module provides functions to take a set of responses from a user and create

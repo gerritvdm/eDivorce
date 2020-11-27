@@ -93,9 +93,7 @@ def input_field(context, type, name='', value='', multiple='', ignore_error=Fals
         elif type == "number":
             if value == '':
                 value = context.get(name, '')
-            elif value.isdigit():
-                value = value
-            else:
+            elif not value.isdigit():
                 value = context.get(value, '')
 
         attributes = additional_attributes(**kwargs)
@@ -138,5 +136,5 @@ def additional_attributes(**kwargs):
 def multiple_values_to_list(source):
     try:
         return json.loads(source)
-    except:
+    except Exception:
         return []

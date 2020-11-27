@@ -100,8 +100,7 @@ def determine_missing_undue_hardship_reasons(questions_dict):
                     if value:
                         return False
         return True
-    else:
-        return False
+    return False
 
 
 @if_no_children(return_val='')
@@ -109,9 +108,9 @@ def determine_child_support_payor(questions_dict):
     payor = questions_dict.get('child_support_payor', '')
     if payor == 'Myself (Claimant 1)':
         return 'Claimant 1'
-    elif payor == 'My Spouse (Claimant 2)':
+    if payor == 'My Spouse (Claimant 2)':
         return 'Claimant 2'
-    elif payor == 'Both myself and my spouse':
+    if payor == 'Both myself and my spouse':
         return 'both Claimant 1 and Claimant 2'
     return ''
 
@@ -126,7 +125,7 @@ def determine_show_fact_sheet_f_you(questions_dict):
         annual = float(questions_dict.get('annual_gross_income', 0))
     except ValueError:
         annual = 0
-    return (payor == 'Claimant 1' or payor == 'both Claimant 1 and Claimant 2') and annual > 150000
+    return payor in ['Claimant 1', 'both Claimant 1 and Claimant 2'] and annual > 150000
 
 
 @if_no_children(return_val=False)
@@ -141,7 +140,7 @@ def determine_show_fact_sheet_f_spouse(questions_dict):
     except ValueError:
         annual = 0
 
-    return (payor == 'Claimant 2' or payor == 'both Claimant 1 and Claimant 2') and annual > 150000
+    return payor in ['Claimant 2', 'both Claimant 1 and Claimant 2'] and annual > 150000
 
 
 @if_no_children(return_val=False)
@@ -169,8 +168,7 @@ def determine_missing_extraordinary_expenses(questions_dict):
             except ValueError:
                 pass
         return True
-    else:
-        return False
+    return False
 
 
 @if_no_children(return_val=False)
@@ -214,7 +212,7 @@ def __get_cleaned_aka(response):
        containt both a first name and a last name"""
     try:
         aka = json.loads(response)
-    except:
+    except Exception:
         return None
 
     if len(aka) == 0 or len(aka[0]) != 5:

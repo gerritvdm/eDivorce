@@ -33,7 +33,7 @@ class EFilingSubmission(EFilingHubCallerBase):
             request.session['transaction_id'] = guid
         return guid
 
-    def _get_api(self, request, url, bceid_guid, headers=None, data=None, transaction_id=None, files=None):
+    def _get_api(self, url, bceid_guid, headers=None, data=None, transaction_id=None, files=None):
         # make sure we have an access token
         if not self.access_token:
             if not self._get_token():
@@ -81,7 +81,7 @@ class EFilingSubmission(EFilingHubCallerBase):
         url = f'{self.api_base_url}/submission/documents'
         print('DEBUG: ' + url)
         try:
-            response = self._get_api(request, url, bceid_guid, headers={},
+            response = self._get_api(url, bceid_guid, headers={},
                                      transaction_id=transaction_id, files=files)
         except Exception:
             if self.initial_filing:
@@ -104,7 +104,7 @@ class EFilingSubmission(EFilingHubCallerBase):
                 print('DEBUG: ' + url)
                 data = json.dumps(package_data)
                 print('DEBUG: ' + data)
-                response = self._get_api(request, url, bceid_guid, headers=headers,
+                response = self._get_api(url, bceid_guid, headers=headers,
                                          transaction_id=transaction_id, data=data)
 
                 if response.status_code == 200:

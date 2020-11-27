@@ -29,16 +29,16 @@ def reformat_value(source):
     """
     if source['error']:
         return MISSING_RESPONSE
-    elif not source['value']:
+    if not source['value']:
         return NO_ANSWER
     question_key = source['question_id']
     try:
         json_list = json.loads(source['value'])
         return process_json_list(question_key, json_list)
-    except:
+    except Exception:
         if question_key in ['spouse_support_details', 'other_orders_detail']:
             return reformat_textarea(source)
-        elif '\n' in source['value']:
+        if '\n' in source['value']:
             return reformat_textarea(source, as_ul=False)
         return source['value']
 
@@ -79,12 +79,11 @@ def get_other_name_tags(json_list):
             '\n',
             '<li>{} {} {} {} {}</li>',
             ((alias_type, given1, given2, given3, last_name) for alias_type, last_name, given1, given2, given3 in json_list if last_name))
-    else:
-        # old json format with unfielded names
-        return format_html_join(
-            '\n',
-            '<li>{} {}</li>',
-            ((alias_type, value) for alias_type, value in json_list if value))
+    # old json format with unfielded names
+    return format_html_join(
+        '\n',
+        '<li>{} {}</li>',
+        ((alias_type, value) for alias_type, value in json_list if value))
 
 
 def get_reconciliation_period_tags(json_list):
@@ -135,8 +134,8 @@ def reformat_textarea(source, as_ul=True):
                 '<p>{0}<p/>',
                 ((value, '') for value in text_list))
         return tag
-    else:
-        return text_list.pop()
+    
+    return text_list.pop()
 
 
 def format_row(question, response):
@@ -265,7 +264,7 @@ def format_children(context, source):
                     show_fact_sheet = True
                     fact_sheet_error = context['derived']['fact_sheet_f_error']
 
-                if show_fact_sheet and len(fact_sheet_mapping[question]):
+                if show_fact_sheet and len(fact_sheet_mapping[question]) > 0:
                     if fact_sheet_error:
                         value = MISSING_RESPONSE
                     else:
@@ -277,7 +276,7 @@ def format_children(context, source):
             else:
                 item_list = list(filter(lambda x: x['question_id'] == question, working_source))
 
-                if len(item_list):
+                if len(item_list) > 0:
                     item = item_list.pop()
                     q_id = item['question_id']
                     if q_id in questions:
@@ -319,14 +318,14 @@ def combine_address(source):
     for item in source:
         q_id = item['question_id']
         if 'address' in q_id and 'email' not in q_id and 'fax' not in q_id:
-            if 'you' in q_id:
+            if 'you' in q_id:  # pylint: disable=no-else-continue
                 if address_you_error:
                     continue
-                elif item['error']:
+                if item['error']:
                     address_you_error = True
                     tags = format_table_data(tags, address_you_name, MISSING_RESPONSE)
                     continue
-                elif item['value'] and item['value'] != 'Other':
+                if item['value'] and item['value'] != 'Other':
                     address_you.append(item['value'])
                 if 'postal_code' in q_id:
                     tags = format_table_data(tags, address_you_name, process_json_list(q_id, address_you))
@@ -334,11 +333,11 @@ def combine_address(source):
             else:
                 if address_spouse_error:
                     continue
-                elif item['error']:
+                if item['error']:
                     address_spouse_error = True
                     tags = format_table_data(tags, address_spouse_name, MISSING_RESPONSE)
                     continue
-                elif item['value'] and item['value'] != 'Other':
+                if item['value'] and item['value'] != 'Other':
                     address_spouse.append(item['value'])
                 if 'postal_code' in q_id:
                     tags = format_table_data(tags, address_spouse_name, process_json_list(q_id, address_spouse))
@@ -355,7 +354,7 @@ def combine_address(source):
 
 
 @register.simple_tag(takes_context=True)
-def marriage_tag(context, source):
+def marriage_tag(_context, source):
     tags = ''
     marriage_location = []
     marriage_country_is_other = False
@@ -367,10 +366,10 @@ def marriage_tag(context, source):
                 skip_location = True
                 tags = format_table_data(tags, "Where were you married?", MISSING_RESPONSE)
                 continue
-            elif q_id == 'where_were_you_married_country' and item['value'] == 'Other':
+            if q_id == 'where_were_you_married_country' and item['value'] == 'Other':
                 marriage_country_is_other = True
                 continue
-            elif item['value']:
+            if item['value']:
                 marriage_location.append(item['value'])
 
             # Insert in the right spot in table. Either country is the last item (if US or Canada) or other country is last
@@ -408,7 +407,7 @@ def personal_info_tag(source):
         if q_id.startswith('lived_in_bc_') and item['value'] == moved_to_bc_value:
             lived_in_bc_item = item
             continue
-        elif q_id.startswith('moved_to_bc_date_'):
+        if q_id.startswith('moved_to_bc_date_'):
             item['question__name'] = lived_in_bc_item['question__name']
             item['value'] = f"{moved_to_bc_value} {item['value']}"
         tags = format_question_for_table(tags, item)

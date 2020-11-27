@@ -117,8 +117,7 @@ class EFilingSubmissionTests(TransactionTestCase):
         self.hub.access_token = 'aslkfjadskfjd'
 
         # pylint: disable=protected-access
-        response = self.hub._get_api(
-            self.request, 'https://somewhere.com', 'alksdjfa')
+        response = self.hub._get_api('https://somewhere.com', 'alksdjfa')
 
         self.assertTrue(response)
         self.assertEqual(response.status_code, 200)
@@ -138,8 +137,7 @@ class EFilingSubmissionTests(TransactionTestCase):
         ]
 
         # pylint: disable=protected-access
-        response = self.hub._get_api(
-            self.request, 'https://somewhere.com', 'alksdjfa')
+        response = self.hub._get_api('https://somewhere.com', 'alksdjfa')
 
         self.assertTrue(response)
         self.assertEqual(response.status_code, 200)
@@ -153,8 +151,7 @@ class EFilingSubmissionTests(TransactionTestCase):
 
         with self.assertRaises(Exception):
             # pylint: disable=protected-access
-            _ = self.hub._get_api(
-                self.request, 'https://somewhere.com', 'alksdjfa', 'kasdkfd', {})
+            _ = self.hub._get_api('https://somewhere.com', 'alksdjfa', 'kasdkfd', {})
 
     def test_transaction_id_current(self):
         self.request.session['transaction_id'] = 'alksdjflaskdjf'

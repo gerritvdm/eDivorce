@@ -2,7 +2,6 @@ from unittest import mock
 
 from django.core.files.uploadedfile import SimpleUploadedFile
 from django.test import TransactionTestCase
-from redis.exceptions import ConnectionError
 
 from edivorce.apps.core.models import BceidUser, Document
 from edivorce.apps.core.redis import generate_unique_filename

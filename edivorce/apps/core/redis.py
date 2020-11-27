@@ -99,5 +99,3 @@ class RedisStorage(Storage):
         """
         name = self._full_key_name(name)
         return super().get_available_name(name, max_length)
-
-
