@@ -2,9 +2,12 @@
   <div>
     <h5 class="uploader-label" :class="{ 'has-optional': formDef.optional }">
       {{ formDef.preText }}
-      <a href="javascript:void(0)" :id="'Tooltip-' + uniqueId">
-        {{ formDef.name }} <i class="fa fa-question-circle"></i>
-      </a>
+      <span class="tooltip-link" :id="'Tooltip-' + uniqueId">
+        <span class="content">
+        {{ formDef.name }}
+        </span>
+        <i class="fa fa-question-circle"></i>
+      </span>
       <span v-if="formDef.postText"> {{ formDef.postText }}</span>
       <span v-else-if="party === 1"> for You</span>
       <span v-else-if="party === 2"> for Your Spouse</span>
@@ -621,10 +624,9 @@
       margin-bottom: 0;
     }
 
-    a {
+    span.tooltip-link {
       color: #365ebe;
       font-weight: bold;
-      text-decoration: underline;
     }
   }
 </style>
