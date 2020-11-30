@@ -96,7 +96,10 @@ def forms_to_file(responses_dict, initial=False):
 
             uploaded.append({'doc_type': 'OFI', 'party_code': 0})
             uploaded.append({'doc_type': 'EFSS2', 'party_code': 1})
-            uploaded.append({'doc_type': 'EFSS2', 'party_code': 2})
+
+            if how_to_sign == 'Separately':
+                uploaded.append({'doc_type': 'EFSS2', 'party_code': 2})
+                
             if has_children:
                 uploaded.append({'doc_type': 'AAI', 'party_code': 0})
             if name_change_you:

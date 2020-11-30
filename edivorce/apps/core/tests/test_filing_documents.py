@@ -207,9 +207,9 @@ class FilingLogic(TestCase):
         self.create_response('children_of_marriage', 'NO')
         uploaded, generated = forms_to_file(self.questions_dict, initial=False)
 
-        self.assertEqual(len(uploaded), 4)
+        self.assertEqual(len(uploaded), 3)
         self.assertIn({'doc_type': doc_type("electronic filing statement for affidavits"), 'party_code': 1}, uploaded)
-        self.assertIn({'doc_type': doc_type("electronic filing statement for affidavits"), 'party_code': 2}, uploaded)
+        self.assertNotIn({'doc_type': doc_type("electronic filing statement for affidavits"), 'party_code': 2}, uploaded)
         self.assertIn({'doc_type': doc_type("desk order divorce form"), 'party_code': 0}, uploaded)
         self.assertIn({'doc_type': doc_type("draft final order"), 'party_code': 0}, uploaded)
 
@@ -221,19 +221,19 @@ class FilingLogic(TestCase):
         self.create_response('children_of_marriage', 'YES')
         self.create_response('has_children_under_19', 'YES')
         uploaded, generated = forms_to_file(self.questions_dict, initial=False)
-        self.assertEqual(len(uploaded), 6)
+        self.assertEqual(len(uploaded), 5)
         self.assertIn({'doc_type': doc_type("child support affidavit"), 'party_code': 0}, uploaded)
         self.assertIn({'doc_type': doc_type("agreement as to annual income"), 'party_code': 0}, uploaded)
 
         self.create_response('want_which_orders', '["Other orders"]')
         self.create_response('name_change_you', 'YES')
         uploaded, generated = forms_to_file(self.questions_dict, initial=False)
-        self.assertEqual(len(uploaded), 7)
+        self.assertEqual(len(uploaded), 6)
         self.assertIn({'doc_type': doc_type("identification of applicant"), 'party_code': 1}, uploaded)
 
         self.create_response('name_change_spouse', 'YES')
         uploaded, generated = forms_to_file(self.questions_dict, initial=False)
-        self.assertEqual(len(uploaded), 8)
+        self.assertEqual(len(uploaded), 7)
         self.assertIn({'doc_type': doc_type("identification of applicant"), 'party_code': 2}, uploaded)
 
 
