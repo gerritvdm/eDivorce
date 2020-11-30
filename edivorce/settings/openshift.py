@@ -49,6 +49,10 @@ DEPLOYMENT_TYPE = env('ENVIRONMENT_TYPE', 'unittest')
 PROXY_URL_PREFIX = os.getenv('PROXY_URL_PREFIX', '/divorce')
 PROXY_BASE_URL = os.getenv('PROXY_BASE_URL', 'https://justice.gov.bc.ca')
 
+# EFiling Hub Settings
+EFILING_ENABLED_GLOBALLY = False
+EFILING_HUB_ENABLED = True
+
 if DEPLOYMENT_TYPE == 'dev':
     DEBUG = True
     CSRF_COOKIE_AGE = None
@@ -58,6 +62,7 @@ if DEPLOYMENT_TYPE == 'dev':
     EDIVORCE_KEYCLOAK_BASE_URL = 'https://dev.oidc.gov.bc.ca'
     EFILING_HUB_API_BASE_URL = 'https://fla-nginx-proxy-qzaydf-dev.pathfinder.gov.bc.ca/api'
     EFILING_HUB_KEYCLOAK_BASE_URL = 'https://dev.oidc.gov.bc.ca'
+    EFILING_ENABLED_GLOBALLY = True
 
 if DEPLOYMENT_TYPE == 'test':
     REGISTER_BCEID_URL = 'https://www.test.bceid.ca/directories/bluepages/details.aspx?serviceID=5521'
@@ -95,7 +100,6 @@ LOGIN_REDIRECT_URL = PROXY_URL_PREFIX + '/signin'
 OIDC_AUTH_REQUEST_EXTRA_PARAMS = {'kc_idp_hint': 'bceid'}
 
 # EFiling Hub Settings
-EFILING_HUB_ENABLED = True
 EFILING_HUB_KEYCLOAK_REALM = EDIVORCE_KEYCLOAK_REALM
 EFILING_HUB_KEYCLOAK_CLIENT_ID = 'e-divorce'
 

@@ -59,3 +59,4 @@ EFILING_HUB_KEYCLOAK_CLIENT_ID = env('EFILING_HUB_KEYCLOAK_CLIENT_ID', '')
 EFILING_HUB_API_BASE_URL = 'https://fla-nginx-proxy-qzaydf-dev.pathfinder.gov.bc.ca/api'
 EFILING_HUB_ENABLED = env.bool('EFILING_HUB_ENABLED', False)
 EFILING_BCEID = env('EFILING_BCEID', '', subcast=str)
+EFILING_ENABLED_GLOBALLY = False

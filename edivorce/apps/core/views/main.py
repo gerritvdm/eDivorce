@@ -169,6 +169,10 @@ def dashboard_nav(request, nav_step):
         _add_question_errors(responses_dict)
     if nav_step in ('initial_filing', 'final_filing'):
         _add_error_messages(nav_step, request, responses_dict)
+    if request.user.has_efiling_early_access or settings.EFILING_ENABLED_GLOBALLY:
+        responses_dict['efiling_enabled'] = True
+    else:
+        responses_dict['efiling_enabled'] = False
 
     responses_dict['virtual_swearing_enabled'] = settings.VIRTUAL_SWEARING_ENABLED
     responses_dict['derived'] = get_derived_data(responses_dict)

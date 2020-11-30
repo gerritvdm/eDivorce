@@ -31,6 +31,9 @@ class BceidUser(AbstractUser):
     has_accepted_terms = models.BooleanField(default=False)
     """ Flag for accepting terms of service """
 
+    has_efiling_early_access = models.BooleanField(default=False)
+    """ Flag for early access to efiling features """
+
     @property
     def is_authenticated(self):
         return True

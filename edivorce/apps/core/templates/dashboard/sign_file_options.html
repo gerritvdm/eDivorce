@@ -70,7 +70,7 @@
         </div>
     </div>
     <h3>Filing Options</h3>
-    {% if where_were_you_married_country == 'Canada' %}
+    {% if where_were_you_married_country == 'Canada' and efiling_enabled %}
         <p>You can {% include "partials/tooltips/file.html" %} your application for divorce in different ways.</p>
     {% endif %}
     <p>To {% include "partials/tooltips/file.html" %} your documents, you will need:</p>
@@ -86,7 +86,7 @@
         <li>You will need to have your affidavit(s) sworn / affirmed (see above)</li>
         <li>Photo ID</li>
     </ul>
-    {% if where_were_you_married_country == 'Canada' %}
+    {% if where_were_you_married_country == 'Canada' and efiling_enabled %}
         <div class="question-well">
             <h3>Select how you would like to {% include "partials/tooltips/file.html" %} your documents:</h3>
             <div class="radio"><label>
@@ -118,7 +118,9 @@
     {% else %}
         <div class="question-well">
             <h3>File your documents in-person at the court registry (you can also mail the documents to the court registry)</h3>
-            <p>Based on your previous selections, you must file In-person.</p>
+            {% if efiling_enabled %}
+                <p>Based on your previous selections, you must file In-person.</p>
+            {% endif %}
             <p>To file in-person you need only the items listed under Filing Options.</p>
         </div>
     {% endif %}

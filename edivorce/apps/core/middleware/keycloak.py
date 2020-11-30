@@ -19,6 +19,9 @@ class EDivorceKeycloakBackend(OIDCAuthenticationBackend):
         user.display_name = "{} {}".format(user.first_name, user.last_name).strip()
         user.sm_user = claims.get('preferred_username', '')
         user.user_guid = claims.get('universal-id', '')
+        roles = claims.get('roles', {})
+        user.has_efiling_early_access = 'efiling_early_access' in roles
+
         user.save()
 
         self.request.session['bcgov_userguid'] = user.user_guid
@@ -31,6 +34,9 @@ class EDivorceKeycloakBackend(OIDCAuthenticationBackend):
         user.display_name = "{} {}".format(user.first_name, user.last_name).strip()
         user.sm_user = claims.get('preferred_username', '')
         user.user_guid = claims.get('universal-id', '')
+        roles = claims.get('roles', {})
+        user.has_efiling_early_access = 'efiling_early_access' in roles
+
         user.save()
 
         self.request.session['bcgov_userguid'] = user.user_guid
