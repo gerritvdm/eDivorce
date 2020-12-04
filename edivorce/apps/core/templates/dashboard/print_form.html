@@ -457,17 +457,20 @@
                 <li>
                 {% include "partials/tooltips/forms/proof_of_marriage.html" %}
                     Original or certified Marriage Certificate or Registration of Divorce. If not in English, also provide
-                    {% include "partials/tooltips/forms/affidavit_of_translation.html" with text="Affidavit of Translation (F30)"%}
+                    <a href="https://www2.gov.bc.ca/assets/gov/law-crime-and-justice/courthouse-services/court-files-records/court-forms/supreme-family/f30.pdf?forcedownload=true">Affidavit of Translation (F30)</a>&#8202;
+                    {% include "partials/tooltips/forms/affidavit_of_translation.html" with text="<span></span>"%}
                     and the English translation.
                 </li>
             {% endif %}
             <li>
-                {% include "partials/tooltips/forms/registration_of_divorce.html" %}
+                <a href="https://www.justice.gc.ca/eng/fl-df/divorce/pdf/form.pdf">Completed Registration of Divorce form (Federal)</a>&#8202;
+                {% include "partials/tooltips/forms/registration_of_divorce.html" with text="<span></span>" %}
             </li>
             {% if derived.wants_other_orders %}
                 {% if name_change_you == 'YES' or name_change_spouse == 'YES' %}
                     <li>
-                        {% include "partials/tooltips/forms/identification_of_applicant.html" with text="Completed Identification of Applicant (VSA 512)" %}
+                        <a href="https://www2.gov.bc.ca/assets/gov/health/forms/vital-statistics/vsa512.pdf">Completed Identification of Applicant (VSA 512)</a>&#8202;
+                        {% include "partials/tooltips/forms/identification_of_applicant.html" with text="<span></span>" %}
                         for anyone requesting a name change
                         <ul>
                             {% if name_change_you == 'YES' %}
@@ -480,7 +483,10 @@
             {% endif %}
             {% if derived.has_children_of_marriage %}
                 <li>
-                {% include "partials/tooltips/forms/agreement_to_annual_income_9.html" with text="Completed Agreement as to Annual Income (F9)" %}
+                <a href="https://www2.gov.bc.ca/assets/gov/law-crime-and-justice/courthouse-services/court-files-records/court-forms/supreme-family/f9.pdf?forcedownload=true">
+                    Completed Agreement as to Annual Income (F9)
+                </a>&#8202;
+                {% include "partials/tooltips/forms/agreement_to_annual_income_9.html" with text="<span></span>" %}
                 </li>
             {% endif %}
         </ul>
