@@ -16,6 +16,12 @@ export default {
       "- Required swearing / affirming and signatures by both you and your spouse in front of a commissioner.",
     indicateWhenJoint: true,
   },
+  AFF: {
+    name: "Affidavit of No Marriage Certificate",
+    preText: "Scan and upload the sworn",
+    help:
+      "Affidavit of No Marriage Certificate is a sworn document which may be required by the Court to prove the marriage took place. This document is required when a marriage certificate or registration absolutely cannot be provided.",
+  },
   AFTL: {
     name: "Affidavit of Translation Form",
     preText: "Scan and upload the sworn",
@@ -31,6 +37,15 @@ export default {
     signature:
       "- Required swearing / affirming and signatures by both you and your spouse in front of a commissioner.",
     indicateWhenJoint: true,
+  },
+  EFSS0: {
+    name: "Electronic Filing Statement (F96)",
+    preText: "Upload the signed and scanned",
+    help:
+      "This form is used to confirm that the document you are filing electronically shows your original signature and is a true copy of the original paper version of the document. This document is required when a marriage certificate or registration absolutely cannot be provided.",
+    signature:
+      "- Requires signature by you only (but not a signature in front of a commissioner)",
+    postText: "for your Affidavit of No Marriage Certificate",
   },
   EFSS1: {
     name: "Electronic Filing Statement (F96)",
