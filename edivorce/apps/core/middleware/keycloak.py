@@ -24,8 +24,6 @@ class EDivorceKeycloakBackend(OIDCAuthenticationBackend):
 
         user.save()
 
-        self.request.session['bcgov_userguid'] = user.user_guid
-
         return user
 
     def update_user(self, user, claims):
@@ -38,8 +36,6 @@ class EDivorceKeycloakBackend(OIDCAuthenticationBackend):
         user.has_efiling_early_access = 'efiling_early_access' in roles
 
         user.save()
-
-        self.request.session['bcgov_userguid'] = user.user_guid
 
         return user
 

@@ -46,7 +46,6 @@ class EFilingCourtLocationsTests(TransactionTestCase):
 
     @mock.patch('edivorce.apps.core.utils.efiling_court_locations.EFilingCourtLocations._get_api')
     def test_locations_success(self, mock_get_api):
-        self.request.session['bcgov_userguid'] = '70fc9ce1-0cd6-4170-b842-bbabb88452a9'
         mock_get_api.return_value = self._mock_response(
             text=json.dumps(SAMPLE_COURTS_RESPONSE))
         locations = self.locationsApi.courts(self.request)

@@ -17,20 +17,20 @@ class EFilingCourtLocations(EFilingHubCallerBase):
         self.refresh_token = None
         EFilingHubCallerBase.__init__(self)
 
-    def _get_api(self, url, bceid_guid, headers):
+    def _get_api(self, url, headers):
         # make sure we have an access token
         if not self.access_token:
             if not self._get_token():
                 raise Exception('EFH - Unable to get API Token')
 
-        headers = self._set_headers(headers, bceid_guid)
+        headers = self._set_headers(headers)
         response = requests.get(url, headers=headers)
         logging.debug('EFH - Get Locations %d %s', response.status_code, response.text)
 
         if response.status_code == 401:
             # not authorized .. try refreshing token
             if self._refresh_token():
-                headers = self._set_headers(headers, bceid_guid)
+                headers = self._set_headers(headers)
                 response = requests.get(url, headers=headers)
                 logging.debug('EFH - Get Locations Retry %d %s', response.status_code, response.text)
 
@@ -41,16 +41,10 @@ class EFilingCourtLocations(EFilingHubCallerBase):
         if cache.get('courts'):
             return cache.get('courts')
 
-        bceid_guid = self._get_bceid(request)
-
-        # if bceid_guid is None .. we basically have an anonymous user so raise an error
-        if bceid_guid is None:
-            raise PermissionDenied()
-
         url = f'{self.api_base_url}/courts?courtLevel=S'
         print('DEBUG: ' + url)
 
-        response = self._get_api(url, bceid_guid, headers={})
+        response = self._get_api(url, headers={})
 
         if response.status_code == 200:
             cso_locations = json.loads(response.text)

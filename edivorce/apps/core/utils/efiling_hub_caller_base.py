@@ -71,6 +71,8 @@ class EFilingHubCallerBase:
                 # to figure out what we should pass through to eFiling Hub. This BCEID username
                 # needs to match with what you will be logging in with to the Test BCEID environment.
                 return settings.EFILING_BCEID
+            if hasattr(request, 'user'):
+                return request.user.user_guid
             return request.session.get('bcgov_userguid', None)
 
         guid = _get_raw_bceid(request)
@@ -78,7 +80,7 @@ class EFilingHubCallerBase:
             return str(uuid.UUID(guid))
         return guid
 
-    def _set_headers(self, headers, bceid_guid, transaction_id=None):
+    def _set_headers(self, headers, bceid_guid=None, transaction_id=None):
         if transaction_id:
             headers.update({
                 'X-User-Id': bceid_guid,
@@ -87,7 +89,6 @@ class EFilingHubCallerBase:
             })
         else:
             headers.update({
-                'X-User-Id': bceid_guid,
                 'Authorization': f'Bearer {self.access_token}'
             })
         return headers
