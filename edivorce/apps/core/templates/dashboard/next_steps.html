@@ -84,6 +84,7 @@
                 You now have a divorce file open in the Supreme Court.
             </p>
         </div>
+        {% if how_to_file == 'Online' %}
         <div class="question-well">
             <h3>Next Steps</h3>
             <p>
@@ -99,6 +100,7 @@
                 or {% include "partials/tooltips/online_package_number.html" %}.
             </p>
         </div>
+        {% endif %}
     {% endif %}
 {% endblock %}
 
