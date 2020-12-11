@@ -29,7 +29,7 @@ def home(request):
         request.session['went_to_register'] = False
         return redirect('oidc_authentication_init')
 
-    return render(request, 'intro.html', context={'hide_nav': True})
+    return render(request, 'intro.html', context={'hide_nav': True, 'efiling_enabled_globally': settings.EFILING_ENABLED_GLOBALLY})
 
 
 def prequalification(request, step):

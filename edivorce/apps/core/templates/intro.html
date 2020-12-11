@@ -19,6 +19,7 @@
     </div>
 
     <div class="flex-column right">
+        {% if efiling_enabled_globally %}
         <h3><span class="number-circle">2</span> Print or File Online</h3>
         <p>
             Once you're done with the questions,
@@ -26,6 +27,14 @@
             or file them online.
             That’s all there is to it!
         </p>
+        {% else %}
+        <h3><span class="number-circle">2</span> Print Your Forms</h3>
+        <p>
+            Once you're done with the questions,
+            you'll print your papers and file at your local court registry.
+            That’s all there is to it!
+        </p>
+        {% endif %}
     </div>
 </div>
 
