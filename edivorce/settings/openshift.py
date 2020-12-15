@@ -75,7 +75,7 @@ if DEPLOYMENT_TYPE == 'prod':
     REGISTER_BCEID_URL = 'https://www.bceid.ca/directories/bluepages/details.aspx?serviceID=5203'
     REGISTER_BCSC_URL = 'https://logon7.gov.bc.ca/clp-cgi/fed/fedLaunch.cgi?partner=fed49&partnerList=fed49&flags=0001:0,8&TARGET=http://justice.gov.bc.ca/divorce/oidc/authenticate'
     EDIVORCE_KEYCLOAK_BASE_URL = 'https://oidc.gov.bc.ca'
-    EFILING_HUB_API_BASE_URL = 'https://to-be-filled-in-later'
+    EFILING_HUB_API_BASE_URL = 'https://efiling-hub-nginx-proxy-qzaydf-prod.pathfinder.gov.bc.ca/api'
     EFILING_HUB_KEYCLOAK_BASE_URL = 'https://oidc.gov.bc.ca'
     # Google Tag Manager (Production)
     GTM_ID = 'GTM-W4Z2SPS'
