@@ -69,33 +69,29 @@
             </div>
         </div>
 
-        {% if not hide_nav %}
-
-            <div id="mid_banner">
-                <div class="container-fluid">
-                    <div class="row">
-                        <div class="col-md-5">
-                            {% block backToDashboard %}
-                                <div class="mid_banner-dash"><a href="{% url 'overview' %}">
-                                    <i class="fa fa-arrow-circle-o-left" aria-hidden="true"></i>View Application Stages</a>
-                                </div>
-                            {% endblock %}
+        <div id="mid_banner" class="{% if hide_nav %}hidden{% endif %}">
+            <div class="container-fluid">
+                <div class="row">
+                    <div class="col-md-5">
+                        {% block backToDashboard %}
+                            <div class="mid_banner-dash"><a href="{% url 'overview' %}">
+                                <i class="fa fa-arrow-circle-o-left" aria-hidden="true"></i>View Application Stages</a>
+                            </div>
+                        {% endblock %}
+                    </div>
+                    <div class="col-md-7">
+                        {% block sidebarNav %}
+                        <div class="more_information-link">
+                            <a href="#" class="active"><i class="fa fa-info-circle" aria-hidden="true"></i>More Information</a>
                         </div>
-                        <div class="col-md-7">
-                            {% block sidebarNav %}
-                            <div class="more_information-link">
-                                <a href="#" class="active"><i class="fa fa-info-circle" aria-hidden="true"></i>More Information</a>
-                            </div>
-                            {% endblock %}
-                            <div class="mid_banner-link">
-                                <a href="{% url 'legal' %}"><i class="fa fa-question-circle" aria-hidden="true"></i>Get Help</a>
-                            </div>
+                        {% endblock %}
+                        <div class="mid_banner-link">
+                            <a href="{% url 'legal' %}"><i class="fa fa-question-circle" aria-hidden="true"></i>Get Help</a>
                         </div>
                     </div>
                 </div>
             </div>
-
-        {% endif %}
+        </div>
 
         <div class="row-flex {% block container %}{% endblock %}">
             {% block progress %}
