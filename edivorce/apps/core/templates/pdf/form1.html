@@ -761,48 +761,10 @@
             </tbody>
         </table>
 
-        <p class="text-center">
-            <em> If in this family law case a claim is made under the Family Law Act and one or both of the parties is represented by a lawyer, each of the lawyers must complete a certificate in the following form. </em>
-        </p>
-        <p class="text-center force-break">
-            <strong> LAWYER'S CERTIFICATE ( <em> Family Law Act </em> , s. 8 (2)) </strong>
-        </p>
-        <p>
-            I, <span class="form-entry not-complete">&nbsp;</span> , lawyer for <span class="form-entry not-complete">&nbsp;</span> [<em>name of party</em>]
-        </p>
-        <p>certify that, in accordance with section 8 (2) of the <em> Family Law Act </em> , I have
-        </p>
-        <p class="schIndent2">
-            (a) discussed with the party the advisability of using various types of family dispute resolution to resolve the matter, and
-        </p>
-        <p class="schIndent2">
-            (b) informed the party of the facilities and other resources, known to me, that may be available to assist in resolving the dispute.
-        </p>
-        <br><br>
-        <table class="table sig-table">
-            <tbody>
-                <tr>
-                    <td class="sig-col1">Date:</td>
-                    <td class="sig-col2 underline"></td>
-                    <td class="sig-col3"></td>
-                    <td class="sig-col4 underline"></td>
-                </tr>
-                <tr>
-                    <td class="sig-col1"></td>
-                    <td class="sig-col2 sig-line-text">[dd/mmm/yyyy]</td>
-                    <td class="sig-col3"></td>
-                    <td class="sig-col4 sig-line-text">
-                        <p>
-                            Signature of lawyer
-                        </p>
-                    </td>
-                </tr>
-            </tbody>
-        </table>
 
         <br><br><br>
 
-        <p class="text-center" >
+        <p class="text-center force-break" >
             <em>The following certificate must be completed by each party to a divorce claim.</em>
         </p>
         <h2 class="text-center">
@@ -810,7 +772,12 @@
         </h2>
         <p>
           <span class="fake-checkbox"></span>
-          By checking this box, I, <span class="form-entry not-complete">&nbsp;</span> [<em>name of party</em>], certify that I am aware of my
+          By checking this box, I, {{ responses|name_you }}, certify that I am aware of my
+          duties under sections 7.1 to 7.5 of the <em> Divorce Act </em> (Canada),which say:
+        </p>
+        <p>
+          <span class="fake-checkbox"></span>
+          By checking this box, I, {{ responses|name_spouse }}, certify that I am aware of my
           duties under sections 7.1 to 7.5 of the <em> Divorce Act </em> (Canada),which say:
         </p>
         <p>
@@ -831,12 +798,63 @@
         <p>
           <strong> 7.5 </strong> For greater certainty, a person who is subject to an order made under this Act shall comply with the order until it is no longer in effect.
         </p>
+        <br>
+        <table class="table sig-table">
+          <tbody>
+              <tr>
+                  <td class="sig-col1">Date:</td>
+                  <td class="sig-col2 underline"></td>
+                  <td class="sig-col3"></td>
+                  <td class="sig-col4 underline"></td>
+              </tr>
+              <tr>
+                  <td class="sig-col1"></td>
+                  <td class="sig-col2 sig-line-text">[dd/mmm/yyyy]</td>
+                  <td class="sig-col3"></td>
+                  <td class="sig-col4 sig-line-text">
+                      <p>
+                          Signature of
+                      </p>
+                      <p>
+                          <span class="fake-checkbox"></span> {{ responses|name_you }}
+                      </p>
+                  </td>
+              </tr>
+          </tbody>
+        </table>
+        <br>
+        <table class="table sig-table">
+            <tbody>
+                <tr>
+                    <td class="sig-col1">Date:</td>
+                    <td class="sig-col2 underline"></td>
+                    <td class="sig-col3"></td>
+                    <td class="sig-col4 underline"></td>
+                </tr>
+                <tr>
+                    <td class="sig-col1"></td>
+                    <td class="sig-col2 sig-line-text">[dd/mmm/yyyy]</td>
+                    <td class="sig-col3"></td>
+                    <td class="sig-col4 sig-line-text">
+                        <p>
+                            Signature of
+                        </p>
+                        <p>
+                            <span class="fake-checkbox"></span> {{ responses|name_spouse }}
+                        </p>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+
 
         <br/><br/>
         <p class="text-center force-break">
           <em>The following certificate must be completed for each party to a divorce claim who is represented by a legal adviser.
             </em>
         </p>
+
+
         <h2 class="text-center">
           LEGAL ADVISER’S CERTIFICATE (<em>Divorce Act</em> (Canada), s. 7.7 (3))
         </h2>
