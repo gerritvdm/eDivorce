@@ -5,7 +5,7 @@ services:
   antivirus:
     container_name: edivorce-antivirus
     hostname: antivirus
-    build: https://github.com/bcgov/clamav.git
+    image: mkodockx/docker-clamav:alpine
     ports:
       - "3310:3310"
     restart: always
