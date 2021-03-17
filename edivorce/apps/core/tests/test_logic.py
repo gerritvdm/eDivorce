@@ -168,7 +168,7 @@ class TemplateTagLogic(TestCase):
         self.assertEqual(next_step(self.context, 'children', sub_step='income_expenses'), '/question/children/facts/')
         self.assertEqual(next_step(self.context, 'children', sub_step='facts'), '/question/children/payor_medical/')
         self.assertEqual(next_step(self.context, 'children', sub_step='payor_medical'), '/question/children/what_for/')
-        self.assertEqual(next_step(self.context, 'children', sub_step='what_for'), '/question/other_questions')
+        self.assertEqual(next_step(self.context, 'children', sub_step='what_for'), '/question/proceedings')
     
     def test_previous(self):
         self.assertEqual(prev_step(self.context, 'location'), 'other_questions')
@@ -182,7 +182,7 @@ class TemplateTagLogic(TestCase):
         self.assertEqual(prev_step(self.context, 'other_questions'), 'other_orders')
 
         self.create_response('want_which_orders', '["Spousal support"]')
-        self.assertEqual(prev_step(self.context, 'other_questions'), 'support')
+        self.assertEqual(prev_step(self.context, 'other_questions'), 'proceedings')
 
         self.create_response('want_which_orders', '["Division of property and debts"]')
         self.assertEqual(prev_step(self.context, 'other_questions'), 'property')
@@ -190,7 +190,7 @@ class TemplateTagLogic(TestCase):
         self.create_response('want_which_orders', '[]')
         self.create_response('children_of_marriage', 'YES')
         self.create_response('has_children_under_19', 'YES')
-        self.assertEqual(prev_step(self.context, 'other_questions'), 'children/what_for/')
+        self.assertEqual(prev_step(self.context, 'proceedings'), 'children/what_for/')
         self.assertEqual(prev_step(self.context, 'children', sub_step='what_for'), '/question/children/payor_medical/')
         self.assertEqual(prev_step(self.context, 'children', sub_step='payor_medical'), '/question/children/facts/')
         self.assertEqual(prev_step(self.context, 'children', sub_step='facts'), '/question/children/income_expenses/')

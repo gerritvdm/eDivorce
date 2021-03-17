@@ -1,0 +1,15 @@
+{% extends "partials/tooltips/base.html" %}
+
+{% block title %}
+    Child Protection Services
+{% endblock %}
+
+{% block inner %}
+    Child protection services might use a supervision or custody order 
+    to protect children from harm.  Child protection services may be 
+    called a different name in another province.
+{% endblock %}
+
+{% block label %}
+    {% if text %}{{ text }}{% else %}child protection services{% endif %}
+{% endblock %}

@@ -33,6 +33,7 @@ DERIVED_DATA = [
     'wants_spousal_support',
     'wants_property_division',
     'wants_child_support',
+    'show_related_proceedings',
     'wants_other_orders',
     'show_fact_sheet_a',
     'fact_sheet_a_error',
@@ -145,6 +146,13 @@ def wants_child_support(responses, derived):
     """ Return whether or not the user wants an order for child_support """
 
     return 'Child support' in derived['orders_wanted']
+
+
+def show_related_proceedings(responses, derived):
+    """ Return whether or not to show the related proceedings page """
+
+    return ('Spousal support' in derived['orders_wanted'] or 
+        conditional_logic.determine_has_children_of_marriage(responses))
 
 
 def wants_other_orders(responses, derived):

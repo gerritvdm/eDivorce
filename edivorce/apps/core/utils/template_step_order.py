@@ -11,10 +11,11 @@ template_step_order = {
     'children': 6,
     'support': 7,
     'property': 8,
-    'other_orders': 9,
-    'other_questions': 10,
-    'location': 11,
-    'review': 12
+    'proceedings': 9,    
+    'other_orders': 10,
+    'other_questions': 11,
+    'location': 12,
+    'review': 13
 }
 
 template_sub_step_order = {

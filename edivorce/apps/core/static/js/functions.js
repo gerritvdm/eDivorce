@@ -41,9 +41,9 @@ if (!DocumentType.prototype.replaceWith)
 // data-target_id: id of information section
 // data-reveal_target: reveal target_id section if true
 // data-related_id: id of information section which needed to be hide when target_id section is shown or vice versa
-// data-reveal_control_group: the selector for checkbox items that all behave as one group.  As long as one of them
-//                          is checked, the target_id or target_class will be shown.  Otherwise
-//                          if they are all unchecked, the target_id will be hidden.
+// data-reveal_control_group: the selector for radio items that all behave as one group.  As long as one of them
+//                          is true, the target_id or target_class will be shown.  Otherwise
+//                          if they are all false, the target_id will be hidden.
 var reveal = function(el) {
     var id = '#' + el.data("target_id");
     var cssClass = el.data("target_class");
@@ -132,12 +132,12 @@ var showHideTargetId = function(el, id, relatedId, revealControlGroup) {
             reveal($("input[name=has_children_over_19]:checked"));
         }
     } else if (revealControlGroup !== undefined) {
-        if ($(revealControlGroup).is(':checked').length === 0) {
-            $(id).hide();
-            if (relatedId !== undefined){
-                $('#' + relatedId).show();
+        $(id).hide();
+        $('input[data-reveal_control_group=' + revealControlGroup + ']').each(function() {
+            if ($(this).is(":checked") && $(this).data('reveal_target')) {  
+                $(id).show();
             }
-        }
+         });
     } else {
         $(id).hide();
 
