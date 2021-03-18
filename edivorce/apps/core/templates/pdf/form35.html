@@ -97,63 +97,8 @@
           </p>
         </div>
 
-        <table class="table sig-table">
-            <tbody>
-                <tr>
-                    <td class="sig-col1">Date:</td>
-                    <td class="sig-col2 underline"></td>
-                    <td class="sig-col3"></td>
-                    <td class="sig-col4 underline"></td>
-                    <td class="sig-col3"></td>
-                    <td class="sig-col5 underline"></td>
-                </tr>
-                <tr>
-                    <td class="sig-col1"></td>
-                    <td class="sig-col2 sig-line-text">[dd/mmm/yyyy]</td>
-                    <td class="sig-col3"></td>
-                    <td class="sig-col4 sig-line-text">
-                      <p>Signature of</p>
-                      <p style="white-space: nowrap">
-                          {% checkbox False %} filing party
-                          {% checkbox False %} lawyer for filing party(ies)
-                        </p>
-                    </td>
-                    <td class="sig-col3"></td>
-                    <td class="sig-col5 sig-line-text">
-                        <p>[Print name]<p>
-                    </td>
-                </tr>
-            </tbody>
-        </table>
-
-        <table class="table sig-table">
-            <tbody>
-                <tr>
-                    <td class="sig-col1">Date:</td>
-                    <td class="sig-col2 underline"></td>
-                    <td class="sig-col3"></td>
-                    <td class="sig-col4 underline"></td>
-                    <td class="sig-col3"></td>
-                    <td class="sig-col5 underline"></td>
-                </tr>
-                <tr>
-                    <td class="sig-col1"></td>
-                    <td class="sig-col2 sig-line-text">[dd/mmm/yyyy]</td>
-                    <td class="sig-col3"></td>
-                    <td class="sig-col4 sig-line-text">
-                      <p>Signature of</p>
-                      <p style="white-space: nowrap">
-                        {% checkbox False %} filing party
-                        {% checkbox False %} lawyer for filing party(ies)
-                      </p>
-                    </td>
-                    <td class="sig-col3"></td>
-                    <td class="sig-col5 sig-line-text">
-                        <p>[Print name]<p>
-                    </td>
-                </tr>
-            </tbody>
-        </table>
+        {% include 'pdf/partials/party_signature.html' %}
+        {% include 'pdf/partials/party_signature.html' %}
 
         <small class="bottom">Printed on {% now "F jS, Y" %} from https://justice.gov.bc.ca/divorce</small>
     </div>
