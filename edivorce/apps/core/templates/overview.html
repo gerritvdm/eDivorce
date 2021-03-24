@@ -64,7 +64,7 @@
     </a>
     {% endif %}
 
-    {% if derived.show_related_proceedings %}
+    {% if derived.f102_required %}
     <a href="{% url 'question_steps' 'proceedings' %}" class="progress-question {% if step_status.related_proceedings == 'Completed' %} complete {% endif %}">
         <span class="progress-icon"><i class="fa fa-clone" aria-hidden="true"></i></span>
         <span class="progress-content"><small>Step {% step_order step="proceedings" %}</small><br />Related orders and proceedings</span>

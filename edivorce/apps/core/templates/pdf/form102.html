@@ -201,12 +201,42 @@
       </table>
     </div>
 
-    {% if responses.which_claimant == 'both' or responses.which_claimant == 'Claimant 1' %}
-        {% include 'pdf/partials/party_signature.html' %}
-    {% endif %}
-    {% if responses.which_claimant == 'both' or responses.which_claimant == 'Claimant 2' %}
-        {% include 'pdf/partials/party_signature.html' %}
-    {% endif %}
+    {% load format_utils %}
+
+    <div class="avoid-break">
+      <table class="table sig-table">
+        <tbody>
+          <tr>
+            <td class="sig-col1">Date:</td>
+            <td class="sig-col2 underline"></td>
+            <td class="sig-col3"></td>
+            <td class="sig-col4 underline"></td>
+            <td class="sig-col3"></td>
+            <td class="sig-col5"></td>
+          </tr>
+          <tr>
+            <td class="sig-col1"></td>
+            <td class="sig-col2 sig-line-text">[dd/mmm/yyyy]</td>
+            <td class="sig-col3"></td>
+            <td class="sig-col4 sig-line-text">
+              <p>Signature of {{ responses.which_claimant }}</p>
+              <p>
+                <strong>
+                  {% if responses.which_claimant == 'Claimant 1' %}
+                    {% include "partials/name_with_alias.html" with name=responses|name_you use_other_name=responses.any_other_name_you other_names=responses.other_name_you %}
+                  {% else %}
+                    {% include "partials/name_with_alias.html" with name=responses|name_spouse use_other_name=responses.any_other_name_spouse other_names=responses.other_name_spouse %}
+                  {% endif %}
+                </strong>
+              </p>
+            </td>
+            <td class="sig-col3"></td>
+            <td class="sig-col5">
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
 
     <small class="bottom">Printed on {% now "F jS, Y" %} from https://justice.gov.bc.ca/divorce</small>
     

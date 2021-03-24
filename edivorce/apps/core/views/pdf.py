@@ -76,9 +76,7 @@ def pdf_form(request, form_number):
         responses['which_claimant'] = 'Claimant 1'
         responses['which_affidavits'] = 'Affidavit of Translation'
 
-    if form_number == "102":
-        responses["which_claimant"] = 'both'
-    elif form_number == '102_claimant1':
+    if form_number == "102" or form_number == '102_claimant1':
         form_number = '102'
         responses = __add_claimant_info(responses, '_you')
         responses['which_claimant'] = 'Claimant 1'
