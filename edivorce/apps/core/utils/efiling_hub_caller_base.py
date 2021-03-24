@@ -39,6 +39,7 @@ class EFilingHubCallerBase:
                 return True
         return False
 
+    #todo: the MOJ Keycloak instance doesn't have refresh tokens enabled anymore
     def _refresh_token(self):
         if not self.refresh_token:
             return False
