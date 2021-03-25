@@ -127,7 +127,7 @@ export default {
     name: "Statement of Information for Corollary Relief Proceedings (F102)",
     preText: "Upload the signed and scanned",
     help:
-      "This form is required under the Supreme Court Family Rules and provides information about legal proceedings or orders from civil proceedings, child protection proceedings and criminal proceedings that should be considered by the court.",
+      "This form is required under the Supreme Court Family Rules and provides information about legal order or proceedings from civil matters, child protection matters and criminal matters that should be considered by the court.",
     signature:
       "- Requires signature by the party or parties named on the form (but not a signature in front of a commissioner)",
   },  
