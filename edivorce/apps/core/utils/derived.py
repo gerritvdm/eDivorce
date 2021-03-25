@@ -151,8 +151,8 @@ def wants_child_support(responses, derived):
 def f102_required(responses, derived):
     """ Return whether or not to show the related proceedings page """
 
-    return ('Spousal support' in derived['orders_wanted'] or 
-        conditional_logic.determine_has_children_of_marriage(responses))
+    return ('Spousal support' in derived['orders_wanted'] or
+        'Child support' in derived['orders_wanted'])
 
 
 def wants_other_orders(responses, derived):
