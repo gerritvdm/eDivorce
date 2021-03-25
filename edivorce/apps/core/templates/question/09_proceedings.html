@@ -11,10 +11,10 @@
 
 <h1><small>Step {% step_order step="proceedings" %}:</small>Related Orders and Proceedings</h1>
 <div class="intro">
-    <p>Families sometimes become involved with multiple parts of the justice system at the same time. To properly 
-        consider and issue, the court must be aware of all relevant information, including legal orders and proceddings, 
-        involving you and your spouse.  The infomation will be condiered by the court in proceedings where there 
-        is a claim for child support, spousal support or parenting order. 
+    <p>Families sometimes become involved with multiple parts of the justice system at the same time. To properly
+        consider and issue, the court must be aware of all relevant information, including legal orders and proceedings
+        involving you and your spouse.  This infomation will be considered by the court in proceedings where there
+        is a claim for child support, spousal support or parenting order.
     </p>
 </div>
 
@@ -40,7 +40,7 @@
         {% if protection_order_involving_you_or_spouse_error %}{% include 'partials/required.html' %}{% endif %}
     </h3>
 
-    <p>This includes and protection order proceedings whether child protection, criminal, etc.</p>
+    <p>This includes any protection order proceedings whether child protection, criminal, etc.</p>
 
     <div class="btn-radio-group" data-toggle="buttons">
         <label class="btn btn-radio">
@@ -137,8 +137,6 @@
     <h3>Are you or your spouse in prison?
         {% if criminal_charge_prison_error %}{% include 'partials/required.html' %}{% endif %}
     </h3>
-
-    <p>This includes and protection order proceedings whether child protection, criminal, etc.</p>
 
     <div class="btn-radio-group" data-toggle="buttons">
         <label class="btn btn-radio">
