@@ -211,8 +211,6 @@
             <td class="sig-col2 underline"></td>
             <td class="sig-col3"></td>
             <td class="sig-col4 underline"></td>
-            <td class="sig-col3"></td>
-            <td class="sig-col5"></td>
           </tr>
           <tr>
             <td class="sig-col1"></td>
@@ -223,15 +221,13 @@
               <p>
                 <strong>
                   {% if responses.which_claimant == 'Claimant 1' %}
-                    {% include "partials/name_with_alias.html" with name=responses|name_you use_other_name=responses.any_other_name_you other_names=responses.other_name_you %}
+                    {{ responses|name_you }}
                   {% else %}
-                    {% include "partials/name_with_alias.html" with name=responses|name_spouse use_other_name=responses.any_other_name_spouse other_names=responses.other_name_spouse %}
+                    {{ responses|name_spouse }}
                   {% endif %}
                 </strong>
               </p>
             </td>
-            <td class="sig-col3"></td>
-            <td class="sig-col5">
             </td>
           </tr>
         </tbody>
