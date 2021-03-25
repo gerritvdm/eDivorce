@@ -155,6 +155,7 @@ class Document(models.Model):
         'AFDO': "Affidavit - Desk Order Divorce Form (F38)",
         'AFTL': "Affidavit of Translation Form",
         'CSA': "Child Support Affidavit (F37)",
+        'CRT': "Party's Certificate",
         'EFSS1': "Electronic Filing Statement for Translation (F96)",
         'EFSS2': "Electronic Filing Statement for Affidavits (F96)",
         'MC': "Proof of Marriage",
@@ -163,7 +164,8 @@ class Document(models.Model):
         'OFI': "Draft Final Order Form (F52)",
         'RCP': "Certificate of Pleadings Form (F36)",
         'RDP': "Registration of Joint Divorce Proceedings (JUS280)",
-        'RFO': "Requisition Form (F35)"
+        'RFO': "Requisition Form (F35)",
+        'SICR': "Statement of Information for Corollary Relief Proceedings (F102)"
     }
 
     class Meta:
