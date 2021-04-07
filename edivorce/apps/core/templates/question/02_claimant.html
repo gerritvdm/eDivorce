@@ -122,8 +122,8 @@
     <p>This is often referred to as Family name or Surname</p>
 </div>
 
-<div class="question-well">
-    <h3>What was your last name immediately before you were married?{% include 'partials/optional.html' %}</h3>
+<div class="question-well {% if last_name_before_married_you_error %}error{% endif %}">
+    <h3>What was your last name immediately before you were married?{% if last_name_before_married_you_error %}{% include 'partials/required.html' %}{% endif %}</h3>
     <span class="form-group">
         {% input_field type="text" name="last_name_before_married_you" class="form-block input-wide response-textbox name" %}
     </span>
