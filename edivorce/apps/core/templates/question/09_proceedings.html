@@ -1,0 +1,188 @@
+{% extends 'base.html' %}
+{% load input_field %}
+{% load format_utils %}
+{% load step_order %}
+
+{% block title %}{{ block.super }}: Application Location{% endblock %}
+
+{% block progress %}{% include "partials/progress.html" %}{% endblock %}
+
+{% block content %}
+
+<h1><small>Step {% step_order step="proceedings" %}:</small>Related Orders and Proceedings</h1>
+
+<div class="question-well {% if protection_order_against_you_or_spouse_error %}error{% endif %}">
+    <h3>Are you aware of any active {% include "partials/tooltips/civil_protection_order.html" %} about you 
+        or your spouse?
+        {% if protection_order_against_you_or_spouse_error %}{% include 'partials/required.html' %}{% endif %}
+    </h3>
+
+    <div class="btn-radio-group" data-toggle="buttons">
+        <label class="btn btn-radio">
+            {% input_field type="radio" name="protection_order_against_you_or_spouse" autocomplete="off" value="YES" data_target_id="protection_order_details" data_reveal_target="true" data_reveal_control_group="protection-order-group" %} Yes
+        </label>
+
+        <label class="btn btn-radio">
+            {% input_field type="radio" name="protection_order_against_you_or_spouse" autocomplete="off" value="NO" data_target_id="protection_order_details" data_reveal_target="false" data_reveal_control_group="protection-order-group" %} No
+        </label>
+    </div>
+</div>
+
+<div class="question-well {% if protection_order_involving_you_or_spouse_error %}error{% endif %}">
+    <h3>Are you or your spouse involved in any protection order matter?
+        {% if protection_order_involving_you_or_spouse_error %}{% include 'partials/required.html' %}{% endif %}
+    </h3>
+
+    <p>This includes any protection order proceedings whether child protection, criminal, etc.</p>
+
+    <div class="btn-radio-group" data-toggle="buttons">
+        <label class="btn btn-radio">
+            {% input_field type="radio" name="protection_order_involving_you_or_spouse" autocomplete="off" value="YES" data_target_id="protection_order_details" data_reveal_target="true" data_reveal_control_group="protection-order-group" %} Yes
+        </label>
+
+        <label class="btn btn-radio">
+            {% input_field type="radio" name="protection_order_involving_you_or_spouse" autocomplete="off" value="NO" data_target_id="protection_order_details" data_reveal_target="false" data_reveal_control_group="protection-order-group" %} No
+        </label>
+    </div>
+</div>
+
+<div id="protection_order_details" class="question-well {% if protection_order_details_error %}error{% endif %}" hidden>
+    <h3>Please provide details about the protection order(s) below.
+        {% if protection_order_details_error %}{% include 'partials/required.html' %}{% endif %}</h3>
+    {% input_field type="textarea" name="protection_order_details" rows="8" cols="65" class="response-textarea" %}
+</div>
+
+<div class="question-well {% if involved_with_child_protective_services_error %}error{% endif %}">
+    <h3>Are you or your spouse involved with {% include "partials/tooltips/child_protection_services.html" %}?
+        {% if involved_with_child_protective_services_error %}{% include 'partials/required.html' %}{% endif %}
+    </h3>
+
+    <div class="btn-radio-group" data-toggle="buttons">
+        <label class="btn btn-radio protection-order-group">
+            {% input_field type="radio" name="involved_with_child_protective_services" autocomplete="off" value="YES" data_target_id="child_protective_services_details" data_reveal_target="true" %} Yes
+        </label>
+
+        <label class="btn btn-radio protection-order-group">
+            {% input_field type="radio" name="involved_with_child_protective_services" autocomplete="off" value="NO" data_target_id="child_protective_services_details" data_reveal_target="false" %} No
+        </label>
+    </div>
+</div>
+
+<div id="child_protective_services_details" class="question-well {% if child_protective_services_details_error %}error{% endif %}" hidden>
+    <h3>Please provide details of the child protection services.
+        {% if child_protective_services_details_error %}{% include 'partials/required.html' %}{% endif %}</h3>
+    {% input_field type="textarea" name="child_protective_services_details" rows="8" cols="65" class="response-textarea" %}
+</div>
+
+<div class="question-well {% if criminal_charge_facing_error %}error{% endif %}">
+    <h3>Are you or your spouse facing a {% include "partials/tooltips/criminal_charge.html" %}?
+        {% if criminal_charge_facing_error %}{% include 'partials/required.html' %}{% endif %}
+    </h3>
+
+    <div class="btn-radio-group" data-toggle="buttons">
+        <label class="btn btn-radio">
+            {% input_field type="radio" name="criminal_charge_facing" autocomplete="off" value="YES" data_target_id="criminal_charge_details" data_reveal_target="true" data_reveal_control_group="criminal-charge-group" %} Yes
+        </label>
+
+        <label class="btn btn-radio">
+            {% input_field type="radio" name="criminal_charge_facing" autocomplete="off" value="NO" data_target_id="criminal_charge_details" data_reveal_target="false" data_reveal_control_group="criminal-charge-group" %} No
+        </label>
+    </div>
+</div>
+
+<div class="question-well {% if criminal_charge_court_order_error %}error{% endif %}">
+    <h3>Are you or your spouse required to follow a {% include "partials/tooltips/court_order.html" with text="court order" %} because 
+        of a criminal matter?
+        {% if criminal_charge_court_order_error %}{% include 'partials/required.html' %}{% endif %}
+    </h3>
+
+    <p>Examples include release/bail order, probation order, peace bond/recognizance, parole order, or required to follow conditions.</p>
+
+    <div class="btn-radio-group" data-toggle="buttons">
+        <label class="btn btn-radio">
+            {% input_field type="radio" name="criminal_charge_court_order" autocomplete="off" value="YES" data_target_id="criminal_charge_details" data_reveal_target="true" data_reveal_control_group="criminal-charge-group" %} Yes
+        </label>
+
+        <label class="btn btn-radio">
+            {% input_field type="radio" name="criminal_charge_court_order" autocomplete="off" value="NO" data_target_id="criminal_charge_details" data_reveal_target="false" data_reveal_control_group="criminal-charge-group" %} No
+        </label>
+    </div>
+</div>
+
+<div class="question-well {% if criminal_charge_demands_error %}error{% endif %}">
+    <h3>Are you or your spouse required to follow {% include "partials/tooltips/demands.html" %} because 
+        of a criminal matter? 
+        {% if criminal_charge_demands_error %}{% include 'partials/required.html' %}{% endif %}
+    </h3>
+
+    <div class="btn-radio-group" data-toggle="buttons">
+        <label class="btn btn-radio">
+            {% input_field type="radio" name="criminal_charge_demands" autocomplete="off" value="YES" data_target_id="criminal_charge_details" data_reveal_target="true" data_reveal_control_group="criminal-charge-group" %} Yes
+        </label>
+
+        <label class="btn btn-radio">
+            {% input_field type="radio" name="criminal_charge_demands" autocomplete="off" value="NO" data_target_id="criminal_charge_details" data_reveal_target="false" data_reveal_control_group="criminal-charge-group" %} No
+        </label>
+    </div>
+</div>
+
+<div class="question-well {% if criminal_charge_prison_error %}error{% endif %}">
+    <h3>Are you or your spouse in prison?
+        {% if criminal_charge_prison_error %}{% include 'partials/required.html' %}{% endif %}
+    </h3>
+
+    <div class="btn-radio-group" data-toggle="buttons">
+        <label class="btn btn-radio">
+            {% input_field type="radio" name="criminal_charge_prison" autocomplete="off" value="YES" data_target_id="criminal_charge_details" data_reveal_target="true" data_reveal_control_group="criminal-charge-group" %} Yes
+        </label>
+
+        <label class="btn btn-radio">
+            {% input_field type="radio" name="criminal_charge_prison" autocomplete="off" value="NO" data_target_id="criminal_charge_details" data_reveal_target="false" data_reveal_control_group="criminal-charge-group" %} No
+        </label>
+    </div>
+</div>
+
+<div id="criminal_charge_details" class="question-well {% if criminal_charge_details_error %}error{% endif %}" hidden>
+    <h3>Please provide details about your situation.
+        {% if criminal_charge_details_error %}{% include 'partials/required.html' %}{% endif %}</h3>
+		<p>If you indicated yes to the above noted questions regarding criminal proceedings, please provide details 
+		about the criminal charges, court orders and/or demands required to be followed, and imprisonment.</p>
+    {% input_field type="textarea" name="criminal_charge_details" rows="8" cols="65" class="response-textarea" %}
+</div>
+
+<div id="questions_modal" class="modal in" tabindex="-1" role="dialog" style="display: block">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <i class="fa fa-clone" aria-hidden="true"></i>
+                <h1 class="modal-title">Related Orders and Proceedings</h1>
+            </div>
+            <div class="modal-body">
+                <p>
+                    Families sometimes become involved with multiple parts of the justice system at the same time. To
+                    properly consider an issue, the court must be aware of all relevant information, including legal
+                    orders and proceedings involving you and your spouse. This information will be considered by the
+                    court in proceedings as you’ve made a claim for spousal support and/or orders pertaining to
+                    children.
+                </p>
+            </div>
+            <div class="modal-footer">
+                <a type="button" class="btn btn-primary btn-lg" data-dismiss="modal">Continue</a>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="modal-backgrop in"></div>
+
+{% endblock %}
+
+{% block formBack %}{% prev_step step='proceedings' %}{% endblock %}
+{% block formNext %}{% next_step step='proceedings' %}{% endblock %}
+
+{% block sidebarNav %}
+<!-- no sidebar -->
+{% endblock %}
+
+{% block sidebar %}
+<!-- no sidebar -->
+{% endblock %}

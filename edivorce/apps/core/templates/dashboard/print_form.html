@@ -27,7 +27,7 @@
              aria-expanded="false" data-target="#collapseF1"
              aria-controls="collapseF1">
             <div>
-                <span>Notice of Joint Family Claim Form (F1) and Party's Certificate</span>
+                <span>Notice of Joint Family Claim Form (F1)</span>
             </div>
         </div>
         <p class="review-buttons">
@@ -48,6 +48,87 @@
             </div>
         </div>
     </div>
+    {% if how_to_sign == 'Together' %}
+        <div class="review-well clearfix">
+            <div class="collapse-trigger collapsed" data-toggle="collapse"
+                 aria-expanded="false" data-target="#collapseFPC"
+                 aria-controls="collapseFPC">
+                <div>
+                    <span>Party’s Certificate - to be signed together</span>
+                </div>
+            </div>
+            <p class="review-buttons">
+                <a href="{% url 'pdf_form' 'PC' %}" class="btn btn-primary spinner"
+                    target="_blank"><i class="fa fa-pencil" aria-hidden="true"></i>
+                    Review, Print &amp; Sign
+                </a>
+            </p>
+            <div class="clearfix"></div>
+            <div class="collapse" id="collapseFPC">
+                <div>
+                    <p>
+                        As part of starting the court file for your divorce through the Notice of
+                        Joint Family Claim Form (F1), you and your spouse need to certify that you
+                        are aware of your duties under the Divorce Act (Canada) by completing the
+                        Party’s Certificate.
+                    </p>
+                </div>
+            </div>
+        </div>
+    {% elif how_to_sign == 'Separately' %}
+        <div class="review-well clearfix">
+            <div class="collapse-trigger collapsed" data-toggle="collapse"
+                aria-expanded="false" data-target="#collapseFPCy"
+                aria-controls="collapseFPCy">
+                <div>
+                    <span>Party’s Certificate - to be signed by you</span>
+                </div>
+            </div>
+            <p class="review-buttons">
+                <a href="{% url 'pdf_form' 'PC_claimant1' %}" class="btn btn-primary spinner"
+                    target="_blank"><i class="fa fa-pencil" aria-hidden="true"></i>
+                    Review, Print &amp; Sign
+                </a>
+            </p>
+            <div class="clearfix"></div>
+            <div class="collapse" id="collapseFPCy">
+                <div>
+                    <p>
+                        As part of starting the court file for your divorce through the Notice of
+                        Joint Family Claim Form (F1), you need to certify that you are aware of
+                        your duties under the Divorce Act (Canada) by completing the Party’s
+                        Certificate.
+                    </p>
+                </div>
+            </div>
+        </div>
+        <div class="review-well clearfix">
+            <div class="collapse-trigger collapsed" data-toggle="collapse"
+                 aria-expanded="false" data-target="#collapseFPCs"
+                 aria-controls="collapseFPCs">
+                <div>
+                    <span>Party’s Certificate - to be signed by your spouse</span>
+                </div>
+            </div>
+            <p class="review-buttons">
+                <a href="{% url 'pdf_form' 'PC_claimant2' %}" class="btn btn-primary spinner"
+                    target="_blank"><i class="fa fa-pencil" aria-hidden="true"></i>
+                    Review, Print &amp; Sign
+                </a>
+            </p>
+            <div class="clearfix"></div>
+            <div class="collapse" id="collapseFPCs">
+                <div>
+                    <p>
+                        As part of starting the court file for your divorce through the Notice of
+                        Joint Family Claim Form (F1), your spouse needs to certify that they are
+                        aware of their duties under the Divorce Act (Canada) by completing the
+                        Party’s Certificate.
+                    </p>
+                </div>
+            </div>
+        </div>        
+    {% endif %}
     <div class="review-well clearfix">
         <div class="collapse-trigger collapsed" data-toggle="collapse"
              aria-expanded="false" data-target="#collapseF35"
@@ -160,6 +241,60 @@
             </div>
         </div>
     </div>
+
+    {% if derived.f102_required %}
+        <div class="review-well clearfix">
+            <div class="collapse-trigger collapsed" data-toggle="collapse"
+                aria-expanded="false" data-target="#collapseF102y"
+                aria-controls="collapseF102y">
+                <div>
+                    <span>Statement of Information for Corollary Relief Proceedings (F102) - to be signed by you</span>
+                </div>
+            </div>
+            <p class="review-buttons">
+                <a href="{% url 'pdf_form' '102_claimant1' %}" class="btn btn-primary spinner"
+                target="_blank"><i class="fa fa-pencil" aria-hidden="true"></i>
+                    Review, Print &amp; Sign
+                </a>
+            </p>
+            <div class="clearfix"></div>
+            <div class="collapse" id="collapseF102y">
+                <div>
+                    <p>
+                        This form provides information about legal orders and proceedings from the criminal justice 
+                        system, the child protection system and the family justice system that should be considered 
+                        by the court.
+                    </p>
+                </div>
+            </div>
+        </div>
+
+        <div class="review-well clearfix">
+            <div class="collapse-trigger collapsed" data-toggle="collapse"
+                aria-expanded="false" data-target="#collapseF102s"
+                aria-controls="collapseF102s">
+                <div>
+                    <span>Statement of Information for Corollary Relief Proceedings (F102) - to be signed by your spouse</span>
+                </div>
+            </div>
+            <p class="review-buttons">
+                <a href="{% url 'pdf_form' '102_claimant2' %}" class="btn btn-primary spinner"
+                target="_blank"><i class="fa fa-pencil" aria-hidden="true"></i>
+                    Review, Print &amp; Sign
+                </a>
+            </p>
+            <div class="clearfix"></div>
+            <div class="collapse" id="collapseF102s">
+                <div>
+                    <p>
+                        This form provides information about legal orders and proceedings from the criminal justice 
+                        system, the child protection system and the family justice system that should be considered 
+                        by the court.
+                    </p>
+                </div>
+            </div>
+        </div>
+    {% endif %}
 
     {% if how_to_file == 'Online' %}
         <div class="review-well clearfix">
@@ -488,14 +623,6 @@
                 </a>&#8202;
                 {% include "partials/tooltips/forms/agreement_to_annual_income_9.html" with text="<span></span>" %}
                 </li>
-            {% endif %}
-            {% if derived.wants_spousal_support or derived.wants_child_support %}
-            <li>
-            <a href="https://www2.gov.bc.ca/assets/gov/law-crime-and-justice/courthouse-services/court-files-records/court-forms/supreme-family/f102.pdf?forcedownload=true">
-                Completed Statement of Information for Corollary Relief Proceedings (F102)
-            </a>&#8202;
-            {% include "partials/tooltips/forms/statement_of_information_for_corollary_relief_proceeedings.html" with text="<span></span>" %}
-            </li>
             {% endif %}
         </ul>
     </div>

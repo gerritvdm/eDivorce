@@ -30,32 +30,23 @@
         <h3>Who is the {% include "partials/tooltips/children/payor.html" %}?
             {% if child_support_payor_error %}{% include 'partials/required.html' %}{% endif %}
         </h3>
-        {% if derived.show_fact_sheet_b %}
-        <p>
-            If the total in the <b>Fact Sheet(s)</b> is <b>zero dollars ($0.00)</b>, select 'Both' are the payor below.
-        </p>
-        {% endif %}
+        {% if derived.show_fact_sheet_b or derived.show_fact_sheet_c %}
+        <div>
+            Based on your indicated shared / split custody the payor is 
+            <strong>
+                {% if child_support_payor == "Myself (Claimant 1)" %}
+                    {% you_name if_blank="Myself" %} (Claimant 1).
+                {% elif child_support_payor == "My Spouse (Claimant 2)" %}
+                    {% spouse_name if_blank="My spouse" %} (Claimant 2).
+                {% elif child_support_payor == "Both myself and my spouse" %}
+                    Both {% you_name if_blank="myself" %} and {% spouse_name if_blank="my spouse" %}.
+                {% endif %}
+            </strong>
+        </div>
+        {% else %}
         <p>
             Please select one
         </p>
-
-        {% if derived.show_fact_sheet_b or derived.show_fact_sheet_c %}
-            <div class="radio">
-                <label>
-                    {% input_field type="radio" name="child_support_payor" autocomplete="off" value="Myself (Claimant 1)" disabled="" %} {% you_name if_blank="Myself" %} (Claimant 1)
-                </label>
-            </div>
-            <div class="radio">
-                <label>
-                    {% input_field type="radio" name="child_support_payor" autocomplete="off" value="My Spouse (Claimant 2)" disabled="" %} {% spouse_name if_blank="My spouse" %} (Claimant 2)
-                </label>
-            </div>
-            <div class="radio">
-                <label>
-                    {% input_field type="radio" name="child_support_payor" autocomplete="off" value="Both myself and my spouse" disabled="" %} Both {% you_name if_blank="myself" %} and {% spouse_name if_blank="my spouse" %}
-                </label>
-            </div>
-        {% else %}
             <div class="radio">
                 <label>
                     {% input_field type="radio" name="child_support_payor" autocomplete="off" value="Myself (Claimant 1)" %} {% you_name if_blank="Myself" %} (Claimant 1)

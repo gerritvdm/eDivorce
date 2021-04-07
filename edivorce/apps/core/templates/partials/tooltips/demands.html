@@ -1,0 +1,13 @@
+{% extends "partials/tooltips/base.html" %}
+
+{% block title %}
+    Demands
+{% endblock %}
+
+{% block inner %}
+    Promise to appear or summons ordering you to appear in court.
+{% endblock %}
+
+{% block label %}
+    {% if text %}{{ text }}{% else %}demands{% endif %}
+{% endblock %}

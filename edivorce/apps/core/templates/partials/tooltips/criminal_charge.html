@@ -1,0 +1,16 @@
+{% extends "partials/tooltips/base.html" %}
+
+{% block title %}
+    Criminal Charge
+{% endblock %}
+
+{% block inner %}
+    Criminal offences are offences under the Criminal Code and other federal 
+    laws, including the Controlled Drugs and Substances Act (Canada). Criminal 
+    offences or matters do not include bylaw offences, traffic tickets or 
+    consumer issues.
+{% endblock %}
+
+{% block label %}
+    {% if text %}{{ text }}{% else %}criminal charge{% endif %}
+{% endblock %}

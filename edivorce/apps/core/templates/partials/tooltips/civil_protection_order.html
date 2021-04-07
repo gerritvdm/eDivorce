@@ -1,0 +1,23 @@
+{% extends "partials/tooltips/base.html" %}
+
+{% block title %}
+    Civil Protection Order
+{% endblock %}
+
+{% block inner %}
+    A civil protection order is any order made against a person for 
+    the purposes of protecting another person’s safety.
+    <br><br>
+    A civil protection order may restrict or restrain a person from doing 
+    certain things, such as:
+    <ul>
+        <li>contacting another person,</li>
+        <li>being a certain distance from another person or a specific place,</li>
+        <li>harassing or threatening another person, or</li>
+        <li>living in the family home</li>
+    </ul>
+{% endblock %}
+
+{% block label %}
+    {% if text %}{{ text }}{% else %}civil protection order{% endif %}
+{% endblock %}

@@ -29,6 +29,14 @@ export default {
       "The Affidavit of Translation is an affidavit which is sworn by a translator before a notary, lawyer or commissioner for taking Affidavits.  The original certificate of marriage should be exhibited to the Affidavit of Translation together with the translation of the translator.",
     optional: "Required only if your marriage certificate is NOT in English",
   },
+  CRT: {
+    name: "Party's Certificate",
+    preText: "Upload the signed and scanned",
+    help:
+      "The Party’s Certificate certifies that you and your spouse are aware of your duties under the Divorce Act (Canada) throughout the process of applying for divorce.",
+    signature:
+      "- Requires signature by the party or parties named on the form (but not a signature in front of a commissioner)",
+  },  
   CSA: {
     name: "Child Support Affidavit (F37)",
     preText: "Upload the sworn / affirmed and scanned",
@@ -115,4 +123,12 @@ export default {
       "This form is a request to the Court for your application for divorce. It tells the court that you want a divorce and outlines all the documents you are filing in support of your application.",
     signature: "- Does not require signatures when filed online.",
   },
+  SICR: {
+    name: "Statement of Information for Corollary Relief Proceedings (F102)",
+    preText: "Upload the signed and scanned",
+    help:
+      "This form is required under the Supreme Court Family Rules and provides information about legal order or proceedings from civil matters, child protection matters and criminal matters that should be considered by the court.",
+    signature:
+      "- Requires signature by the party or parties named on the form (but not a signature in front of a commissioner)",
+  },  
 };

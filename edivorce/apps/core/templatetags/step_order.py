@@ -57,7 +57,8 @@ def _adjust_for_orders(next_item, want_which_orders, children_of_marriage, direc
         lambda next_item: next_item == 6 and not children_of_marriage,
         lambda next_item: next_item == 7 and 'Spousal support' not in want_which_orders,
         lambda next_item: next_item == 8 and 'Division of property and debts' not in want_which_orders,
-        lambda next_item: next_item == 9 and 'Other orders' not in want_which_orders
+        lambda next_item: next_item == 9 and not children_of_marriage and 'Spousal support' not in want_which_orders,
+        lambda next_item: next_item == 10 and 'Other orders' not in want_which_orders
     ]
     addend = 1
     if direction != 'next':
@@ -86,7 +87,7 @@ def step_order(context, step):
     if base_order > 7 and not derived_data.get('wants_property_division'):
         order -= 1
 
-    if base_order > 8 and not derived_data.get('wants_other_orders'):
+    if base_order > 9 and not derived_data.get('wants_other_orders'):
         order -= 1
 
     return order

@@ -92,6 +92,14 @@
     </a>
     {% endif %}
 
+    {% if derived.f102_required %}
+    <a href="{% url 'question_steps' 'proceedings' %}" class="progress-question {% if step_status.related_proceedings == 'Completed' %} complete {% endif %} {% if active_page == 'related_proceedings' %} active {% endif %}">
+        <span class="progress-icon"><i class="fa fa-clone" aria-hidden="true"></i></span>
+        <span class="progress-content"><small>Step {% step_order step="proceedings" %}</small><br />Related orders and proceedings</span>
+        {% include "partials/progress_icon.html" with step_status_string=step_status.related_proceedings%}
+    </a>
+    {% endif %}
+
     {% if derived.wants_other_orders %}
     <a href="{% url 'question_steps' 'other_orders' %}" class="progress-question {% if step_status.other_orders == 'Completed' %} complete {% endif %} {% if active_page == 'other_orders' %} active {% endif %}">
         <span class="progress-icon"><i class="fa fa-gavel" aria-hidden="true"></i></span>

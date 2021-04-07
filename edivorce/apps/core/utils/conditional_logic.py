@@ -194,6 +194,18 @@ def determine_other_orders_wanted(questions_dict):
     return 'Other orders' in orders_wanted(questions_dict)
 
 
+def determine_has_protection_order(questions_dict):
+    return (questions_dict.get('protection_order_against_you_or_spouse', '') == 'YES' or
+        questions_dict.get('protection_order_involving_you_or_spouse', '') == 'YES')
+
+
+def determine_needs_criminal_details(questions_dict):
+    return (questions_dict.get('criminal_charge_facing', '') == 'YES' or
+        questions_dict.get('criminal_charge_court_order', '') == 'YES' or
+        questions_dict.get('criminal_charge_demands', '') == 'YES' or
+        questions_dict.get('criminal_charge_prison', '') == 'YES')
+
+
 def get_cleaned_response_value(response):
     if response is None:
         return None

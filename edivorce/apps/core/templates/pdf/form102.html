@@ -1,0 +1,242 @@
+{% load static %}
+{% load format_utils %}
+<!doctype html>
+<html class="no-js" lang="en">
+
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+
+  <title>Form 102</title>
+
+  <meta name="description" content="">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  <link rel="stylesheet" type="text/css" href="{{ css_root }}/static/css/bootstrap-slim.min.css">
+  <link rel="stylesheet" type="text/css" href="{{ css_root }}/static/css/font-awesome.min.css">
+  <link rel="stylesheet" type="text/css" href="{{ css_root }}/static/css/weasyprint.css" />
+
+  {% include 'partials/gtm_head.html' %}
+
+  <style type="text/css">
+    td.question { width: 82%; }
+    td.check { width: 9%; }
+    td.essay { height: 80px; }
+  </style>
+</head>
+
+<body>
+  <div class="print-wrapper">
+    <h1 class="text-center">FORM F102 (RULE 15-2.2 (1) AND (2))</h1>
+
+    <p class="text-right">
+      Court File No.: <span class="form-entry not-complete">&nbsp;</span>
+    </p>
+    <p class="text-right">
+      Court Registry: {% if responses.court_registry_for_filing %} {{ responses.court_registry_for_filing }} {% else %} <span class="form-entry not-complete"> </span> {% endif %}
+    </p>
+    <p class="text-center">
+      <em> In the Supreme Court of British Columbia </em>
+    </p>
+
+    <p>
+      <span class="claimant-label">Claimant 1:</span>
+      {% if responses|name_you %}
+        {% include "partials/name_with_alias.html" with name=responses|name_you use_other_name=responses.any_other_name_you other_names=responses.other_name_you class_name='form-entry_claimant' %}
+      {% else %}
+        <span class="form-entry not-complete">&nbsp;</span>
+      {% endif %}
+    </p>
+    <p>
+      <span class="claimant-label">Claimant 2:</span>
+      {% if responses|name_spouse %}
+        {% include "partials/name_with_alias.html" with name=responses|name_spouse use_other_name=responses.any_other_name_spouse other_names=responses.other_name_spouse class_name='form-entry_claimant' %}
+      {% else %}
+        <span class="form-entry not-complete">&nbsp;</span>
+      {% endif %}
+    </p>
+
+    <h2 class="text-center">
+      STATEMENT OF INFORMATION FOR<br>
+      COROLLARY RELIEF BENEFITS
+    </h2>        
+
+    <div class="avoid-break">
+      <h3>1. Civil Protection Orders or Proceedings</h3>
+      <table class="table table-bordered">
+        <tbody>
+            <tr>
+                <td colspan="3"> 
+                  [A civil protection order is any order made against a person for the 
+                  purposes of protecting another person’s safety]
+                </td>
+            </tr>
+            <tr>
+              <td colspan="3"> 
+                A civil protection order may restrict or restrain a person from doing certain things, such as
+                <ul>
+                <li>contacting another person,</li>
+                <li>being a certain distance from another person or a specific place,</li>
+                <li>harassing or threatening another person, or</li>
+                <li>living in the family home</li>
+              </ul>
+              </td>
+          </tr>
+          <tr>
+            <td class="question"></td>
+            <td class="check">YES</td>
+            <td class="check">NO</td>
+          </tr>
+          <tr>
+            <td class="question">Are you aware of any active protection order about you, or 
+              any other people involved in this family law case?
+            </td>
+            <td class="check">{% checkbox protection_order_against_you_or_spouse='YES' %}</td>
+            <td class="check">{% checkbox protection_order_against_you_or_spouse='NO' %}</td>
+          </tr>
+          <tr>
+            <td class="question">Are you or others involved in this family law case also 
+              involved in any protection order matter?
+            </td>
+            <td class="check">{% checkbox protection_order_involving_you_or_spouse='YES' %}</td>
+            <td class="check">{% checkbox protection_order_involving_you_or_spouse='NO' %}</td>
+          </tr>
+          <tr>
+            <td colspan="3" class="essay"> 
+              If you answered yes, provide more detail:<br>
+              {{ protection_order_detail|linebreaksbr }}
+            </td>
+        </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="avoid-break">
+      <h3>2. Child Protection Orders or Proceedings</h3>
+      <table class="table table-bordered">
+        <tbody>
+          <tr>
+            <td colspan="3"> 
+              [Child protection services (“child welfare”) protect children from harm. Child 
+              protection services might use a supervision or custody order to protect children 
+              from harm. Child protection services may exist under a different name in another 
+              province.]
+            </td>
+          </tr>
+          <tr>
+            <td class="question"></td>
+            <td class="check">YES</td>
+            <td class="check">NO</td>
+          </tr>
+          <tr>
+            <td class="question">Are you or others involved in this family law case also 
+              involved with child protection services?
+            </td>
+            <td class="check">{% checkbox involved_with_child_protective_services='YES' %}</td>
+            <td class="check">{% checkbox involved_with_child_protective_services='NO' %}</td>
+          </tr>
+          <tr>
+            <td colspan="3" class="essay"> 
+              If you answered yes, provide more detail:<br>
+              {{ child_protective_services_details|linebreaksbr }}
+            </td>
+        </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="avoid-break">
+      <h3>3. Criminal Proceedings</h3>
+      <table class="table table-bordered">
+        <tbody>
+          <tr>
+              <td colspan="3"> 
+                [Criminal offences are offences under the Criminal Code and other federal laws, 
+                including the Controlled Drugs and Substances Act (Canada). Criminal offences 
+                or matters do not include bylaw offences, traffic tickets, or consumer issues.]
+              </td>
+          </tr>
+          <tr>
+            <td class="question"></td>
+            <td class="check">YES</td>
+            <td class="check">NO</td>
+          </tr>
+          <tr>
+            <td class="question">Are you or others involved in this family law case facing a 
+              criminal charge?
+            </td>
+            <td class="check">{% checkbox criminal_charge_facing='YES' %}</td>
+            <td class="check">{% checkbox criminal_charge_facing='NO' %}</td>
+          </tr>
+          <tr>
+            <td class="question">Are you or others involved in this family law case required 
+              to follow a court order because of a criminal matter? (Such as release / bail 
+              order, probation order, peace bond/ recognizance, parole order, warrant, or 
+              required to follow conditions)
+            </td>
+            <td class="check">{% checkbox criminal_charge_court_order='YES' %}</td>
+            <td class="check">{% checkbox criminal_charge_court_order='NO' %}</td>
+          </tr>
+          <tr>
+            <td class="question">Are you or others involved in this family law case required 
+              to follow demands because of a criminal matter? (Such as a promise to appear or 
+              a summons)
+            </td>
+            <td class="check">{% checkbox criminal_charge_demands='YES' %}</td>
+            <td class="check">{% checkbox criminal_charge_demands='NO' %}</td>
+          </tr>
+          <tr>
+            <td class="question">Are you or others involved in this family law case in prison?
+            </td>
+            <td class="check">{% checkbox criminal_charge_prison='YES' %}</td>
+            <td class="check">{% checkbox criminal_charge_prison='NO' %}</td>
+          </tr>
+          <tr>
+            <td colspan="3" class="essay"> 
+              If you answered yes, provide more detail:<br>
+              {{ criminal_charge_details|linebreaksbr }}
+            </td>
+        </tr>
+        </tbody>
+      </table>
+    </div>
+
+    {% load format_utils %}
+
+    <div class="avoid-break">
+      <table class="table sig-table">
+        <tbody>
+          <tr>
+            <td class="sig-col1">Date:</td>
+            <td class="sig-col2 underline"></td>
+            <td class="sig-col3"></td>
+            <td class="sig-col4 underline"></td>
+          </tr>
+          <tr>
+            <td class="sig-col1"></td>
+            <td class="sig-col2 sig-line-text">[dd/mmm/yyyy]</td>
+            <td class="sig-col3"></td>
+            <td class="sig-col4 sig-line-text">
+              <p>Signature of {{ responses.which_claimant }}</p>
+              <p>
+                <strong>
+                  {% if responses.which_claimant == 'Claimant 1' %}
+                    {{ responses|name_you }}
+                  {% else %}
+                    {{ responses|name_spouse }}
+                  {% endif %}
+                </strong>
+              </p>
+            </td>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <small class="bottom">Printed on {% now "F jS, Y" %} from https://justice.gov.bc.ca/divorce</small>
+    
+  </div>
+</body>
+
+</html>
