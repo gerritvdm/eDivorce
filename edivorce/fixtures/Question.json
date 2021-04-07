@@ -274,7 +274,7 @@
             "name": "What was your last name before you were married?",
             "description": "For step 2, Form 1 2. Divorce section A",
             "summary_order": 26,
-            "required": ""
+            "required": "Required"
         },
         "model": "core.question",
         "pk": "last_name_before_married_you"
@@ -398,7 +398,7 @@
             "name": "What was their last name before you were married?",
             "description": "For step 3, Form 1 2. Divorce section A",
             "summary_order": 38,
-            "required": ""
+            "required": "Required"
         },
         "model": "core.question",
         "pk": "last_name_before_married_spouse"
