@@ -418,9 +418,9 @@ $(function () {
             diff_amounts_total = diff_amounts_c;
         }
 
-        // Update value for Payor radio button and Factsheet D total support amount field.
+        // Update value for Payor and Factsheet D total support amount field.
         $('#total_spouse_paid_child_support').val(diff_amounts_total);
-        $('input[name=child_support_payor][value="' + payor_total + '"]').prop("checked", true).change();
+        ajaxCall('child_support_payor', payor_total);
     };
 
     var findPayor = function(amount_you, amount_spouse) {
