@@ -32,6 +32,15 @@ def pdf_form(request, form_number):
         responses['num_actual_children'] = len(children)
         responses['children'] = children
 
+    if form_number == "PC" or "PC_claimant1":
+        form_number = "PC"
+        responses = __add_claimant_info(responses, '_you')
+        responses['which_claimant'] = 'Claimant 1'
+    elif form_number == 'PC_claimant2':
+        form_number = 'PC'
+        responses = __add_claimant_info(responses, '_spouse')
+        responses['which_claimant'] = 'Claimant 2'        
+
     if form_number == "37":
         responses["which_claimant"] = 'both'
     elif form_number == "37_claimant1":

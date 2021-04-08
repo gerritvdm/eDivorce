@@ -1,0 +1,102 @@
+{% load static %}
+{% load composites %}
+{% load input_field %}
+{% load format_utils %}
+<!doctype html>
+<html class="no-js" lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+
+    <title>Party's Certificate</title>
+
+    <meta name="description" content="">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <link rel="stylesheet" type="text/css" href="{{ css_root }}/static/css/bootstrap-slim.min.css">
+    <link rel="stylesheet" type="text/css" href="{{ css_root }}/static/css/font-awesome.min.css">
+    <link rel="stylesheet" type="text/css" href="{{ css_root }}/static/css/weasyprint.css" />
+
+    {% include 'partials/gtm_head.html' %}
+</head>
+
+<body>
+    <div class="print-wrapper">
+
+        <p class="text-center force-break" >
+            <em>The following certificate must be completed by each party to a divorce claim.</em>
+        </p>
+        <h2 class="text-center">
+          PARTY’S CERTIFICATE (<em>Divorce Act</em> (Canada), s. 7.6)
+        </h2>
+        {% if responses.which_claimant == 'Claimant 1' %}
+        <p>
+          <span class="fake-checkbox"></span>
+          By checking this box, I, {{ responses|name_you }}, certify that I am aware of my
+          duties under sections 7.1 to 7.5 of the <em> Divorce Act </em> (Canada),which say:
+        </p>
+        {% endif %}
+        {% if responses.which_claimant == 'Claimant 2' %}
+        <p>
+          <span class="fake-checkbox"></span>
+          By checking this box, I, {{ responses|name_spouse }}, certify that I am aware of my
+          duties under sections 7.1 to 7.5 of the <em> Divorce Act </em> (Canada),which say:
+        </p>
+        {% endif %}
+        <p>
+            <strong> 7.1 </strong> A person to whom parenting time or decision-making responsibility has been allocated in respect of a child of the marriage or who has contact with that child under a contact order shall exercise that time, responsibility or contact in a manner that is consistent with the best interests of the child.
+
+        </p>
+        <p>
+          <strong> 7.2 </strong>  A party to a proceeding under this Act shall, to the best of their ability, protect any child of the marriage from conflict arising from the proceeding.
+        </p>
+        <p>
+          <strong> 7.3 </strong> To the extent that it is appropriate to do so, the parties to a proceeding shall try to resolve the
+          matters that may be the subject of an order under this Act through a family dispute resolution
+          process.
+        </p>
+        <p>
+          <strong> 7.4 </strong> A party to a proceeding under this Act or a person who is subject to an order made under this Act shall provide complete, accurate and up-to-date information if required to do so under this Act.
+        </p>
+        <p>
+          <strong> 7.5 </strong> For greater certainty, a person who is subject to an order made under this Act shall comply with the order until it is no longer in effect.
+        </p>
+        <br>
+        <table class="table sig-table">
+          <tbody>
+              <tr>
+                  <td class="sig-col1">Date:</td>
+                  <td class="sig-col2 underline"></td>
+                  <td class="sig-col3"></td>
+                  <td class="sig-col4 underline"></td>
+              </tr>
+              <tr>
+                  <td class="sig-col1"></td>
+                  <td class="sig-col2 sig-line-text">[dd/mmm/yyyy]</td>
+                  <td class="sig-col3"></td>
+                  <td class="sig-col4 sig-line-text">
+                      {% if responses.which_claimant == 'Claimant 1' %}
+                        <p>
+                            Signature of Claimant 1
+                        </p>
+                        <p>
+                          <strong>{{ responses|name_you }}</strong>
+                        </p>
+                      {% else %}
+                        <p>
+                          Signature of Claimant 2
+                        </p>
+                        <p>
+                            <strong>{{ responses|name_spouse }}</strong>
+                        </p>
+                      {% endif %}
+                  </td>
+              </tr>
+          </tbody>
+        </table>
+        <small class="bottom">Printed on {% now "F jS, Y" %} from https://justice.gov.bc.ca/divorce</small>
+    </div>
+</body>
+
+</html>
