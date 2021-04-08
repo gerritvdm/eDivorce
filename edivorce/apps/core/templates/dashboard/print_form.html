@@ -48,87 +48,60 @@
             </div>
         </div>
     </div>
-    {% if how_to_sign == 'Together' %}
-        <div class="review-well clearfix">
-            <div class="collapse-trigger collapsed" data-toggle="collapse"
-                 aria-expanded="false" data-target="#collapseFPC"
-                 aria-controls="collapseFPC">
-                <div>
-                    <span>Party’s Certificate - to be signed together</span>
-                </div>
-            </div>
-            <p class="review-buttons">
-                <a href="{% url 'pdf_form' 'PC' %}" class="btn btn-primary spinner"
-                    target="_blank"><i class="fa fa-pencil" aria-hidden="true"></i>
-                    Review, Print &amp; Sign
-                </a>
-            </p>
-            <div class="clearfix"></div>
-            <div class="collapse" id="collapseFPC">
-                <div>
-                    <p>
-                        As part of starting the court file for your divorce through the Notice of
-                        Joint Family Claim Form (F1), you and your spouse need to certify that you
-                        are aware of your duties under the Divorce Act (Canada) by completing the
-                        Party’s Certificate.
-                    </p>
-                </div>
+
+    <div class="review-well clearfix">
+        <div class="collapse-trigger collapsed" data-toggle="collapse"
+            aria-expanded="false" data-target="#collapseFPCy"
+            aria-controls="collapseFPCy">
+            <div>
+                <span>Party’s Certificate - to be signed by you</span>
             </div>
         </div>
-    {% elif how_to_sign == 'Separately' %}
-        <div class="review-well clearfix">
-            <div class="collapse-trigger collapsed" data-toggle="collapse"
-                aria-expanded="false" data-target="#collapseFPCy"
-                aria-controls="collapseFPCy">
-                <div>
-                    <span>Party’s Certificate - to be signed by you</span>
-                </div>
-            </div>
-            <p class="review-buttons">
-                <a href="{% url 'pdf_form' 'PC_claimant1' %}" class="btn btn-primary spinner"
-                    target="_blank"><i class="fa fa-pencil" aria-hidden="true"></i>
-                    Review, Print &amp; Sign
-                </a>
-            </p>
-            <div class="clearfix"></div>
-            <div class="collapse" id="collapseFPCy">
-                <div>
-                    <p>
-                        As part of starting the court file for your divorce through the Notice of
-                        Joint Family Claim Form (F1), you need to certify that you are aware of
-                        your duties under the Divorce Act (Canada) by completing the Party’s
-                        Certificate.
-                    </p>
-                </div>
+        <p class="review-buttons">
+            <a href="{% url 'pdf_form' 'PC_claimant1' %}" class="btn btn-primary spinner"
+                target="_blank"><i class="fa fa-pencil" aria-hidden="true"></i>
+                Review, Print &amp; Sign
+            </a>
+        </p>
+        <div class="clearfix"></div>
+        <div class="collapse" id="collapseFPCy">
+            <div>
+                <p>
+                    As part of starting the court file for your divorce through the Notice of
+                    Joint Family Claim Form (F1), you need to certify that you are aware of
+                    your duties under the Divorce Act (Canada) by completing the Party’s
+                    Certificate.
+                </p>
             </div>
         </div>
-        <div class="review-well clearfix">
-            <div class="collapse-trigger collapsed" data-toggle="collapse"
-                 aria-expanded="false" data-target="#collapseFPCs"
-                 aria-controls="collapseFPCs">
-                <div>
-                    <span>Party’s Certificate - to be signed by your spouse</span>
-                </div>
+    </div>
+    <div class="review-well clearfix">
+        <div class="collapse-trigger collapsed" data-toggle="collapse"
+                aria-expanded="false" data-target="#collapseFPCs"
+                aria-controls="collapseFPCs">
+            <div>
+                <span>Party’s Certificate - to be signed by your spouse</span>
             </div>
-            <p class="review-buttons">
-                <a href="{% url 'pdf_form' 'PC_claimant2' %}" class="btn btn-primary spinner"
-                    target="_blank"><i class="fa fa-pencil" aria-hidden="true"></i>
-                    Review, Print &amp; Sign
-                </a>
-            </p>
-            <div class="clearfix"></div>
-            <div class="collapse" id="collapseFPCs">
-                <div>
-                    <p>
-                        As part of starting the court file for your divorce through the Notice of
-                        Joint Family Claim Form (F1), your spouse needs to certify that they are
-                        aware of their duties under the Divorce Act (Canada) by completing the
-                        Party’s Certificate.
-                    </p>
-                </div>
+        </div>
+        <p class="review-buttons">
+            <a href="{% url 'pdf_form' 'PC_claimant2' %}" class="btn btn-primary spinner"
+                target="_blank"><i class="fa fa-pencil" aria-hidden="true"></i>
+                Review, Print &amp; Sign
+            </a>
+        </p>
+        <div class="clearfix"></div>
+        <div class="collapse" id="collapseFPCs">
+            <div>
+                <p>
+                    As part of starting the court file for your divorce through the Notice of
+                    Joint Family Claim Form (F1), your spouse needs to certify that they are
+                    aware of their duties under the Divorce Act (Canada) by completing the
+                    Party’s Certificate.
+                </p>
             </div>
-        </div>        
-    {% endif %}
+        </div>
+    </div>
+    
     <div class="review-well clearfix">
         <div class="collapse-trigger collapsed" data-toggle="collapse"
              aria-expanded="false" data-target="#collapseF35"

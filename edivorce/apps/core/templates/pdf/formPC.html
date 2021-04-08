@@ -30,14 +30,14 @@
         <h2 class="text-center">
           PARTY’S CERTIFICATE (<em>Divorce Act</em> (Canada), s. 7.6)
         </h2>
-        {% if responses.which_claimant == 'both' or responses.which_claimant == 'Claimant 1' %}
+        {% if responses.which_claimant == 'Claimant 1' %}
         <p>
           <span class="fake-checkbox"></span>
           By checking this box, I, {{ responses|name_you }}, certify that I am aware of my
           duties under sections 7.1 to 7.5 of the <em> Divorce Act </em> (Canada),which say:
         </p>
         {% endif %}
-        {% if responses.which_claimant == 'both' or responses.which_claimant == 'Claimant 2' %}
+        {% if responses.which_claimant == 'Claimant 2' %}
         <p>
           <span class="fake-checkbox"></span>
           By checking this box, I, {{ responses|name_spouse }}, certify that I am aware of my
@@ -62,7 +62,6 @@
         <p>
           <strong> 7.5 </strong> For greater certainty, a person who is subject to an order made under this Act shall comply with the order until it is no longer in effect.
         </p>
-        {% if responses.which_claimant == 'both' or responses.which_claimant == 'Claimant 1' %}
         <br>
         <table class="table sig-table">
           <tbody>
@@ -77,45 +76,25 @@
                   <td class="sig-col2 sig-line-text">[dd/mmm/yyyy]</td>
                   <td class="sig-col3"></td>
                   <td class="sig-col4 sig-line-text">
-                      <p>
-                          Signature of Claimant 1
-                      </p>
-                      <p>
-                        <strong>{{ responses|name_you }}</strong>
-                      </p>
-                  </td>
-              </tr>
-          </tbody>
-        </table>
-        {% endif %}
-
-        {% if responses.which_claimant == 'both' or responses.which_claimant == 'Claimant 2' %}
-        <br>
-        <table class="table sig-table">
-            <tbody>
-                <tr>
-                    <td class="sig-col1">Date:</td>
-                    <td class="sig-col2 underline"></td>
-                    <td class="sig-col3"></td>
-                    <td class="sig-col4 underline"></td>
-                </tr>
-                <tr>
-                    <td class="sig-col1"></td>
-                    <td class="sig-col2 sig-line-text">[dd/mmm/yyyy]</td>
-                    <td class="sig-col3"></td>
-                    <td class="sig-col4 sig-line-text">
+                      {% if responses.which_claimant == 'Claimant 1' %}
                         <p>
-                            Signature of Claimant 2
+                            Signature of Claimant 1
+                        </p>
+                        <p>
+                          <strong>{{ responses|name_you }}</strong>
+                        </p>
+                      {% else %}
+                        <p>
+                          Signature of Claimant 2
                         </p>
                         <p>
                             <strong>{{ responses|name_spouse }}</strong>
                         </p>
-                    </td>
-                </tr>
-            </tbody>
+                      {% endif %}
+                  </td>
+              </tr>
+          </tbody>
         </table>
-        {% endif %}
-
         <small class="bottom">Printed on {% now "F jS, Y" %} from https://justice.gov.bc.ca/divorce</small>
     </div>
 </body>

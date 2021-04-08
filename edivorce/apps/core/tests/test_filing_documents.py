@@ -29,9 +29,10 @@ class FilingLogic(TestCase):
         # Base forms required
         uploaded, generated = forms_to_file(self.questions_dict, initial=True)
 
-        self.assertEqual(len(uploaded), 2)
+        self.assertEqual(len(uploaded), 3)
         self.assertIn({'doc_type': doc_type("joint divorce proceedings"), 'party_code': 0}, uploaded)
-        self.assertIn({'doc_type': doc_type("party's certificate"), 'party_code': 0}, uploaded)
+        self.assertIn({'doc_type': doc_type("party's certificate"), 'party_code': 1}, uploaded)
+        self.assertIn({'doc_type': doc_type("party's certificate"), 'party_code': 2}, uploaded)        
 
         self.assertEqual(len(generated), 1)
         self.assertIn({'doc_type': doc_type("notice of joint family claim"), 'form_number': 1}, generated)
@@ -39,17 +40,11 @@ class FilingLogic(TestCase):
         # Marriage certificate required
         self.create_response('original_marriage_certificate', 'YES')
         uploaded, generated = forms_to_file(self.questions_dict, initial=True)
-        self.assertEqual(len(uploaded), 5)
+        self.assertEqual(len(uploaded), 6)
         self.assertIn({'doc_type': doc_type("affidavit of translation"), 'party_code': 0}, uploaded)
         self.assertIn({'doc_type': doc_type("electronic filing statement for translation"), 'party_code': 1}, uploaded)
         self.assertIn({'doc_type': doc_type("proof of marriage"), 'party_code': 0}, uploaded)
         self.assertIn({'doc_type': doc_type("joint divorce proceedings"), 'party_code': 0}, uploaded)
-
-        self.create_response('how_to_sign', 'Separately')
-        uploaded, generated = forms_to_file(self.questions_dict, initial=True)
-        self.assertEqual(len(uploaded), 6)
-        self.assertIn({'doc_type': doc_type("party's certificate"), 'party_code': 1}, uploaded)
-        self.assertIn({'doc_type': doc_type("party's certificate"), 'party_code': 2}, uploaded)
 
 
     def test_final_forms_to_file_in_person(self):

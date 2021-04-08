@@ -35,7 +35,7 @@ export default {
     help:
       "The Party’s Certificate certifies that you and your spouse are aware of your duties under the Divorce Act (Canada) throughout the process of applying for divorce.",
     signature:
-      "- Requires signature by the party or parties named on the form (but not a signature in front of a commissioner)",
+      "- Requires signature by the party named on the form (but not a signature in front of a commissioner)",
   },  
   CSA: {
     name: "Child Support Affidavit (F37)",
