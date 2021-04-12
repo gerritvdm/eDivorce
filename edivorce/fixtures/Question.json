@@ -481,7 +481,7 @@
         "description": "For step 4, Form 1 2. Divorce section A, Form 52 Court orders that section",
         "summary_order": 46,
         "required": "Conditional",
-        "conditional_target": "determine_where_were_you_married_country",
+        "conditional_target": "determine_married_in_usa_or_canada",
         "reveal_response": "True"
     },
     "model": "core.question",
