@@ -2,6 +2,8 @@ import json
 import logging
 import requests
 
+from django.conf import settings
+from django.http import HttpResponse
 from django.core.cache import cache
 from django.core.exceptions import PermissionDenied
 
@@ -44,7 +46,11 @@ class EFilingCourtLocations(EFilingHubCallerBase):
         url = f'{self.api_base_url}/courts?courtLevel=S'
         print('DEBUG: ' + url)
 
-        response = self._get_api(url, headers={})
+        if settings.EFILING_HUB_ENABLED:
+            response = self._get_api(url, headers={})
+        else:
+            response = HttpResponse()
+            response.status_code = 401
 
         if response.status_code == 200:
             cso_locations = json.loads(response.text)
@@ -65,7 +71,8 @@ class EFilingCourtLocations(EFilingHubCallerBase):
             return locations
 
         if response.status_code == 401:
-            print(response.headers.get('WWW-Authenticate', ''))
+            if hasattr(response, 'headers'):
+                print(response.headers.get('WWW-Authenticate', ''))
             return {
                 "Authentication error calling court locations API": {},
                 "Vancouver": {"address_1": "API Error", "postal": "APIERR", "location_id": "6011"}
