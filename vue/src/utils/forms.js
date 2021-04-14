@@ -27,7 +27,6 @@ export default {
     preText: "Scan and upload the sworn",
     help:
       "The Affidavit of Translation is an affidavit which is sworn by a translator before a notary, lawyer or commissioner for taking Affidavits.  The original certificate of marriage should be exhibited to the Affidavit of Translation together with the translation of the translator.",
-    optional: "Required only if your marriage certificate is NOT in English",
   },
   CRT: {
     name: "Party's Certificate",
@@ -63,7 +62,6 @@ export default {
     signature:
       "- Requires signature by you only (but not a signature in front of a commissioner)",
     postText: "for your Affidavit of Translation form",
-    optional: "Required only if your marriage certificate is NOT in English",
   },
   EFSS2: {
     name: "Electronic Filing Statement (F96)",
