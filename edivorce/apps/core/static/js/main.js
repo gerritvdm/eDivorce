@@ -1287,3 +1287,34 @@ var updateChildSupportActQuestion = function (wantChildSupport) {
     }
 };
 
+// Set default country to Canada for your marriage for first time load
+$('#btnYourMarriage').click(function(){
+    var hasValue = false;
+    var selectedCountry = '';
+
+    $('input[name=where_were_you_married_country]').each(function(){
+        if($(this).attr('checked'))
+        {
+            hasValue = true;
+            selectedCountry = $(this).val();
+            return;
+        }
+    });
+
+    if(!hasValue){
+        $('input[name=where_were_you_married_country][value="Canada"]').prop("checked", true).change();
+    }
+    else{
+       if(selectedCountry == 'Other'){
+        $('.country-province').hide()
+       }
+    }
+})
+
+// Hide or show the province field depending on the country selected
+$('input[name=where_were_you_married_country]').change(function(){
+    country = $(this).val();
+    country == 'Other' ? $('.country-province').hide() : $('.country-province').show();
+})
+
+    
