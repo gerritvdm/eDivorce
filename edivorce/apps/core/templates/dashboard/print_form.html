@@ -269,15 +269,15 @@
         </div>
     {% endif %}
 
-    {% if how_to_file == 'Online' %}
+
+    {% if how_to_file == 'Online' and marriage_certificate_in_english == 'NO' %}
         <div class="review-well clearfix">
             <div class="collapse-trigger collapsed" data-toggle="collapse"
                 aria-expanded="false" data-target="#collapseF96t"
                 aria-controls="collapseF96t">
                 <div>
                     <span>
-                        Electronic Filing Statement (F96) for your Affadivit of Translation -
-                        to be signed by you
+                        Electronic Filing Statement (F96) for your Affadivit of Translation
                     </span>
                 </div>
             </div>
@@ -287,7 +287,6 @@
                     Review, Print &amp; Sign
                 </a>
             </p>
-            <div class="review-explanation">(<strong>Optional</strong> - Only required if your marriage certificate is NOT in English)</div>
             <div class="clearfix"></div>
             <div class="collapse" id="collapseF96t">
                 <div>
@@ -564,10 +563,7 @@
             {% if original_marriage_certificate == 'YES' %}
                 <li>
                 {% include "partials/tooltips/forms/proof_of_marriage.html" %}
-                    Original or certified Marriage Certificate or Registration of Divorce. If not in English, also provide
-                    <a href="https://www2.gov.bc.ca/assets/gov/law-crime-and-justice/courthouse-services/court-files-records/court-forms/supreme-family/f30.pdf?forcedownload=true">Affidavit of Translation (F30)</a>&#8202;
-                    {% include "partials/tooltips/forms/affidavit_of_translation.html" with text="<span></span>"%}
-                    and the English translation.
+                    Original or certified Marriage Certificate or Registration of Divorce.
                 </li>
             {% endif %}
             <li>

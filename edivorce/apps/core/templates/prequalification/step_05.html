@@ -120,17 +120,31 @@
 
 {% if married_marriage_like == "Legally married" %}
 <div class="question-well" id="is_certificate_in_english">
-    <h3>Is your marriage certificate or registration of marriage in English <strong>OR</strong> been translated into English by a certified translator?</h3>
+    <h3>Is your marriage certificate or registration of marriage in English</h3>
 
     <div class="btn-radio-group" data-toggle="buttons">
         <label class="btn btn-radio">
-            {% input_field type="radio" name="marriage_certificate_in_english" autocomplete="off" value="YES" data_target_id="certificate_in_english" data_reveal_target="false" %} Yes
+            {% input_field type="radio" name="marriage_certificate_in_english" autocomplete="off" value="YES" data_target_id="is_certificate_translated_to_english" data_reveal_target="false"  %} Yes
         </label>
 
         <label class="btn btn-radio">
-            {% input_field type="radio" name="marriage_certificate_in_english" autocomplete="off" value="NO" data_target_id="certificate_in_english" data_reveal_target="true" %} No
+            {% input_field type="radio" name="marriage_certificate_in_english" autocomplete="off" value="NO" data_target_id="is_certificate_translated_to_english" data_reveal_target="true" %} No
         </label>
     </div>
+</div>
+<div class="question-well" id="is_certificate_translated_to_english" hidden>
+    <h3>Has your marriage certificate or registration of marriage been translated into English by a certified translator?</h3>
+
+    <div class="btn-radio-group" data-toggle="buttons">
+        <label class="btn btn-radio">
+            {% input_field type="radio" name="marriage_certificate_translated_to_english" autocomplete="off" value="YES" data_target_id="certificate_in_english" data_reveal_target="false" %} Yes
+        </label>
+
+        <label class="btn btn-radio">
+            {% input_field type="radio" name="marriage_certificate_translated_to_english" autocomplete="off" value="NO" data_target_id="certificate_in_english" data_reveal_target="true" %} No
+        </label>
+    </div>
+
     <div class="information-message bg-danger" id="certificate_in_english" hidden>
         <p>You may proceed with using this service but must have a certified translation before filing your documents. See below:</p>
 
