@@ -22,7 +22,9 @@ class EFilingPackagingTests(TransactionTestCase):
         self.packaging = EFilingPackaging(initial_filing=True)
         # court_locations={"Vancouver": {"location_id": "6011"}}
 
-    def test_format_package(self):
+    @mock.patch('edivorce.apps.core.utils.efiling_court_locations.EFilingCourtLocations.courts')
+    def test_format_package(self, mock_courts):
+        mock_courts.return_value = {"Vancouver": {"location_id": "6011"}}
         files = []
         documents = []
         for i in range(0, 2):
