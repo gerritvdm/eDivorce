@@ -37,8 +37,10 @@ class FilingLogic(TestCase):
         self.assertEqual(len(generated), 1)
         self.assertIn({'doc_type': doc_type("notice of joint family claim"), 'form_number': 1}, generated)
 
-        # Marriage certificate required
+        # Marriage certificate and translation required
         self.create_response('original_marriage_certificate', 'YES')
+        self.create_response('marriage_certificate_in_english', 'NO')
+        self.create_response('marriage_certificate_translated_to_english', 'YES')
         uploaded, generated = forms_to_file(self.questions_dict, initial=True)
         self.assertEqual(len(uploaded), 6)
         self.assertIn({'doc_type': doc_type("affidavit of translation"), 'party_code': 0}, uploaded)
