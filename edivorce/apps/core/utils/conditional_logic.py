@@ -237,3 +237,8 @@ def __get_cleaned_aka(response):
             return response
 
     return None
+
+
+def determine_married_in_usa_or_canada(questions_dict):
+    return (questions_dict.get('where_were_you_married_country', '') == 'Canada' or
+        questions_dict.get('where_were_you_married_country', '') == 'USA')
