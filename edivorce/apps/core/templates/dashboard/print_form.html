@@ -556,45 +556,128 @@
         {% endif %}
     {% endif %}
 
-    <div class="question-well">
-        <h3>Additional Documents to Print and Complete</h3>
-        <p>The following additional documents are required as part of your filing:</p>
-        <ul>
-            {% if original_marriage_certificate == 'YES' %}
-                <li>
-                {% include "partials/tooltips/forms/proof_of_marriage.html" %}
-                    Original or certified Marriage Certificate or Registration of Divorce.
-                </li>
-            {% endif %}
-            <li>
-                <a href="https://www.justice.gc.ca/eng/fl-df/divorce/form-formulaire.html" target="_blank">Complete online Registration of Divorce form (Federal)</a>&#8202;
-                {% include "partials/tooltips/forms/registration_of_divorce.html" with text="<span></span>" %}
-            </li>
-            {% if derived.wants_other_orders %}
-                {% if name_change_you == 'YES' or name_change_spouse == 'YES' %}
-                    <li>
-                        <a href="https://www2.gov.bc.ca/assets/gov/health/forms/vital-statistics/vsa512.pdf">Completed Identification of Applicant (VSA 512)</a>&#8202;
-                        {% include "partials/tooltips/forms/identification_of_applicant.html" with text="<span></span>" %}
-                        for anyone requesting a name change
-                        <ul>
-                            {% if name_change_you == 'YES' %}
-                                <li>Claimant 1 ({% you_name %})</li>{% endif %}
-                            {% if name_change_spouse == 'YES' %}
-                                <li>Claimant 2 ({% spouse_name %})</li>{% endif %}
-                        </ul>
-                    </li>
-                {% endif %}
-            {% endif %}
-            {% if derived.has_children_of_marriage %}
-                <li>
-                <a href="https://www2.gov.bc.ca/assets/gov/law-crime-and-justice/courthouse-services/court-files-records/court-forms/supreme-family/f9.pdf?forcedownload=true">
-                    Completed Agreement as to Annual Income (F9)
-                </a>&#8202;
-                {% include "partials/tooltips/forms/agreement_to_annual_income_9.html" with text="<span></span>" %}
-                </li>
-            {% endif %}
-        </ul>
+    
+    <h3>Additional Required Documentation</h3>
+    <p>The following documents are required as part of your filing but are not created automatically by this site:</p>
+
+    {% if original_marriage_certificate == 'YES' %}
+    <div class="review-well clearfix">
+        <div class="collapse-trigger collapsed">
+        <div>
+            <span>Proof of Marriage - Original or certified Marriage Certificate or Registration of Divorce.</span>
+        </div>
+        </div>
+        <p class="review-buttons">
+            <span>
+                Have Ready to Scan
+            </span>
+        </p>
+        <div class="clearfix"></div>
     </div>
+    {% endif %}
+
+    {% if marriage_certificate_in_english == 'NO' %}
+    <div class="review-well clearfix">
+        <div class="collapse-trigger collapsed">
+        <div>
+            <span>Affidavit if Translation (F30) - requires <a href="https://justice.gov.bc.ca/divorce/dashboard/help_saving_pdf" target="_blank">Adobe Acrobat Reader</a></span>
+        </div>
+        </div>
+        <p class="review-buttons">
+            <span>
+                Have Ready to Scan
+            </span>
+        </p>
+        <div class="clearfix"></div>
+    </div>
+    {% endif %}
+
+    {% if original_marriage_certificate == 'NO' %}
+    <div class="review-well clearfix">
+        <div class="collapse-trigger collapsed review-well-small" data-toggle="collapse">
+            <div>
+                <span>Affidavit of No Marriage Certificate - requires <a href="https://justice.gov.bc.ca/divorce/dashboard/help_saving_pdf" target="_blank">Adobe Acrobat Reader</a></span>
+            </div>
+        </div>
+        <p class="review-buttons">
+            <a href="#" class="btn btn-primary spinner"
+                       target="_blank"><i class="fa fa-pencil" aria-hidden="true"></i>
+                        Complete, Swear &amp; Sign
+                    </a>
+        </p>
+        <div class="clearfix"></div>
+    </div>
+    {% endif %}
+
+    <div class="review-well clearfix">
+        <div class="collapse-trigger collapsed" data-toggle="collapse">
+            <div>
+                <span>Registration of Divorce (JUS280) - requires completion on the Government of Canada's site</span>
+            </div>
+        </div>
+        <p class="review-buttons">
+            <a href="https://www.justice.gc.ca/eng/fl-df/divorce/form-formulaire.html" class="btn btn-primary spinner"
+               target="_blank"><i class="fa fa-pencil" aria-hidden="true"></i>
+                Complete &amp; Print
+            </a>
+        </p>
+        <div class="clearfix"></div>
+    </div>
+
+    {% if derived.wants_other_orders %}
+        {% if name_change_you == 'YES' or name_change_spouse == 'YES' %}
+            {% if name_change_you == 'YES' %}
+            <div class="review-well clearfix">
+                <div class="collapse-trigger collapsed" data-toggle="collapse">
+                    <div>
+                        <span>Identification of Applicant (VSA 512) - For Claimant 1 ({% you_name %})</span>
+                    </div>
+                </div>
+                <p class="review-buttons">
+                    <a href="https://www2.gov.bc.ca/assets/gov/health/forms/vital-statistics/vsa512.pdf" class="btn btn-primary spinner"
+                    target="_blank"><i class="fa fa-pencil" aria-hidden="true"></i>
+                        Complete &amp; Print
+                    </a>
+                </p>
+                <div class="clearfix"></div>
+            </div>
+            {% endif %}
+            {% if name_change_spouse == 'YES' %}
+            <div class="review-well clearfix">
+                <div class="collapse-trigger collapsed" data-toggle="collapse">
+                    <div>
+                        <span>Identification of Applicant (VSA 512) - For Claimant 2 ({% spouse_name %})</span>
+                    </div>
+                </div>
+                <p class="review-buttons">
+                    <a href="https://www2.gov.bc.ca/assets/gov/health/forms/vital-statistics/vsa512.pdf" class="btn btn-primary spinner"
+                    target="_blank"><i class="fa fa-pencil" aria-hidden="true"></i>
+                        Complete &amp; Print
+                    </a>
+                </p>
+                <div class="clearfix"></div>
+            </div>
+            {% endif %}
+        {% endif %}
+    {% endif %}
+
+    {% if derived.has_children_of_marriage %}
+    <div class="review-well clearfix">
+        <div class="collapse-trigger collapsed" data-toggle="collapse">
+            <div>
+                <span>Agreement as to Annual Income (F9) - requires <a href="https://justice.gov.bc.ca/divorce/dashboard/help_saving_pdf" target="_blank">Adobe Acrobat Reader</a></span>
+            </div>
+        </div>
+        <p class="review-buttons">
+            <a href="https://www2.gov.bc.ca/assets/gov/law-crime-and-justice/courthouse-services/court-files-records/court-forms/supreme-family/f9.pdf?forcedownload=true" class="btn btn-primary spinner"
+               target="_blank"><i class="fa fa-pencil" aria-hidden="true"></i>
+                Complete &amp; Print
+            </a>
+        </p>
+        <div class="clearfix"></div>
+    </div>
+    {% endif %}
+    
 
     <div id="info_modal" class="modal" tabindex="-1" role="dialog">
         <div class="modal-dialog" role="document">
