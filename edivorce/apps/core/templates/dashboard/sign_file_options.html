@@ -69,13 +69,13 @@
             </ul>
         </div>
     </div>
-    <h3>Filing Options</h3>
+    <h3 class="padding-top-20">Filing Options</h3>
     {% if where_were_you_married_country == 'Canada' and efiling_enabled %}
         <p>You can {% include "partials/tooltips/file.html" %} your application for divorce in different ways.</p>
     {% endif %}
     <p>To {% include "partials/tooltips/file.html" %} your documents, you will need:</p>
 
-    <ul>
+    <ul class="padding-bottom-20">
         <li>a printer (or a print service)</li>
         <li>payment for filing fees (see More Information sidebar for more information)</li>
         {% if original_marriage_certificate == 'YES' %}
