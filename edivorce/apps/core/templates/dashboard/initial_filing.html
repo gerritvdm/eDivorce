@@ -17,12 +17,9 @@
             <b>Your {% include "partials/tooltips/online_package_number.html" with with_cso=True %} is {{ initial_filing_package_number }}</b>
         </p>
         <p class="no-margin-bottom">
-            You can view the following items at any time:
+            You can <a href="{{ initial_filing_package_link }}" target="_blank">view the package of all documents</a>
+            you have submitted in this filing.
         </p>
-        <ul>
-            <li><a href="{{ initial_filing_receipt_link }}" target="_blank">Your eFiling Receipt</a> on the CSO eFiling Hub</li>
-            <li><a href="{{ initial_filing_package_link }}" target="_blank">The package of all documents</a> you have submitted for filing</li>
-        </ul>
         <p>
             In order to complete your divorce you’ll need to file the final set of documents.
             To do this you’ll require a {% include "partials/tooltips/court_file_number.html" %}
