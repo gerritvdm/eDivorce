@@ -28,7 +28,7 @@ export default {
     help:
       "The Affidavit of Translation is an affidavit which is sworn by a translator before a notary, lawyer or commissioner for taking Affidavits.  The original certificate of marriage should be exhibited to the Affidavit of Translation together with the translation of the translator.",
   },
-  PCER: {
+  CRT: {
     name: "Party's Certificate",
     preText: "Upload the signed and scanned",
     help:
