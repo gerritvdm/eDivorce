@@ -144,25 +144,16 @@ def _after_submit_files(request, initial=False):
         _save_response(user, 'final_filing_status', 'Submitted')
 
     package_number = _get_package_number(request)
-
     _save_response(user, f'{prefix}_filing_package_number', package_number)
 
-    if settings.DEPLOYMENT_TYPE == 'localdev':
-        base_url = 'https://dev.justice.gov.bc.ca'
-    else:
-        base_url = settings.PROXY_BASE_URL
+    package_link = _get_package_link(request, package_number)
+    _save_response(user, f'{prefix}_filing_package_link', package_link)
 
     # purge the attachments
     Document.objects.filter(
         bceid_user=user,
         filing_type=('i' if initial else 'f')
-    ).delete()
-
-    receipt_link = base_url + '/cso/filing/status/viewDocument.do?actionType=viewReceipt&packageNo=' + package_number
-    _save_response(user, f'{prefix}_filing_receipt_link', receipt_link)
-
-    package_link = base_url + '/cso/accounts/bceidNotification.do?packageNo=' + package_number
-    _save_response(user, f'{prefix}_filing_package_link', package_link)
+    ).delete()    
 
     responses_dict['active_page'] = next_page
 
@@ -171,25 +162,32 @@ def _after_submit_files(request, initial=False):
 
 def _get_package_number(request):
     if settings.EFILING_HUB_ENABLED:
+        return request.GET.get('packageNo', '')
+            
+    # Generate a random string in format 000-000-000
+    package_number_parts = []
+    for _ in range(3):
+        num = ''
+        for _ in range(3):
+            num += str(random.randint(0, 9))
+        package_number_parts.append(num)
+    return '-'.join(package_number_parts)
+
+
+def _get_package_link(request, package_number):
+    if settings.EFILING_HUB_ENABLED:
         base64_message = request.GET.get('packageRef', '')
         base64_bytes = base64_message.encode('ascii')
         message_bytes = base64.b64decode(base64_bytes)
-        message = message_bytes.decode('ascii')
-        parts = message.split('=')
-        if len(parts) == 2:
-            return parts[1]
-        else:
-            return ""
-            
+        link = message_bytes.decode('ascii')
+        return link
+
+    if settings.DEPLOYMENT_TYPE == 'localdev':
+        base_url = 'https://dev.justice.gov.bc.ca'
     else:
-        # Generate a random string in format 000-000-000
-        package_number_parts = []
-        for _ in range(3):
-            num = ''
-            for _ in range(3):
-                num += str(random.randint(0, 9))
-            package_number_parts.append(num)
-        return '-'.join(package_number_parts)
+        base_url = settings.PROXY_BASE_URL
+
+    return base_url + '/cso/accounts/bceidNotification.do?packageNo=' + package_number
 
 
 def _save_response(user, question, value):
