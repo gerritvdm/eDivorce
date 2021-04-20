@@ -1336,4 +1336,8 @@ var setCountryProvinceState = function(country){
         }
 }
 
-    
+// Hide province options when selecting the other textbox for other countries
+$('input[name=where_were_you_married_other_country]').focusin(function() {
+    $('.country-province').hide();
+    $('input[name=where_were_you_married_prov]').val('').change();
+})    
