@@ -71,7 +71,7 @@
     </div>
 </div>
 
-<div class="question-well {% if where_were_you_married_city_error or where_were_you_married_country_error or where_were_you_married_other_country_error %}error{% endif %}">
+<div class="question-well {% if where_were_you_married_city_error or where_were_you_married_country_error or where_were_you_married_other_country_error or where_were_you_married_prov_error %}error{% endif %}">
     <h3>Where were you married?</h3>
     <p>Enter the location as it appears on the marriage certificate (e.g. city, province or state and country)</p>
     <p>City{% if where_were_you_married_city_error %}{% include 'partials/required.html' with inline=True %}{% endif %}</p>
