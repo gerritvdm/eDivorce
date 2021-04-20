@@ -504,7 +504,9 @@
             "name": "Where were you married? Prov",
             "description": "For step 4, Form 1 2. Divorce section A, Form 52 Court orders that section",
             "summary_order": 48,
-            "required": ""
+            "required": "Conditional",
+            "conditional_target": "determine_married_in_usa_or_canada",
+            "reveal_response": "True"
         },
         "model": "core.question",
         "pk": "where_were_you_married_prov"
@@ -1985,19 +1987,9 @@
     },
     {
         "fields": {
-            "name": "Initial Filing receipt link",
-            "description": "For stage 4, Initial filing",
-            "summary_order": 182,
-            "required": ""
-        },
-        "model": "core.question",
-        "pk": "initial_filing_receipt_link"
-    },
-    {
-        "fields": {
             "name": "Initial Filing download package link",
             "description": "For stage 4, Initial filing",
-            "summary_order": 183,
+            "summary_order": 182,
             "required": ""
         },
         "model": "core.question",
@@ -2007,7 +1999,7 @@
         "fields": {
             "name": "Court File Number",
             "description": "For stage 7, Final filing",
-            "summary_order": 184,
+            "summary_order": 183,
             "required": ""
         },
         "model": "core.question",
@@ -2017,7 +2009,7 @@
         "fields": {
             "name": "Has the user successfully submitted the final filing",
             "description": "For stage 7, Final filing",
-            "summary_order": 185,
+            "summary_order": 184,
             "required": ""
         },
         "model": "core.question",
@@ -2027,7 +2019,7 @@
         "fields": {
             "name": "Final Filing CSO Online Package #",
             "description": "For stage 7, Final filing",
-            "summary_order": 186,
+            "summary_order": 185,
             "required": ""
         },
         "model": "core.question",
@@ -2035,19 +2027,9 @@
     },
     {
         "fields": {
-            "name": "Final Filing receipt link",
-            "description": "For stage 7, Final filing",
-            "summary_order": 187,
-            "required": ""
-        },
-        "model": "core.question",
-        "pk": "final_filing_receipt_link"
-    },
-    {
-        "fields": {
             "name": "Final Filing download package link",
             "description": "For stage 7, Final filing",
-            "summary_order": 188,
+            "summary_order": 186,
             "required": ""
         },
         "model": "core.question",
@@ -2057,7 +2039,7 @@
         "fields": {
             "name": "Final filing status",
             "description": "For stage 8, Next steps",
-            "summary_order": 189,
+            "summary_order": 187,
             "required": ""
         },
         "model": "core.question",

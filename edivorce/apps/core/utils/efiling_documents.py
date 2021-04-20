@@ -19,8 +19,8 @@ def forms_to_file(responses_dict, initial=False):
 
     if initial:
         generated.append({'doc_type': 'NJF', 'form_number': 1})
-        uploaded.append({'doc_type': 'CRT', 'party_code': 1})
-        uploaded.append({'doc_type': 'CRT', 'party_code': 2})
+        uploaded.append({'doc_type': 'PCER', 'party_code': 1})
+        uploaded.append({'doc_type': 'PCER', 'party_code': 2})
 
         if provide_marriage_certificate:
             uploaded.append({'doc_type': 'MC', 'party_code': 0})

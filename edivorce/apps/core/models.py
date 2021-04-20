@@ -155,7 +155,7 @@ class Document(models.Model):
         'AFDO': "Affidavit - Desk Order Divorce Form (F38)",
         'AFTL': "Affidavit of Translation Form",
         'CSA': "Child Support Affidavit (F37)",
-        'CRT': "Party's Certificate",
+        'PCER': "Party's Certificate",
         'EFSS1': "Electronic Filing Statement for Translation (F96)",
         'EFSS2': "Electronic Filing Statement for Affidavits (F96)",
         'MC': "Proof of Marriage",
