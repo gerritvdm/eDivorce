@@ -81,10 +81,30 @@
     <div class="radio"><label>{% input_field type="radio" class="radio-with-other" name="where_were_you_married_country" value="USA" %}USA</label></div>
     <div class="radio"><label>{% input_field type="radio" class="radio-with-other radio_with_textbox" name="where_were_you_married_country" value="Other" %}Other {% input_field type="text" name="where_were_you_married_other_country" class="response-textbox other-textbox input-inline" tabindex="-1" autocomplete="off" %}</label></div>
 
-    <div class="country-province">
+    <div class="country-province" id="canadian_province_where_you_were_married">
         <p>Prov/State{% if where_were_you_married_prov_error %}{% include 'partials/required.html' with inline=True %}{% endif %}</p>
+        <select class="response-dropdown form-control" name="where_were_you_married_prov">
+            <option value="AB">Alberta (AB)</option>
+            <option value="BC">British Columbia (BC)</option>
+            <option value="MB">Manitoba (MB)</option>
+            <option value="NB">New Brunswick (NB)</option>
+            <option value="NL">Newfoundland and Labrador (NL)</option>
+            <option value="NT">North West Territories (NT)</option>
+            <option value="NS">Nova Scotia (NS)</option>
+            <option value="NU">Nunavut (NU)</option>
+            <option value="ON">Ontario (ON)</option>
+            <option value="PE">Prince Edward Island (PE)</option>
+            <option value="QC">Quebec (QC)</option>
+            <option value="SK">Saskatchewan (SK)</option>
+            <option value="YT">Yukon (YT)</option>
+        </select>
+    </div>
+
+    <div id="state_abbreviation_usa" hidden>
+        <p>State (abbreviation)</p>
         {% input_field type="text" name="where_were_you_married_prov" class="form-block input-narrow response-textbox" maxlength="2" autocomplete="off" %}
     </div>
+    
 
 </div>
 

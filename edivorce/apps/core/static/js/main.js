@@ -1303,11 +1303,10 @@ $('#btnYourMarriage').click(function(){
 
     if(!hasValue){
         $('input[name=where_were_you_married_country][value="Canada"]').prop("checked", true).change();
+        $('select[name=where_were_you_married_prov]').val('BC').change();
     }
     else{
-       if(selectedCountry == 'Other'){
-        $('.country-province').hide()
-       }
+        setCountryProvinceState(selectedCountry);
     }
 })
 
@@ -1315,6 +1314,26 @@ $('#btnYourMarriage').click(function(){
 $('input[name=where_were_you_married_country]').change(function(){
     country = $(this).val();
     country == 'Other' ? $('.country-province').hide() : $('.country-province').show();
+
+    setCountryProvinceState(country);
 })
+
+var setCountryProvinceState = function(country){
+    switch(country.toLowerCase()){
+        case 'other': 
+            $('.country-province').hide();
+            break;
+        case 'canada':
+            $('#canadian_province_where_you_were_married').show();
+            $('#state_abbreviation_usa').hide();
+            $('select[name=where_were_you_married_prov]').val('BC').change();
+            break;
+        case 'usa':
+            $('#canadian_province_where_you_were_married').hide();
+            $('#state_abbreviation_usa').show();
+            $('input[name=where_were_you_married_prov]').val('').change();
+            break;
+        }
+}
 
     
