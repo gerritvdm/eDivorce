@@ -1318,6 +1318,34 @@ $('input[name=where_were_you_married_country]').change(function(){
     setCountryProvinceState(country);
 })
 
+// Hide or show the person present at the marriage if no certificate is available
+togglePersonPresentAtMarriage = function(){
+    $('input[name=provide_certificate_later]').change(function() {
+        provideProofOfMarriage = $('input[name=original_marriage_certificate]:checked').val();
+
+        if( $(this).val() == 'NO' && provideProofOfMarriage == 'NO'){
+            $('#person_present_at_marriage').show();
+        }
+        else {
+            $('#person_present_at_marriage').hide();
+        }
+    })
+
+    if($('input[name=provide_certificate_later]:checked').val() == 'NO' && $('input[name=original_marriage_certificate]:checked').val() == 'NO'){
+        $('#person_present_at_marriage').show();
+    }
+};
+togglePersonPresentAtMarriage();
+    
+// Hide person present at marriage if answer is yes
+$('input[name=original_marriage_certificate]').change(function(){
+    if($(this).val() == 'YES'){
+        $('#person_present_at_marriage').hide();
+    }
+    else if( $(this).val() == 'NO' && $('input[name=provide_certificate_later]:checked').val() == 'NO'){
+        $('#person_present_at_marriage').show();
+    }
+})
 var setCountryProvinceState = function(country){
     switch(country.toLowerCase()){
         case 'other': 
