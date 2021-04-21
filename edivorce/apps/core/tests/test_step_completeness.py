@@ -90,6 +90,8 @@ class StepCompletenessTestCase(TestCase):
         UserResponse.objects.filter(question_id='provide_certificate_later').update(value="NO")
         self.assertEqual(self.check_completeness(step), False)
         self.create_response('not_provide_certificate_reason', 'Because')
+        self.assertEqual(self.check_completeness(step), False)
+        self.create_response('name_of_person_present_at_marriage', 'John Doe')
         self.assertEqual(self.check_completeness(step), True)
 
     def test_which_order(self):
