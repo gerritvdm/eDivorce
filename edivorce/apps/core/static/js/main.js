@@ -1368,4 +1368,5 @@ var setCountryProvinceState = function(country){
 $('input[name=where_were_you_married_other_country]').focusin(function() {
     $('.country-province').hide();
     $('input[name=where_were_you_married_prov]').val('').change();
+    $('#state_abbreviation_usa').hide();
 })    
