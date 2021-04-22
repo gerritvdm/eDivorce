@@ -162,8 +162,13 @@ def _after_submit_files(request, initial=False):
 
 def _get_package_number(request):
     if settings.EFILING_HUB_ENABLED:
-        return request.GET.get('packageNo', '')
-            
+        link = _get_package_link(request)
+        parts = link.split('=')
+        if len(parts) == 2:
+            return parts[1]
+        else:
+            return ""
+           
     # Generate a random string in format 000-000-000
     package_number_parts = []
     for _ in range(3):
