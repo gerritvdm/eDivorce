@@ -1306,7 +1306,7 @@ $('#btnYourMarriage').click(function(){
         $('select[name=where_were_you_married_prov]').val('BC').change();
     }
     else{
-        setCountryProvinceState(selectedCountry);
+        setCountryProvinceState(selectedCountry, false);
     }
 })
 
@@ -1315,7 +1315,7 @@ $('input[name=where_were_you_married_country]').change(function(){
     country = $(this).val();
     country == 'Other' ? $('.country-province').hide() : $('.country-province').show();
 
-    setCountryProvinceState(country);
+    setCountryProvinceState(country, true);
 })
 
 // Hide or show the person present at the marriage if no certificate is available
@@ -1346,7 +1346,7 @@ $('input[name=original_marriage_certificate]').change(function(){
         $('#person_present_at_marriage').show();
     }
 })
-var setCountryProvinceState = function(country){
+var setCountryProvinceState = function(country, update){
     switch(country.toLowerCase()){
         case 'other': 
             $('.country-province').hide();
@@ -1354,12 +1354,18 @@ var setCountryProvinceState = function(country){
         case 'canada':
             $('#canadian_province_where_you_were_married').show();
             $('#state_abbreviation_usa').hide();
-            $('select[name=where_were_you_married_prov]').val('BC').change();
+            
+            if(update){ 
+                $('select[name=where_were_you_married_prov]').val('BC').change();
+            }
             break;
         case 'usa':
             $('#canadian_province_where_you_were_married').hide();
             $('#state_abbreviation_usa').show();
-            $('input[name=where_were_you_married_prov]').val('').change();
+
+            if(update){
+                $('input[name=where_were_you_married_prov]').val('').change();
+            }
             break;
         }
 }
