@@ -42,7 +42,7 @@ $(window).ready(function () {
         }
         $('div#app').children().each(function (i, child) {
             if ($(child).find("div.placeholder.required").length > 0) {
-                var formName = $(child).find("h5 a").text();
+                var formName = $(child).find("h5 span > span").text();
                 errors.push('Missing documents for ' + formName);
             }
         })
