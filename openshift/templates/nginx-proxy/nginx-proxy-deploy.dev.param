@@ -1,10 +1,10 @@
 #=========================================================
 # OpenShift template parameters for:
 # Component: .
-# Template File: templates/nginx-proxy/nginx-proxy-deploy.yaml
+# Template File: ../openshift/templates/nginx-proxy/nginx-proxy-deploy.yaml
 #=========================================================
 # NAME=nginx-proxy
 # IMAGE_NAMESPACE=ed44ad-tools
 TAG_NAME=dev
-SITEMINDER_APPLICATION_DOMAIN=edivorce-dev.pathfinder.bcgov
+SITEMINDER_APPLICATION_DOMAIN=edivorce-dev.silver.devops.bcgov
 # SITEMINDER_WHITE_LIST=

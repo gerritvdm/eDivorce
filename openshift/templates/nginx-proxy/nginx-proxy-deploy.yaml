@@ -131,7 +131,7 @@ parameters:
   displayName: SiteMinder Application Domain
   description: The endpoint used for SiteMinder routed access to the application.
   required: true
-  value: "edivorce-dev.pathfinder.bcgov"
+  value: "edivorce-dev.silver.devops.bcgov"
 - name: SITEMINDER_WHITE_LIST
   displayName: SiteMinder Whitelist
   description: The whitelist containing all of the trusted siteminder IPs (separated by spaces).
