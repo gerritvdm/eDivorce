@@ -1,0 +1,11 @@
+# Uses the 'testConnection' script from https://github.com/BCDevOps/openshift-developer-tools
+# Example:
+# echo -e "clamav\n redis\n nginx-proxy\n edivorce-django\n postgresql\n weasyprint" | xargs -I {} testConnection -n ed44ad-dev -f TestConnections.txt -p {}
+
+google.com:80
+clamav:3310
+redis:6379
+nginx-proxy:8080
+edivorce-django:8080
+postgresql:5432
+weasyprint:5001
