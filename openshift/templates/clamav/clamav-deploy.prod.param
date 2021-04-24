@@ -1,0 +1,6 @@
+#=========================================================
+# OpenShift template parameters for:
+# Component: .
+# Template File: ../openshift/templates/clamav/clamav-deploy.yaml
+#=========================================================
+TAG_NAME=prod

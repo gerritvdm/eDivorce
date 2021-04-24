@@ -1,0 +1,7 @@
+#=========================================================
+# OpenShift template parameters for:
+# Component: .
+# Template File: ../openshift/templates/clamav/clamav-build.yaml
+#=========================================================
+NAME=clamav
+GIT_SOURCE_URL=https://github.com/bcgov/clamav.git
