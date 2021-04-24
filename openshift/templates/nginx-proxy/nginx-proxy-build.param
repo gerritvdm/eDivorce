@@ -1,7 +1,7 @@
 #=========================================================
 # OpenShift template parameters for:
 # Component: .
-# Template File: templates/nginx-proxy/nginx-proxy-build.yaml
+# Template File: ../openshift/templates/nginx-proxy/nginx-proxy-build.yaml
 #=========================================================
 NAME=nginx-proxy
 GIT_REPO_URL=https://github.com/bcgov/eDivorce.git

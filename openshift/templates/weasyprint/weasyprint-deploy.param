@@ -1,7 +1,7 @@
 #=========================================================
 # OpenShift template parameters for:
 # Component: .
-# Template File: templates/weasyprint/weasyprint-deploy.yaml
+# Template File: ../openshift/templates/weasyprint/weasyprint-deploy.yaml
 #=========================================================
 NAME=weasyprint
 SOURCE_IMAGE_NAME=weasyprint

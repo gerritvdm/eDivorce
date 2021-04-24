@@ -176,8 +176,6 @@ parameters:
   displayName: PostgreSQL Database Name
   description: The name of the PostgreSQL database.
   required: true
-  generate: expression
-  from: "[a-zA-Z_][a-zA-Z0-9_]{10}"
   value: default
 - name: POSTGRESQL_USER
   displayName: PostgreSQL Connection Username

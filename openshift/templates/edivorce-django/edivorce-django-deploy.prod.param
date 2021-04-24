@@ -1,7 +1,7 @@
 #=========================================================
 # OpenShift template parameters for:
 # Component: .
-# Template File: templates/edivorce-django/edivorce-django-deploy.yaml
+# Template File: ../openshift/templates/edivorce-django/edivorce-django-deploy.yaml
 #=========================================================
 # NAME=edivorce-django
 # DATABASE_SERVICE_NAME=postgresql
@@ -14,6 +14,11 @@ TAG_NAME=prod
 PROXY_URL_PREFIX=/divorce
 PROXY_BASE_URL=https://justice.gov.bc.ca
 BASICAUTH_ENABLED=False
+# EDIVORCE_KEYCLOAK_SECRET=
+# EFILING_HUB_KEYCLOAK_SECRET=
 # BASICAUTH_USERNAME=divorce
 # BASICAUTH_PASSWORD=[a-zA-Z0-9]{16}
+# CPU_REQUEST=10m
+# CPU_LIMIT=500m
+# MEMORY_REQUEST=10Mi
 # MEMORY_LIMIT=512Mi

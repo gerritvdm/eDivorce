@@ -1,7 +1,7 @@
 #=========================================================
 # OpenShift template parameters for:
 # Component: .
-# Template File: templates/backup/backup-deploy.json
+# Template File: ../openshift/templates/backup/backup-deploy.yaml
 #=========================================================
 # NAME=backup
 # SOURCE_IMAGE_NAME=backup
@@ -20,7 +20,7 @@ TAG_NAME=test
 # CONFIG_MOUNT_PATH=/
 # PERSISTENT_VOLUME_NAME=backup-pvc
 # PERSISTENT_VOLUME_SIZE=20Gi
-# PERSISTENT_VOLUME_CLASS=gluster-file
+# PERSISTENT_VOLUME_CLASS=
 # CPU_REQUEST=0
 # CPU_LIMIT=0
 # MEMORY_REQUEST=0Mi
