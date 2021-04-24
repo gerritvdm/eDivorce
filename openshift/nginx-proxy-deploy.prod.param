@@ -4,7 +4,7 @@
 # Template File: templates/nginx-proxy/nginx-proxy-deploy.yaml
 #=========================================================
 # NAME=nginx-proxy
-# IMAGE_NAMESPACE=jag-csb-edivorce-tools
+# IMAGE_NAMESPACE=ed44ad-tools
 TAG_NAME=prod
 SITEMINDER_APPLICATION_DOMAIN=edivorce-prod.pathfinder.bcgov
 # SITEMINDER_WHITE_LIST=

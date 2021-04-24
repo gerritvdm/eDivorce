@@ -5,7 +5,7 @@
 #=========================================================
 # NAME=weasyprint
 # SOURCE_IMAGE_NAME=weasyprint
-# IMAGE_NAMESPACE=jag-csb-edivorce-tools
+# IMAGE_NAMESPACE=ed44ad-tools
 TAG_NAME=test
 # CPU_LIMIT=2
 # MEMORY_LIMIT=1Gi

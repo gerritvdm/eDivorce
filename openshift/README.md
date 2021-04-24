@@ -245,10 +245,10 @@ There are three deployment environments set up for different purposes within Ope
 
 These instructions assume you have 4 EMPTY projects created in OpenShift:
 
-- jag-csb-edivorce-tools (BUILD)
-- jag-csb-edivorce-dev (DEV)
-- jag-csb-edivorce-test (TEST)
-- jag-csb-edivorce-prod (PROD)
+- ed44ad-tools (BUILD)
+- ed44ad-dev (DEV)
+- ed44ad-test (TEST)
+- ed44ad-prod (PROD)
 
 # Backups
 

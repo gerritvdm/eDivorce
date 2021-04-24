@@ -121,7 +121,7 @@ parameters:
   displayName: Image Namespace
   description: Namespace containing application images.
   required: true
-  value: "jag-csb-edivorce-tools"
+  value: "ed44ad-tools"
 - name: TAG_NAME
   displayName: Environment TAG name
   description: The TAG name for this environment, e.g., dev, test, prod.

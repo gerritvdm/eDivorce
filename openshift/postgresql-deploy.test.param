@@ -4,7 +4,7 @@
 # Template File: templates/postgresql/postgresql-deploy.yaml
 #=========================================================
 # NAME=postgresql
-# IMAGE_NAMESPACE=jag-csb-edivorce-tools
+# IMAGE_NAMESPACE=ed44ad-tools
 # SOURCE_IMAGE_NAME=postgresql
 TAG_NAME=test
 # POSTGRESQL_DATABASE_NAME=default

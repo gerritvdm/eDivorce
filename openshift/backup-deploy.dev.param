@@ -5,7 +5,7 @@
 #=========================================================
 # NAME=backup
 # SOURCE_IMAGE_NAME=backup
-# IMAGE_NAMESPACE=jag-csb-edivorce-tools
+# IMAGE_NAMESPACE=ed44ad-tools
 TAG_NAME=dev
 # POSTGRESQL_HOST_NAME=postgresql
 # BACKUP_STRATEGY=rolling

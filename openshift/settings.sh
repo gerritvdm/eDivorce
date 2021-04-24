@@ -1,4 +1,4 @@
-export PROJECT_NAMESPACE=${PROJECT_NAMESPACE:-jag-csb-edivorce}
+export PROJECT_NAMESPACE=${PROJECT_NAMESPACE:-ed44ad}
 export GIT_URI=${GIT_URI:-"https://github.com/bcgov/eDivorce.git"}
 export GIT_REF=${GIT_REF:-"master"}
 
