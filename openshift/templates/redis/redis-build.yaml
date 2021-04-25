@@ -48,4 +48,3 @@ parameters:
     required: true
     description: The Namespace where the ImageStream resides.
     value: openshift
-
