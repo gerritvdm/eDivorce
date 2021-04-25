@@ -7,4 +7,4 @@
 # IMAGE_NAMESPACE=ed44ad-tools
 TAG_NAME=test
 SITEMINDER_APPLICATION_DOMAIN=edivorce-test.silver.devops.bcgov
-# SITEMINDER_WHITE_LIST=
+# ALLOW_LIST=

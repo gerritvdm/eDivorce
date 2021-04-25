@@ -125,7 +125,7 @@ Use `-h` to get advanced usage information.  Use the `-l` option to apply any lo
 
 #### Mandatory Settings:
 
-SITEMINDER_WHITE_LIST
+ALLOW_LIST
 
 While running `genDepls.sh` you will be prompted for a list of IP addresses that make up the white-list of hosts allowed to access the service.
 
@@ -133,7 +133,7 @@ The list must be provided as a space delimited list of IP addresses.
 
 The actual values cannot be stored on Github because this would violate BC Government Github policies. The addresses are different for each environment (dev, test, and prod).
 
-An example of the [nginx-proxy-deploy.overrides.sh](./nginx-proxy-deploy.overrides.sh) script prompting for the value to use for SITEMINDER_WHITE_LIST;
+An example of the [nginx-proxy-deploy.overrides.sh](./nginx-proxy-deploy.overrides.sh) script prompting for the value to use for ALLOW_LIST;
 ```
 Processing deployment configuration; templates/nginx-proxy/nginx-proxy-deploy.yaml ...
 Loading parameter overrides for templates/nginx-proxy/nginx-proxy-deploy.yaml ...
