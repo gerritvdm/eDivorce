@@ -120,7 +120,7 @@ objects:
     resources:
       requests:
         storage: "${PERSISTENT_VOLUME_SIZE}"
-    storageClassName: gluster-file-db
+    storageClassName: ${PERSISTENT_VOLUME_CLASS}
 - kind: Secret
   apiVersion: v1
   metadata:
@@ -205,6 +205,11 @@ parameters:
   description: The size of the persistent volume , e.g. 512Mi, 1Gi, 2Gi.
   required: true
   value: 5Gi
+- name: PERSISTENT_VOLUME_CLASS
+  displayName: Persistent Volume Class name
+  description: The class of the volume; netapp-file-standard, netapp-file-extended, netapp-block-standard, or netapp-block-extended.
+  required: false
+  value: netapp-file-standard
 - name: MEMORY_LIMIT
   displayName: Memory Limit
   description: Maximum amount of memory the container can use.
