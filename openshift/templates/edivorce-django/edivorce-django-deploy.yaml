@@ -123,6 +123,11 @@ objects:
                     secretKeyRef:
                       key: efiling-client-secret
                       name: "keycloak-secrets"
+                - name: REDIS_PASSWORD
+                  valueFrom:
+                    secretKeyRef:
+                      key: database-password
+                      name: "redis"
               resources:
                 limits:
                   cpu: ${CPU_LIMIT}
