@@ -11,11 +11,12 @@ objects:
       generation: 1
       creationTimestamp: null
       labels:
-        app: clamav
+        name: clamav
+        app: ${APP_NAME}
     spec:
       replicas: 1
       selector:
-        app: clamav
+        name: clamav
         deploymentconfig: clamav
       strategy:
         activeDeadlineSeconds: 21600
@@ -24,7 +25,8 @@ objects:
         metadata:
           creationTimestamp: null
           labels:
-            app: clamav
+            name: clamav
+            app: ${APP_NAME}
             deploymentconfig: clamav
         spec:
           containers:
@@ -89,7 +91,8 @@ objects:
       name: clamav
       creationTimestamp: null
       labels:
-        app: clamav
+        name: clamav
+        app: ${APP_NAME}
     spec:
       ports:
         - name: 3310-tcp
