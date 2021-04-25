@@ -132,9 +132,8 @@ objects:
         - redis
         from:
           kind: ImageStreamTag
-          name: redis:${REDIS_VERSION}
-          namespace: ${NAMESPACE}
-        lastTriggeredImage: ""
+          namespace: "${IMAGE_NAMESPACE}"
+          name: "${SOURCE_IMAGE_NAME}:${TAG_NAME}"
       type: ImageChange
     - type: ConfigChange
   status: {}
@@ -144,10 +143,6 @@ parameters:
   name: MEMORY_LIMIT
   required: true
   value: 1Gi
-- description: The OpenShift Namespace where the ImageStream resides.
-  displayName: Namespace
-  name: NAMESPACE
-  value: openshift
 - description: The name of the OpenShift Service exposed for the database.
   displayName: Database Service Name
   name: DATABASE_SERVICE_NAME
@@ -164,8 +159,20 @@ parameters:
   name: VOLUME_CAPACITY
   required: true
   value: 20Gi
-- description: Version of Redis image to be used (3.2 or latest).
-  displayName: Version of Redis Image
-  name: REDIS_VERSION
+- name: IMAGE_NAMESPACE
+  displayName: Image Namespace
+  description: The namespace of the OpenShift project containing the imagestream for the application.
   required: true
-  value: "latest"
+  value: ed44ad-tools
+- name: SOURCE_IMAGE_NAME
+  displayName: Source Image Name
+  description: The name of the image to use for this resource.
+  required: true
+  value: redis
+- name: TAG_NAME
+  displayName: Environment TAG name
+  description: The TAG name for this environment, e.g., dev, test, prod
+  required: true
+  value: dev
+
+
