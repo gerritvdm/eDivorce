@@ -1,26 +1,34 @@
-# =================================================================
-# Special Deployment Parameters needed for Application  Deployment
-# -----------------------------------------------------------------
-# The results need to be encoded as OpenShift template
-# parameters for use with oc process.
-# =================================================================
+#! /bin/bash
+_includeFile=$(type -p overrides.inc)
+if [ ! -z ${_includeFile} ]; then
+  . ${_includeFile}
+else
+  _red='\033[0;31m'; _yellow='\033[1;33m'; _nc='\033[0m'; echo -e \\n"${_red}overrides.inc could not be found on the path.${_nc}\n${_yellow}Please ensure the openshift-developer-tools are installed on and registered on your path.${_nc}\n${_yellow}https://github.com/BCDevOps/openshift-developer-tools${_nc}"; exit 1;
+fi
 
-generateUsername() {
-  # Generate a random username and Base64 encode the result ...
-  _userName=USER_$( cat /dev/urandom | LC_CTYPE=C tr -dc 'a-zA-Z0-9' | fold -w 4 | head -n 1 )
-  _userName=$(echo -n "${_userName}"|base64)
-  echo ${_userName}
-}
+if createOperation; then
+  # Randomly generate a set of credentials without asking ...
+  printStatusMsg "Creating a set of random user credentials ..."
+  writeParameter "BASICAUTH_USERNAME" $(generateUsername) "false"
+  writeParameter "BASICAUTH_PASSWORD" $(generatePassword) "false"
 
-generatePassword() {
-  # Generate a random password and Base64 encode the result ...
-  _password=$( cat /dev/urandom | LC_CTYPE=C tr -dc 'a-zA-Z0-9_' | fold -w 16 | head -n 1 )
-  _password=$(echo -n "${_password}"|base64)  
-  echo ${_password}
-}
+  # Ask for sensitive information ...
+  readParameter "EDIVORCE_KEYCLOAK_SECRET - Please provide the KeyCloak client secret for the eDivorce aplication. The default is a blank string." EDIVORCE_KEYCLOAK_SECRET "" "false"
+  readParameter "EFILING_HUB_KEYCLOAK_SECRET - Please provide the KeyCloak client secret for the eFiling Hub aplication. The default is a blank string." EFILING_HUB_KEYCLOAK_SECRET "" "false"
+else
+  # Secrets are removed from the configurations during update operations ...
+  printStatusMsg "Update operation detected ...\nSkipping the generation of random user credentials ...\n"
+  writeParameter "BASICAUTH_USERNAME" "generation_skipped" "false"
+  writeParameter "BASICAUTH_PASSWORD" "generation_skipped" "false"
 
-_userName=$(generateUsername)
-_password=$(generatePassword)
+  printStatusMsg "Update operation detected ...\nSkipping prompts for secrets ...\n"
+  writeParameter "EDIVORCE_KEYCLOAK_SECRET" "prompt_skipped" "false"
+  writeParameter "EFILING_HUB_KEYCLOAK_SECRET" "prompt_skipped" "false"
+fi
 
-SPECIALDEPLOYPARMS="-p BASICAUTH_USERNAME=${_userName} -p BASICAUTH_PASSWORD=${_password}"
+SPECIALDEPLOYPARMS="--param-file=${_overrideParamFile}"
 echo ${SPECIALDEPLOYPARMS}
+
+
+
+
