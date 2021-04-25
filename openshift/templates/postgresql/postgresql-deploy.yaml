@@ -13,7 +13,8 @@ objects:
     name: "${NAME}"
     generation: 1
     labels:
-      app: "${NAME}-persistent"
+      name: ${NAME}
+      app: ${APP_NAME}
       template: "${NAME}-persistent-template"
   spec:
     strategy:
@@ -41,6 +42,7 @@ objects:
       metadata:
         labels:
           name: "${NAME}"
+          app: ${APP_NAME}
       spec:
         volumes:
         - name: "${NAME}-data"
@@ -112,7 +114,8 @@ objects:
   metadata:
     name: "${NAME}"
     labels:
-      app: "${NAME}-persistent"
+      name: ${NAME}
+      app: ${APP_NAME}
       template: "${NAME}-persistent-template"
   spec:
     accessModes:
@@ -126,7 +129,8 @@ objects:
   metadata:
     name: "${NAME}"
     labels:
-      app: "${NAME}"
+      name: "${NAME}"
+      app: ${APP_NAME}
   data:
     admin-password: "${POSTGRESQL_ADMIN_PASSWORD}"
     database-password: "${POSTGRESQL_PASSWORD}"
@@ -137,7 +141,8 @@ objects:
   metadata:
     name: "${NAME}"
     labels:
-      app: "${NAME}-persistent"
+      name: "${NAME}"
+      app: ${APP_NAME}
       template: "${NAME}-persistent-template"
     annotations:
       template.openshift.io/expose-uri: postgres://{.spec.clusterIP}:{.spec.ports[?(.name=="postgresql")].port}
@@ -157,6 +162,11 @@ parameters:
   description: The name assigned to all of the OpenShift resources associated to the PostgreSQL instance.
   required: true
   value: postgresql
+- name: APP_NAME
+  displayName: App Name
+  description: App Name
+  required: true
+  value: eDivorce
 - name: IMAGE_NAMESPACE
   displayName: Image Namespace
   description: The namespace of the OpenShift project containing the imagestream for the application.

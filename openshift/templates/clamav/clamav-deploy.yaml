@@ -101,6 +101,11 @@ objects:
       sessionAffinity: None
       type: ClusterIP
 parameters:
+  - name: APP_NAME
+    displayName: App Name
+    description: Used to group components together in the OpenShift console.
+    required: true
+    value: eDivorce
   - description: The TAG name for this environment, e.g., dev, test, prod
     displayName: Env TAG name
     name: TAG_NAME

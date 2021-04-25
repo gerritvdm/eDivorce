@@ -14,6 +14,7 @@ objects:
   apiVersion: v1
   metadata:
     name: "${NAME}"
+    app: ${APP_NAME}
     annotations:
       description: Exposes and load balances the application pods
   spec:
@@ -51,6 +52,7 @@ objects:
         name: "${NAME}"
         labels:
           name: "${NAME}"
+          app: ${APP_NAME}
       spec:
         containers:
         - name: edivorce-django
@@ -130,7 +132,8 @@ objects:
   metadata:
     name: "${NAME}"
     labels:
-      app: "${NAME}"
+      name: "${NAME}"
+      app: ${APP_NAME}
   data:
     basic-auth-password: "${BASICAUTH_PASSWORD}"
     basic-auth-username: "${BASICAUTH_USERNAME}"
@@ -140,7 +143,8 @@ objects:
   metadata:
     name: "keycloak-secrets"
     labels:
-      app: "${NAME}"
+      name: "${NAME}"
+      app: ${APP_NAME}
   data:
     edivorce-client-secret: "${EDIVORCE_KEYCLOAK_SECRET}"
     efiling-client-secret: "${EFILING_HUB_KEYCLOAK_SECRET}"
@@ -150,7 +154,8 @@ objects:
   metadata:
     name: "${NAME}"
     labels:
-      app: "${NAME}"
+      name: "${NAME}"
+      app: ${APP_NAME}
   spec:
     scaleTargetRef:
       kind: DeploymentConfig
@@ -163,6 +168,11 @@ parameters:
   description: The name assigned to all of the frontend objects defined in this template.
   required: true
   value: edivorce-django
+- name: APP_NAME
+  displayName: App Name
+  description: App Name
+  required: true
+  value: eDivorce
 - name: DATABASE_SERVICE_NAME
   displayName: Database Service Name
   required: true
