@@ -24,13 +24,13 @@ objects:
         type: Git
         git:
           uri: ${GIT_SOURCE_URL}
+          ref: ${GIT_REF}
       strategy:
         type: Docker
         dockerStrategy:
           from:
-            kind: ImageStreamTag
-            name: base-centos7:latest
-            namespace: openshift
+            kind: DockerImage
+            name: registry.redhat.io/ubi8/ubi:8.2
       output:
         to:
           kind: ImageStreamTag
@@ -55,3 +55,8 @@ parameters:
     description: A GIT URL to your source code.
     required: true
     value: https://github.com/bcgov/clamav.git
+  - name: GIT_REF
+    displayName: Git Reference
+    description: The git reference or branch.
+    required: true
+    value: ocp4

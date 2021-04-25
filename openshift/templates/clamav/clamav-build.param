@@ -5,3 +5,4 @@
 #=========================================================
 NAME=clamav
 GIT_SOURCE_URL=https://github.com/bcgov/clamav.git
+GIT_REF=ocp4
