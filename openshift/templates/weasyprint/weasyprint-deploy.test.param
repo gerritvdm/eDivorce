@@ -4,6 +4,7 @@
 # Template File: ../openshift/templates/weasyprint/weasyprint-deploy.yaml
 #=========================================================
 # NAME=weasyprint
+# APP_NAME=eDivorce
 # SOURCE_IMAGE_NAME=weasyprint
 # IMAGE_NAMESPACE=ed44ad-tools
 TAG_NAME=test
