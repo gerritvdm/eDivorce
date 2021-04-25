@@ -4,6 +4,7 @@
 # Template File: ../openshift/templates/postgresql/postgresql-deploy.yaml
 #=========================================================
 # NAME=postgresql
+# APP_NAME=eDivorce
 # IMAGE_NAMESPACE=ed44ad-tools
 # SOURCE_IMAGE_NAME=postgresql
 TAG_NAME=dev
