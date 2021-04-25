@@ -28,6 +28,9 @@ objects:
   apiVersion: v1
   metadata:
     name: "${NAME}"
+    labels:
+      name: "${NAME}"
+      app: ${APP_NAME}
     annotations:
       description: Defines how to deploy the application server
   spec:
@@ -134,10 +137,11 @@ objects:
     labels:
       name: "${NAME}"
       app: ${APP_NAME}
-  data:
+  stringData:
     basic-auth-password: "${BASICAUTH_PASSWORD}"
     basic-auth-username: "${BASICAUTH_USERNAME}"
   type: Opaque
+
 - kind: Secret
   apiVersion: v1
   metadata:
@@ -145,10 +149,11 @@ objects:
     labels:
       name: "${NAME}"
       app: ${APP_NAME}
-  data:
+  stringData:
     edivorce-client-secret: "${EDIVORCE_KEYCLOAK_SECRET}"
     efiling-client-secret: "${EFILING_HUB_KEYCLOAK_SECRET}"
   type: Opaque
+
 - kind: HorizontalPodAutoscaler
   apiVersion: autoscaling/v1
   metadata:
@@ -162,6 +167,7 @@ objects:
       name: "${NAME}"
     minReplicas: 1
     maxReplicas: 4
+
 parameters:
 - name: NAME
   displayName: Name
