@@ -5,7 +5,7 @@
 #=========================================================
 NAME=edivorce-django
 GIT_REPO_URL=https://github.com/bcgov/eDivorce.git
-GIT_REF=master
+GIT_REF=dev
 SOURCE_CONTEXT_DIR=
 SOURCE_IMAGE_KIND=DockerImage
 SOURCE_IMAGE_NAME=registry.fedoraproject.org/f32/python3

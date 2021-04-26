@@ -120,7 +120,7 @@ objects:
       scaleTargetRef:
         kind: DeploymentConfig
         name: "${NAME}"
-      minReplicas: 1
+      minReplicas: 2
       maxReplicas: 4
 
   - kind: Secret
