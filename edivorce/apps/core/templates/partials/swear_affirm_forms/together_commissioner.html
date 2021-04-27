@@ -1,0 +1,136 @@
+<div class="question-well margin-bottom-none">
+    <div class="row">
+        <div class="col col-md-1">
+            <div class="number-circle">1</div>
+        </div>
+        <div class="col col-md-11">
+            <b>Take note of your Court File Number.</b>
+            <div>&nbsp;</div>
+            <p>
+                If you do not have a {% include "partials/tooltips/court_file_number.html" %} rerturn to the <a href="{% url 'dashboard_nav' 'wait_for_number' %}">Wait for Court File Number</a> step. You will not be able to proceed with swearing / affirming your affidavits without a Court File Number.
+            </p>
+        </div>
+    </div>
+</div>
+<div class="text-center">
+    <span class="arrow arrow-down"></span>
+</div>
+<div class="question-well margin-bottom-none margin-top-negative-10">
+    <div class="row">
+        <div class="col col-md-1">
+            <div class="number-circle">2</div>
+        </div>
+        <div class="col col-md-11">
+            <b>Print out all your affidavits that are ready for signing.</b>
+            <div>&nbsp;</div>
+            <p>
+                You will need to print the following form(s):
+                <ul>
+                    <li>
+                        <a href="{% url 'pdf_form' '37' %}" target="_blank">Child Support Affidavit (F37)</a>
+                    </li>
+                    <li>
+                        <a href="{% url 'pdf_form' '38' %}" target="_blank">Affidavit Desk Order Divorce Form (F38)</a>
+                    </li>
+                </ul>
+            </p>
+            <p>
+                If you do not have these printed out, return to the <a href="{% url 'dashboard_nav' 'print_form' %}">Review and Print</a> step.
+            </p>
+        </div>
+    </div>
+</div>
+<div class="row">
+    <div class="col col-md-6 text-center">
+        <span class="arrow arrow-down"></span>
+    </div>
+    <div class="col col-md-6 text-center">
+        <span class="arrow arrow-down"></span>
+    </div>
+</div>
+<div class="row">
+    <div class="col col-md-6">
+        <div class="question-well margin-bottom-none margin-top-negative-10">
+            <div class="row">
+                <div class="col col-md-2">
+                    <div class="number-circle">3A</div>
+                </div>
+                <div class="col col-md-10">
+                    <b>If you plan to swear / affirm with a lawyer, notary, or other {% include "partials/tooltips/commissioner.html" %}</b>
+                    <div>&nbsp;</div>
+                    <p>
+                        Contact them directly for further instructions.
+                    </p>
+                    <p>
+                        This option may be more conveniently located and may have wider hours of operation than the court.
+                    </p>
+                    <p>
+                        A commissioner will charge a fee to swear / affirm your affidavits.
+                    </p>
+                </div>
+            </div>
+        </div>
+        <div class="text-center">
+            <span class="arrow-long arrow-down"></span>
+        </div>
+    </div>
+    <div class="col col-md-6">
+        <div class="question-well margin-bottom-none margin-top-negative-10">
+            <div class="row">
+                <div class="col col-md-2">
+                    <div class="number-circle-open">3B</div>
+                </div>
+                <div class="col col-md-10">
+                    <b>If you plan to swear / affirm at the court registry</b>
+                    <div>&nbsp;</div>
+                    <p>
+                        Print our all your completed documents from the Review step to bring with you to the court registry.
+                    </p>
+                    <p>
+                        The court registry will charge a fee to swear/affirm your affidavits,
+                    </p>
+                </div>
+            </div>
+        </div>
+        <div class="text-center">
+            <span class="arrow arrow-down"></span>
+        </div>
+        <div class="question-well margin-bottom-none margin-top-negative-10">
+            <div class="row">
+                <div class="col col-md-2">
+                    <div class="number-circle-open">4</div>
+                </div>
+                <div class="col col-md-10">
+                    <b>Attend at the court registry to swear / affirm your affidavits.</b>
+                    <div>&nbsp;</div>
+                    <p>
+                       Remember to <b>bring photo ID</b> along with your printed affidavits and documents.
+                    </p>
+                    <p>
+                        You have indicated your closest court registry is:
+                    </p>
+                    {% include "partials/filing_location.html" %}
+                </div>
+            </div>
+        </div>
+        <div class="text-center">
+            <span class="arrow arrow-down"></span>
+        </div>
+    </div>
+</div>
+<div class="question-well margin-top-negative-10">
+    <div class="row">
+        <div class="col col-md-1">
+            <div class="number-circle">5</div>
+        </div>
+        <div class="col col-md-11">
+            <b>File your sworn / affirmed affidavits.</b>
+            <p>
+                Procceed to the Final Filing step by clicking the Next button on this page.
+            </p>
+            <p>
+                Final Filing must be completed within <b>30 days of swearing / affirming your affidavits.</b>
+            </p>
+        </div>
+    </div>
+</div>
