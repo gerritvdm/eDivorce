@@ -118,6 +118,7 @@
         </div>
     </div>
 </div>
+{% if how_to_sign == 'Together' %}
 <div class="question-well margin-top-negative-10">
     <div class="row">
         <div class="col col-md-1">
@@ -125,6 +126,7 @@
         </div>
         <div class="col col-md-11">
             <b>File your sworn / affirmed affidavits.</b>
+            <div>&nbsp;</div>
             <p>
                 Procceed to the Final Filing step by clicking the Next button on this page.
             </p>
@@ -134,3 +136,40 @@
         </div>
     </div>
 </div>
+{% elif how_to_sign == 'Separately'%}
+<div class="question-well margin-top-negative-10 margin-bottom-none">
+    <div class="row">
+        <div class="col col-md-1">
+            <div class="number-circle">5</div>
+        </div>
+        <div class="col col-md-11">
+            <b>Your spouse can swear / affirm and sign their affidavits.</b>
+            <div>&nbsp;</div>
+            <p>
+                Once you have filed, your spouse will be able to sign / swear and file their affidavits using either of the methods noted
+                in step 3 above or by sending the documents back to you to be filed at the same time as your documents.
+            </p>
+        </div>
+    </div>
+</div>
+<div class="text-center">
+    <span class="arrow arrow-down"></span>
+</div>
+<div class="question-well margin-top-negative-10">
+    <div class="row">
+        <div class="col col-md-1">
+            <div class="number-circle">6</div>
+        </div>
+        <div class="col col-md-11">
+            <b>File your sworn / affirmed affidavits.</b>
+            <div>&nbsp;</div>
+            <p>
+                Procceed to the Final Filing step by clicking the Next button on this page.
+            </p>
+            <p>
+                Final Filing must be completed within <b>30 days of swearing / affirming your affidavits.</b>
+            </p>
+        </div>
+    </div>
+</div>
+{% endif %}

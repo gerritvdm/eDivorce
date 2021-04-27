@@ -87,7 +87,7 @@
             <p class="no-margin-bottom">
                 The following steps will help you prepare for this.
             </p>
-            {% include "partials/swear_affirm_forms/together_commissioner.html" %}
+            {% include "partials/swear_affirm_forms/swear_affirm_process.html" %}
         </div>
     {% elif how_to_sign == 'Separately' and signing_location_you == 'In-person' and signing_location_spouse == 'In-person' %}
         <div>
@@ -96,28 +96,9 @@
                     a {% include "partials/tooltips/commissioner.html" %}.</b>
             </p>
             <p class="no-margin-bottom">
-                Prepare for swear / affirm and signing by ensuring you:
+                The following steps will help you prepare for this.
             </p>
-            <ul>
-                <li>Have print outs with you of all of your affidavits ready to sign</li>
-                <li>Have photo ID ready to show.</li>
-            </ul>
-            <p class="no-margin-bottom">
-                If you are planning to swear / affirm at the court registry then you should also have print outs of all your
-                completed documents with you.
-            </p>
-            <p>
-                Once you have filed, your spouse will be able to sign / swear and file their affidavits at the court registry.
-                Your spouse will require the {% include "partials/tooltips/court_file_number.html" %} provided to you at the time of your filing.
-            </p>
-            <p>
-                You have indicated your closest court registry is:
-            </p>
-            {% include "partials/filing_location.html" %}
-            <p>
-                If you are planning to swear / affirm with a lawyer, notary or other commissioner please contact
-                them directly.
-            </p>
+            {% include "partials/swear_affirm_forms/swear_affirm_process.html" %}
         </div>
     {% elif how_to_sign == 'Separately' and signing_location_you == 'Virtual' and signing_location_spouse == 'In-person' %}
         <div>
