@@ -562,7 +562,9 @@
 
     {% if original_marriage_certificate == 'YES' %}
     <div class="review-well clearfix">
-        <div class="collapse-trigger collapsed">
+        <div class="collapse-trigger collapsed" data-toggle="collapse"
+        aria-expanded="false" data-target="#collapsePoM"
+        aria-controls="collapseF30">
         <div>
             <span>Proof of Marriage - Original or certified Marriage Certificate or Registration of Divorce.</span>
         </div>
@@ -573,14 +575,24 @@
             </span>
         </p>
         <div class="clearfix"></div>
+        <div class="collapse" id="collapsePoM">
+            <div>
+                <p>
+                    To get a divorce, you need an original marriage certificate or certified true copy of your registration of marriage to prove you are married. 
+                    There are other options described in this tool if you can't get a copy of your marriage certificate or registration of marriage.
+                </p>
+            </div>
+        </div>
     </div>
     {% endif %}
 
     {% if marriage_certificate_in_english == 'NO' %}
     <div class="review-well clearfix">
-        <div class="collapse-trigger collapsed">
+        <div class="collapse-trigger collapsed" data-toggle="collapse"
+        aria-expanded="false" data-target="#collapseF30"
+        aria-controls="collapseF30">
         <div>
-            <span>Affidavit if Translation (F30)</span>
+            <span>Affidavit of Translation (F30)</span>
         </div>
         </div>
         <p class="review-buttons">
@@ -589,12 +601,27 @@
             </span>
         </p>
         <div class="clearfix"></div>
+        <div class="collapse" id="collapseF30">
+            <div>
+                <p>
+                    The Affidavit of Translation is sworn by a translator before a notary, lawyer or commissioner for taking Affidavits.
+                </p>
+                <p>
+                    When filing, the original certificate of marriage should be included with the Affidavit of Translation and the translation of the certificate.
+                </p>
+                <p>
+                    This form is required when your Proof of Marriage is not in English.
+                </p>
+            </div>
+        </div>
     </div>
     {% endif %}
 
     {% if original_marriage_certificate == 'NO' %}
     <div class="review-well clearfix">
-        <div class="collapse-trigger collapsed review-well-small" data-toggle="collapse">
+        <div class="collapse-trigger collapsed review-well-small" data-toggle="collapse"
+        aria-expanded="false" data-target="#collapseF30NMC"
+        aria-controls="collapseF30NMC">
             <div>
                 <span>Affidavit of No Marriage Certificate (F30) - requires <a href="https://justice.gov.bc.ca/divorce/dashboard/help_saving_pdf" target="_blank">Adobe Acrobat Reader</a></span>
             </div>
@@ -606,11 +633,22 @@
                     </a>
         </p>
         <div class="clearfix"></div>
+        <div class="collapse" id="collapseF30NMC">
+            <div>
+                <p>
+                    If it is impossible to get a certificate of marriage or certified copy of the registration of marriage,
+                    you will need a person who was present at the marriage ceremony (usually the officiant or a witness to the marriage)
+                    to complete the affidavit. You will need to file the affidavit as evidence of the marriage.
+                </p>
+            </div>
+        </div>
     </div>
     {% endif %}
 
     <div class="review-well clearfix">
-        <div class="collapse-trigger collapsed" data-toggle="collapse">
+        <div class="collapse-trigger collapsed" data-toggle="collapse"
+        aria-expanded="false" data-target="#collapseJUS280"
+        aria-controls="collapseJUS280">
             <div>
                 <span>Registration of Divorce (JUS280) - requires completion on the Government of Canada's site</span>
             </div>
@@ -622,13 +660,25 @@
             </a>
         </p>
         <div class="clearfix"></div>
+        <div class="collapse" id="collapseJUS280">
+            <div>
+                <p>
+                    This form is for the central divorce registry in Ottawa. They use the form to ensure there is no other divorce proceeding pending in Canada. They also keep track of all divorces in Canada.
+                </p>
+                <p>
+                    This form requires you to complete it either by hand or using <a href="https://justice.gov.bc.ca/divorce/dashboard/help_saving_pdf" target="_blank">Adobe Acrobat Reader</a>.
+                </p>
+            </div>
+        </div>
     </div>
 
     {% if derived.wants_other_orders %}
         {% if name_change_you == 'YES' or name_change_spouse == 'YES' %}
             {% if name_change_you == 'YES' %}
             <div class="review-well clearfix">
-                <div class="collapse-trigger collapsed" data-toggle="collapse">
+                <div class="collapse-trigger collapsed" data-toggle="collapse"
+                aria-expanded="false" data-target="#collapseVSA512C1"
+                aria-controls="collapseVSA512C1">
                     <div>
                         <span>Identification of Applicant (VSA 512) - For Claimant 1 ({% you_name %})</span>
                     </div>
@@ -640,11 +690,23 @@
                     </a>
                 </p>
                 <div class="clearfix"></div>
+                <div class="collapse" id="collapseVSA512C1">
+                    <div>
+                        <p>
+                            This form is used by the Court to notify Vital Statistics of court-ordered legal changes of name.
+                        </p>
+                        <p>
+                            This form requires you to complete it either by hand or using <a href="https://justice.gov.bc.ca/divorce/dashboard/help_saving_pdf" target="_blank">Adobe Acrobat Reader</a>.
+                        </p>
+                    </div>
+                </div>
             </div>
             {% endif %}
             {% if name_change_spouse == 'YES' %}
             <div class="review-well clearfix">
-                <div class="collapse-trigger collapsed" data-toggle="collapse">
+                <div class="collapse-trigger collapsed" data-toggle="collapse"
+                aria-expanded="false" data-target="#collapseVSA512C2"
+                aria-controls="collapseVSA512C2">
                     <div>
                         <span>Identification of Applicant (VSA 512) - For Claimant 2 ({% spouse_name %})</span>
                     </div>
@@ -656,6 +718,16 @@
                     </a>
                 </p>
                 <div class="clearfix"></div>
+                <div class="collapse" id="collapseVSA512C2">
+                    <div>
+                        <p>
+                            This form is used by the Court to notify Vital Statistics of court-ordered legal changes of name.
+                        </p>
+                        <p>
+                            This form requires you to complete it either by hand or using <a href="https://justice.gov.bc.ca/divorce/dashboard/help_saving_pdf" target="_blank">Adobe Acrobat Reader</a>.
+                        </p>
+                    </div>
+                </div>
             </div>
             {% endif %}
         {% endif %}
@@ -663,7 +735,9 @@
 
     {% if derived.has_children_of_marriage %}
     <div class="review-well clearfix">
-        <div class="collapse-trigger collapsed" data-toggle="collapse">
+        <div class="collapse-trigger collapsed"  data-toggle="collapse"
+        aria-expanded="false" data-target="#collapseF9"
+        aria-controls="collapseF9">
             <div>
                 <span>Agreement as to Annual Income (F9) - requires <a href="https://justice.gov.bc.ca/divorce/dashboard/help_saving_pdf" target="_blank">Adobe Acrobat Reader</a></span>
             </div>
@@ -675,6 +749,16 @@
             </a>
         </p>
         <div class="clearfix"></div>
+        <div class="collapse" id="collapseF9">
+            <div>
+                <p>
+                    This form needs to be provided to the Registry as they require it as it is required when reviewing your divorce application. It shows the judge that your application has been checked and is complete.
+                </p>
+                <p>
+                    This form requires you to complete it either by hand or using <a href="https://justice.gov.bc.ca/divorce/dashboard/help_saving_pdf" target="_blank">Adobe Acrobat Reader</a>.
+                </p>
+            </div>
+        </div>
     </div>
     {% endif %}
     
