@@ -20,7 +20,7 @@ export default {
     name: "Affidavit of No Marriage Certificate",
     preText: "Scan and upload the sworn",
     help:
-      "Affidavit of No Marriage Certificate is a sworn document which may be required by the Court to prove the marriage took place. This document is required when a marriage certificate or registration absolutely cannot be provided.",
+      "A sworn document which is required by the Court to prove the marriage took place in the case where a marriage certificate can not be provided. <br />This form is required when a marriage certificate or registration absolutely cannot be provided",
   },
   AFTL: {
     name: "Affidavit of Translation Form",
