@@ -1,0 +1,11 @@
+#=========================================================
+# OpenShift template parameters for:
+# Component: .
+# Template File: ../openshift/templates/redis/redis-build.yaml
+#=========================================================
+NAME=redis
+OUTPUT_IMAGE_TAG=latest
+SOURCE_IMAGE_KIND=ImageStreamTag
+SOURCE_IMAGE_NAME=redis
+SOURCE_IMAGE_TAG=5
+SOURCE_IMAGE_NAMESPACE=openshift

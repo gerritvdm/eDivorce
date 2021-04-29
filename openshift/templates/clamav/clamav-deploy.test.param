@@ -1,0 +1,7 @@
+#=========================================================
+# OpenShift template parameters for:
+# Component: .
+# Template File: ../openshift/templates/clamav/clamav-deploy.yaml
+#=========================================================
+# APP_NAME=eDivorce
+TAG_NAME=test

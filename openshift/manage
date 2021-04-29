@@ -1,0 +1,266 @@
+#!/bin/bash
+export MSYS_NO_PATHCONV=1
+set -e
+SCRIPT_HOME="$( cd "$( dirname "$0" )" && pwd )"
+
+# =================================================================================================================
+# Usage:
+# -----------------------------------------------------------------------------------------------------------------
+usage () {
+  cat <<-EOF
+
+  Allows you to manage certain aspects of the application environment.
+
+  Usage:
+    $0 [options] [commands]
+
+  Commands:
+
+    listBuildRefs
+      - Lists build configurations and their git references in a convenient column format.
+      Example:
+        $0 -e tools listBuildRefs
+
+    migrateData
+      - For migrating data from one OCP environment to another.
+
+    scaleUp
+      - Scale up one or more pods.
+        For example;
+          $0 -e dev scaleUp api
+
+    scaleDown
+      - Scale down one or more pods.
+        For example;
+          $0 -e dev scaleDown api
+
+    recycle
+      - Recycle one or more pods.
+        For example;
+          $0 -e dev recycle api
+EOF
+}
+
+# =================================================================================================================
+# Process the local command line arguments and pass everything else along.
+# - The 'getopts' options string must start with ':' for this to work.
+# -----------------------------------------------------------------------------------------------------------------
+while [ ${OPTIND} -le $# ]; do
+  if getopts : FLAG; then
+    case ${FLAG} in
+      # Pass unrecognized options ...
+      \?) pass+=" -${OPTARG}" ;;
+    esac
+  else
+    # Pass unrecognized arguments ...
+    pass+=" ${!OPTIND}"
+    let OPTIND++
+  fi
+done
+
+# Pass the unrecognized arguments along for further processing ...
+shift $((OPTIND-1))
+set -- "$@" $(echo -e "${pass}" | sed -e 's/^[[:space:]]*//')
+# =================================================================================================================
+
+# -----------------------------------------------------------------------------------------------------------------
+# Define hook scripts:
+# - These must be defined before the main settings script 'settings.sh' is loaded.
+# -----------------------------------------------------------------------------------------------------------------
+onRequiredOptionsExist() {
+  (
+    if [ -z "${DEPLOYMENT_ENV_NAME}" ]; then
+      _red='\033[0;31m'
+      _nc='\033[0m' # No Color
+          echo -e "\n${_red}You MUST specify an environment name using the '-e' flag.${_nc}"
+          echo -e "${_red}Assuming a default would have unwanted consequences.${_nc}\n"
+          return 1
+        else
+          return 0
+    fi
+  )
+}
+
+onUsesCommandLineArguments() {
+  (
+    # This script is expecting command line arguments to be passed ...
+    return 0
+  )
+}
+
+# -----------------------------------------------------------------------------------------------------------------
+# Initialization:
+# -----------------------------------------------------------------------------------------------------------------
+# Load the project settings and functions ...
+_includeFile="ocFunctions.inc"
+_settingsFile="settings.sh"
+if [ ! -z $(type -p ${_includeFile}) ]; then
+  _includeFilePath=$(type -p ${_includeFile})
+  export OCTOOLSBIN=$(dirname ${_includeFilePath})
+
+  if [ -f ${OCTOOLSBIN}/${_settingsFile} ]; then
+    . ${OCTOOLSBIN}/${_settingsFile}
+  fi
+
+  if [ -f ${OCTOOLSBIN}/${_includeFile} ]; then
+    . ${OCTOOLSBIN}/${_includeFile}
+  fi
+else
+  _red='\033[0;31m'
+  _yellow='\033[1;33m'
+  _nc='\033[0m' # No Color
+  echo -e \\n"${_red}${_includeFile} could not be found on the path.${_nc}"
+  echo -e "${_yellow}Please ensure the openshift-developer-tools are installed on and registered on your path.${_nc}"
+  echo -e "${_yellow}https://github.com/BCDevOps/openshift-developer-tools${_nc}"
+fi
+
+# -----------------------------------------------------------------------------------------------------------------
+# Functions:
+# -----------------------------------------------------------------------------------------------------------------
+function migrateData(){
+  (
+    backupPod=${1}
+    destApiPod=${2}
+    destDbPod=${3}
+    destBackupSpec=${4}
+    destDbAdminPasswordKey=${5}
+    sourceCluster=${6}
+    destCluster=${7}
+    sourceNamespace=${8}
+    destNamespace=${9}
+    fullBackupPathNameFilter=${10}
+    rootBackupDir=${11}
+
+    sourceContext=$(oc config get-contexts | sed 's/*/ /g' | grep ${sourceCluster} | awk '{print $1}' | head -n 1)
+    destContext=$(oc config get-contexts | sed 's/*/ /g' | grep ${destCluster} | awk '{print $1}' | head -n 1)
+
+    # Explain what is about to happen and wait for confirmation ...
+txtMsg=$(cat <<-EOF
+A copy of the data from the source environment will be migrated to the destination environment using the following settings:
+  - backupPod: ${backupPod}
+  - destApiPod: ${destApiPod}
+  - destDbPod: ${destDbPod}
+  - destBackupSpec: ${destBackupSpec}
+  - destDbAdminPasswordKey: ${destDbAdminPasswordKey}
+  - sourceCluster: ${sourceCluster}
+  - destCluster: ${destCluster}
+  - sourceNamespace: ${sourceNamespace}
+  - destNamespace: ${destNamespace}
+  - fullBackupPathNameFilter: ${fullBackupPathNameFilter}
+  - rootBackupDir: ${rootBackupDir}
+  - sourceContext: ${sourceContext}
+  - destContext: ${destContext}
+
+The following operations will be performed (ALL EXISTING DATA IN THE DESTINATION ENVIRONMENT WILL BE OVERWRITTEN):
+  - A new backup will be created in the source environment.
+  - The backup will be copied to the destination environment and restored.\n
+EOF
+)
+
+    printAndAskToContinue "${txtMsg}"
+
+    echoWarning "\nSwitching context to the source environemnt; ${sourceNamespace}/${sourceCluster} ..."
+    export FULLY_QUALIFIED_NAMESPACE=${sourceNamespace}
+    oc config use-context ${sourceContext} 2>&1 >/dev/null
+    exitOnError
+
+    # Create a new backup in the source environment ...
+    echoWarning "\nCreating a new backup on the ${backupPod} container in ${sourceNamespace} for the migration ...\n"
+    runInContainer \
+      ${backupPod} \
+      "./backup.sh -s"
+    exitOnError
+
+    # Determine the full path of the most recent backup ...
+    fullBackupPath=$(runInContainer \
+      ${backupPod} \
+      "find ${rootBackupDir}* -type f -printf '%T@ %p\n' | grep ${fullBackupPathNameFilter} | sort | tail -n 1 | sed 's~^.* \(.*$\)~\1~'")
+    exitOnError
+
+    # Copy backup locally ...
+    backupFolderName=$(dirname ${fullBackupPath})
+    backupFileName=$(basename ${fullBackupPath})
+    mkdir -p ./tmp
+    echoWarning "\nCopying ${fullBackupPath} locally to ./tmp/${backupFileName} ..."
+    oc -n ${sourceNamespace} rsync $(getPodByName ${backupPod}):${fullBackupPath} ./tmp
+
+    echoWarning "\nSwitching context to the destination environment ${destNamespace}/${destCluster} ..."
+    export FULLY_QUALIFIED_NAMESPACE=${destNamespace}
+    oc config use-context ${destContext} 2>&1 >/dev/null
+    exitOnError
+
+    # Copy backup to destination environment
+    echoWarning "\nCopying ${fullBackupPath} to the ${backupPod} container in ${destNamespace} ..."
+    runInContainer \
+      ${backupPod} \
+      "mkdir -p ${backupFolderName}"
+    exitOnError
+    oc -n ${destNamespace} cp ./tmp/${backupFileName} $(getPodByName ${backupPod}):${backupFolderName}
+
+    # Restore the backup in the destination environment ...
+    scaleDown -w "${destApiPod}"
+    runInContainer \
+      ${backupPod} \
+      "./backup.sh -s -a $(getSecret ${destDbPod} ${destDbAdminPasswordKey}) -r ${destBackupSpec} -f ${backupFileName}"
+    exitOnError
+    scaleUp -w "${destApiPod}"
+
+    # Clean up; delete the local copy of the backup ...
+    echoWarning "Clean up, deleting ./tmp/${backupFileName} ..."
+    rm -rf ./tmp
+  )
+}
+# =================================================================================================================
+
+pushd ${SCRIPT_HOME} >/dev/null
+_cmd=$(toLower ${1})
+shift
+
+case "${_cmd}" in
+  listbuildrefs)
+    listBuildRefs
+    ;;
+
+  migratedata)
+    backupPod=${1:-backup}
+    destApiPod=${2:-edivorce-django}
+    destDbPod=${3:-postgresql}
+    destBackupSpec=${4:-postgresql:5432/default}
+    destDbAdminPasswordKey=${5:-admin-password}
+    sourceCluster=${6:-console-pathfinder-gov-bc-ca:8443}
+    destCluster=${7:-api-silver-devops-gov-bc-ca:6443}
+    sourceNamespace=${8:-jag-csb-edivorce-${DEPLOYMENT_ENV_NAME}}
+    destNamespace=${9:-ed44ad-${DEPLOYMENT_ENV_NAME}}
+    fullBackupPathNameFilter=${10:-postgresql-default}
+    rootBackupDir=${11:-/backups}
+
+    migrateData \
+      "${backupPod}" \
+      "${destApiPod}" \
+      "${destDbPod}" \
+      "${destBackupSpec}" \
+      "${destDbAdminPasswordKey}" \
+      "${sourceCluster}" \
+      "${destCluster}" \
+      "${sourceNamespace}" \
+      "${destNamespace}" \
+      "${fullBackupPathNameFilter}" \
+      "${rootBackupDir}"
+    ;;
+
+  scaleup)
+    scaleUp -w ${@}
+    ;;
+  scaledown)
+    scaleDown -w ${@}
+    ;;
+  recycle)
+    recyclePods -w ${@}
+    ;;
+  *)
+    echoWarning "Unrecognized command; ${_cmd}"
+    globalUsage
+    ;;
+esac
+
+popd >/dev/null

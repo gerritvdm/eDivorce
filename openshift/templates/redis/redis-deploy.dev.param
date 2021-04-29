@@ -1,0 +1,12 @@
+#=========================================================
+# OpenShift template parameters for:
+# Component: .
+# Template File: ../openshift/templates/redis/redis-deploy.yaml
+#=========================================================
+# MEMORY_LIMIT=1Gi
+# DATABASE_SERVICE_NAME=redis
+# REDIS_PASSWORD=[a-zA-Z0-9]{16}
+# VOLUME_CAPACITY=20Gi
+# IMAGE_NAMESPACE=ed44ad-tools
+# SOURCE_IMAGE_NAME=redis
+TAG_NAME=dev

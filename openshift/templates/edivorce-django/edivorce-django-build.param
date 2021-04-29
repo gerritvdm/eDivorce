@@ -1,0 +1,19 @@
+#=========================================================
+# OpenShift template parameters for:
+# Component: .
+# Template File: ../openshift/templates/edivorce-django/edivorce-django-build.yaml
+#=========================================================
+NAME=edivorce-django
+GIT_REPO_URL=https://github.com/bcgov/eDivorce.git
+GIT_REF=dev
+SOURCE_CONTEXT_DIR=
+SOURCE_IMAGE_KIND=DockerImage
+SOURCE_IMAGE_NAME=registry.fedoraproject.org/f32/python3
+SOURCE_IMAGE_TAG=latest
+PIP_INDEX_URL=
+UPGRADE_PIP_TO_LATEST=true
+PIP_NO_CACHE_DIR=
+CPU_REQUEST=10m
+CPU_LIMIT=750m
+MEMORY_REQUEST=10Mi
+MEMORY_LIMIT=1000Mi

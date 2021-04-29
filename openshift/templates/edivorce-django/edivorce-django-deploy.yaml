@@ -10,236 +10,257 @@ metadata:
 labels:
   template: edivorce-environment-template
 objects:
-- kind: Service
-  apiVersion: v1
-  metadata:
-    name: "${NAME}"
-    annotations:
-      description: Exposes and load balances the application pods
-  spec:
-    ports:
-    - name: web
-      port: 8080
-      targetPort: 8080
-    selector:
+  - kind: Service
+    apiVersion: v1
+    metadata:
       name: "${NAME}"
-- kind: DeploymentConfig
-  apiVersion: v1
-  metadata:
-    name: "${NAME}"
-    annotations:
-      description: Defines how to deploy the application server
-  spec:
-    strategy:
-      type: Rolling
-    triggers:
-    - type: ImageChange
-      imageChangeParams:
-        automatic: true
-        containerNames:
-        - edivorce-django
-        from:
-          kind: ImageStreamTag
-          namespace: "${IMAGE_NAMESPACE}"
-          name: "${NAME}:${TAG_NAME}"
-    - type: ConfigChange
-    replicas: 1
-    selector:
-      name: "${NAME}"
-    template:
-      metadata:
+      app: ${APP_NAME}
+      annotations:
+        description: Exposes and load balances the application pods
+    spec:
+      ports:
+        - name: web
+          port: 8080
+          targetPort: 8080
+      selector:
         name: "${NAME}"
-        labels:
-          name: "${NAME}"
-      spec:
-        containers:
-        - name: edivorce-django
-          image: " "
-          ports:
-          - containerPort: 8080
-          readinessProbe:
-            timeoutSeconds: 3
-            initialDelaySeconds: 3
-            httpGet:
-              path: "/health"
-              port: 8080
-          livenessProbe:
-            timeoutSeconds: 3
-            initialDelaySeconds: 60
-            httpGet:
-              path: "/health"
-              port: 8080
-          env:
-          - name: DATABASE_SERVICE_NAME
-            value: "${DATABASE_SERVICE_NAME}"
-          - name: DATABASE_ENGINE
-            value: "${DATABASE_ENGINE}"
-          - name: DATABASE_NAME
-            value: "${DATABASE_NAME}"
-          - name: DATABASE_USER
-            valueFrom:
-              secretKeyRef:
-                key: database-user
-                name: postgresql
-          - name: DATABASE_PASSWORD
-            valueFrom:
-              secretKeyRef:
-                key: database-password
-                name: postgresql
-          - name: APP_CONFIG
-            value: "${APP_CONFIG}"
-          - name: DJANGO_SECRET_KEY
-            value: "${DJANGO_SECRET_KEY}"
-          - name: ENVIRONMENT_TYPE
-            value: "${TAG_NAME}"
-          - name: PROXY_URL_PREFIX
-            value: "${PROXY_URL_PREFIX}"
-          - name: PROXY_BASE_URL
-            value: "${PROXY_BASE_URL}"
-          - name: BASICAUTH_ENABLED
-            value: "${BASICAUTH_ENABLED}"
-          - name: BASICAUTH_USERNAME
-            valueFrom:
-              secretKeyRef:
-                key: basic-auth-username
-                name: ${NAME}
-          - name: BASICAUTH_PASSWORD
-            valueFrom:
-              secretKeyRef:
-                key: basic-auth-password
-                name: ${NAME}
-          - name: EDIVORCE_KEYCLOAK_SECRET
-            valueFrom:
-              secretKeyRef:
-                key: edivorce-client-secret
-                name: "keycloak-secrets"
-          - name: EFILING_HUB_KEYCLOAK_SECRET
-            valueFrom:
-              secretKeyRef:
-                key: efiling-client-secret
-                name: "keycloak-secrets"
-          resources:
-            limits:
-              cpu: ${CPU_LIMIT}
-              memory: ${MEMORY_LIMIT}
-            requests:
-              cpu: ${CPU_REQUEST}
-              memory: ${MEMORY_REQUEST}
-- kind: Secret
-  apiVersion: v1
-  metadata:
-    name: "${NAME}"
-    labels:
-      app: "${NAME}"
-  data:
-    basic-auth-password: "${BASICAUTH_PASSWORD}"
-    basic-auth-username: "${BASICAUTH_USERNAME}"
-  type: Opaque
-- kind: Secret
-  apiVersion: v1
-  metadata:
-    name: "keycloak-secrets"
-    labels:
-      app: "${NAME}"
-  data:
-    edivorce-client-secret: "${EDIVORCE_KEYCLOAK_SECRET}"
-    efiling-client-secret: "${EFILING_HUB_KEYCLOAK_SECRET}"
-  type: Opaque
-- kind: HorizontalPodAutoscaler
-  apiVersion: autoscaling/v1
-  metadata:
-    name: "${NAME}"
-    labels:
-      app: "${NAME}"
-  spec:
-    scaleTargetRef:
-      kind: DeploymentConfig
+  - kind: DeploymentConfig
+    apiVersion: v1
+    metadata:
       name: "${NAME}"
-    minReplicas: 1
-    maxReplicas: 4
+      labels:
+        name: "${NAME}"
+        app: ${APP_NAME}
+      annotations:
+        description: Defines how to deploy the application server
+    spec:
+      strategy:
+        type: Rolling
+      triggers:
+        - type: ImageChange
+          imageChangeParams:
+            automatic: true
+            containerNames:
+              - edivorce-django
+            from:
+              kind: ImageStreamTag
+              namespace: "${IMAGE_NAMESPACE}"
+              name: "${NAME}:${TAG_NAME}"
+        - type: ConfigChange
+      replicas: 1
+      selector:
+        name: "${NAME}"
+      template:
+        metadata:
+          name: "${NAME}"
+          labels:
+            name: "${NAME}"
+            app: ${APP_NAME}
+        spec:
+          containers:
+            - name: edivorce-django
+              image: " "
+              ports:
+                - containerPort: 8080
+              readinessProbe:
+                timeoutSeconds: 3
+                initialDelaySeconds: 3
+                httpGet:
+                  path: "/health"
+                  port: 8080
+              livenessProbe:
+                timeoutSeconds: 3
+                initialDelaySeconds: 60
+                httpGet:
+                  path: "/health"
+                  port: 8080
+              env:
+                - name: DATABASE_SERVICE_NAME
+                  value: "${DATABASE_SERVICE_NAME}"
+                - name: DATABASE_ENGINE
+                  value: "${DATABASE_ENGINE}"
+                - name: DATABASE_NAME
+                  value: "${DATABASE_NAME}"
+                - name: DATABASE_USER
+                  valueFrom:
+                    secretKeyRef:
+                      key: database-user
+                      name: postgresql
+                - name: DATABASE_PASSWORD
+                  valueFrom:
+                    secretKeyRef:
+                      key: database-password
+                      name: postgresql
+                - name: APP_CONFIG
+                  value: "${APP_CONFIG}"
+                - name: DJANGO_SECRET_KEY
+                  value: "${DJANGO_SECRET_KEY}"
+                - name: ENVIRONMENT_TYPE
+                  value: "${TAG_NAME}"
+                - name: PROXY_URL_PREFIX
+                  value: "${PROXY_URL_PREFIX}"
+                - name: PROXY_BASE_URL
+                  value: "${PROXY_BASE_URL}"
+                - name: BASICAUTH_ENABLED
+                  value: "${BASICAUTH_ENABLED}"
+                - name: BASICAUTH_USERNAME
+                  valueFrom:
+                    secretKeyRef:
+                      key: basic-auth-username
+                      name: ${NAME}
+                - name: BASICAUTH_PASSWORD
+                  valueFrom:
+                    secretKeyRef:
+                      key: basic-auth-password
+                      name: ${NAME}
+                - name: EDIVORCE_KEYCLOAK_SECRET
+                  valueFrom:
+                    secretKeyRef:
+                      key: edivorce-client-secret
+                      name: "keycloak-secrets"
+                - name: EFILING_HUB_KEYCLOAK_SECRET
+                  valueFrom:
+                    secretKeyRef:
+                      key: efiling-client-secret
+                      name: "keycloak-secrets"
+                - name: REDIS_PASSWORD
+                  valueFrom:
+                    secretKeyRef:
+                      key: database-password
+                      name: "redis"
+              resources:
+                limits:
+                  cpu: ${CPU_LIMIT}
+                  memory: ${MEMORY_LIMIT}
+                requests:
+                  cpu: ${CPU_REQUEST}
+                  memory: ${MEMORY_REQUEST}
+  - kind: Secret
+    apiVersion: v1
+    metadata:
+      name: "${NAME}"
+      labels:
+        name: "${NAME}"
+        app: ${APP_NAME}
+    stringData:
+      basic-auth-password: "${BASICAUTH_PASSWORD}"
+      basic-auth-username: "${BASICAUTH_USERNAME}"
+    type: Opaque
+
+  - kind: Secret
+    apiVersion: v1
+    metadata:
+      name: "keycloak-secrets"
+      labels:
+        name: "${NAME}"
+        app: ${APP_NAME}
+    stringData:
+      edivorce-client-secret: "${EDIVORCE_KEYCLOAK_SECRET}"
+      efiling-client-secret: "${EFILING_HUB_KEYCLOAK_SECRET}"
+    type: Opaque
+
+  - kind: HorizontalPodAutoscaler
+    apiVersion: autoscaling/v1
+    metadata:
+      name: "${NAME}"
+      labels:
+        name: "${NAME}"
+        app: ${APP_NAME}
+    spec:
+      scaleTargetRef:
+        kind: DeploymentConfig
+        name: "${NAME}"
+      minReplicas: 2
+      maxReplicas: 4
+
 parameters:
-- name: NAME
-  displayName: Name
-  description: The name assigned to all of the frontend objects defined in this template.
-  required: true
-  value: edivorce-django
-- name: DATABASE_SERVICE_NAME
-  displayName: Database Service Name
-  required: true
-  value: postgresql
-- name: DATABASE_ENGINE
-  displayName: Database Engine
-  description: 'Database engine: postgresql, mysql or sqlite (default).'
-  required: true
-  value: postgresql
-- name: DATABASE_NAME
-  displayName: Database Name
-  required: true
-  value: default
-- name: APP_CONFIG
-  displayName: Application Configuration File Path
-  description: Relative path to Gunicorn configuration file (optional).
-  value: gunicorn_config.py
-- name: DJANGO_SECRET_KEY
-  displayName: Django Secret Key
-  description: Set this to a long random string.
-  generate: expression
-  from: "[\\w]{50}"
-- name: IMAGE_NAMESPACE
-  displayName: Namespace containing application images.
-  required: true
-  value: jag-csb-edivorce-tools
-- name: TAG_NAME
-  displayName: Environment TAG name
-  description: The TAG name for this environment, e.g., dev, test, or prod.
-  required: true
-  value: dev
-- name: PROXY_URL_PREFIX
-  displayName: Proxy URL Prefix
-  description: The proxy URL prefix (aka Host Path) for the application.  For example `/divorce`
-  required: false
-- name: PROXY_BASE_URL
-  displayName: Proxy Base URL
-  description: The proxy base URL (aka Host URL) for the application.  For example `https://justice.gov.bc.ca`
-  required: false
-- name: BASICAUTH_ENABLED
-  displayName: Enable basic auth (recommended for Dev and Test environments)
-  required: true
-  value: "False"
-- name: EDIVORCE_KEYCLOAK_SECRET
-  displayName: Keycloak client secret for the e-divorce-app client
-  required: true
-- name: EFILING_HUB_KEYCLOAK_SECRET
-  displayName: Keycloak client secret for the efiling hub
-  required: true
-- name: BASICAUTH_USERNAME
-  displayName: Basic Auth Username
-  description: Basic Auth Username. Needs to be basee64 encoded.
-  required: true
-  value: divorce
-- name: BASICAUTH_PASSWORD
-  displayName: Basic Auth Password
-  description: Basic Auth Password. Needs to be basee64 encoded.
-  generate: expression
-  from: "[a-zA-Z0-9]{16}"
-# ===============================================================================
-- name: CPU_REQUEST
-  displayName: Resources CPU Request
-  description: The resources CPU request (in cores) for this build.
-  required: true
-  value: 10m
-- name: CPU_LIMIT
-  displayName: Resources CPU Limit
-  description: The resources CPU limit (in cores) for this build.
-  required: true
-  value: 500m
-- name: MEMORY_REQUEST
-  displayName: Resources Memory Request
-  description: The resources Memory request (in Mi, Gi, etc) for this build.
-  required: true
-  value: 10Mi
-- name: MEMORY_LIMIT
-  displayName: Resources Memory Limit
-  description: The resources Memory limit (in Mi, Gi, etc) for this build.
-  required: true
-  value: 512Mi
+  - name: NAME
+    displayName: Name
+    description: The name assigned to all of the frontend objects defined in this template.
+    required: true
+    value: edivorce-django
+  - name: APP_NAME
+    displayName: App Name
+    description: App Name
+    required: true
+    value: eDivorce
+  - name: DATABASE_SERVICE_NAME
+    displayName: Database Service Name
+    required: true
+    value: postgresql
+  - name: DATABASE_ENGINE
+    displayName: Database Engine
+    description: "Database engine: postgresql, mysql or sqlite (default)."
+    required: true
+    value: postgresql
+  - name: DATABASE_NAME
+    displayName: Database Name
+    required: true
+    value: default
+  - name: APP_CONFIG
+    displayName: Application Configuration File Path
+    description: Relative path to Gunicorn configuration file (optional).
+    value: gunicorn_config.py
+  - name: DJANGO_SECRET_KEY
+    displayName: Django Secret Key
+    description: Set this to a long random string.
+    generate: expression
+    from: "[\\w]{50}"
+  - name: IMAGE_NAMESPACE
+    displayName: Namespace containing application images.
+    required: true
+    value: ed44ad-tools
+  - name: TAG_NAME
+    displayName: Environment TAG name
+    description: The TAG name for this environment, e.g., dev, test, or prod.
+    required: true
+    value: dev
+  - name: PROXY_URL_PREFIX
+    displayName: Proxy URL Prefix
+    description: The proxy URL prefix (aka Host Path) for the application.  For example `/divorce`
+    required: false
+  - name: PROXY_BASE_URL
+    displayName: Proxy Base URL
+    description: The proxy base URL (aka Host URL) for the application.  For example `https://justice.gov.bc.ca`
+    required: false
+  - name: BASICAUTH_ENABLED
+    displayName: Enable basic auth (recommended for Dev and Test environments)
+    required: true
+    value: "False"
+  - name: EDIVORCE_KEYCLOAK_SECRET
+    displayName: Keycloak client secret for the e-divorce-app client
+    required: true
+  - name: EFILING_HUB_KEYCLOAK_SECRET
+    displayName: Keycloak client secret for the efiling hub
+    required: true
+  - name: BASICAUTH_USERNAME
+    displayName: Basic Auth Username
+    description: Basic Auth Username. Needs to be basee64 encoded.
+    required: true
+    value: divorce
+  - name: BASICAUTH_PASSWORD
+    displayName: Basic Auth Password
+    description: Basic Auth Password. Needs to be basee64 encoded.
+    generate: expression
+    from: "[a-zA-Z0-9]{16}"
+  # ===============================================================================
+  - name: CPU_REQUEST
+    displayName: Resources CPU Request
+    description: The resources CPU request (in cores) for this build.
+    required: true
+    value: 10m
+  - name: CPU_LIMIT
+    displayName: Resources CPU Limit
+    description: The resources CPU limit (in cores) for this build.
+    required: true
+    value: 500m
+  - name: MEMORY_REQUEST
+    displayName: Resources Memory Request
+    description: The resources Memory request (in Mi, Gi, etc) for this build.
+    required: true
+    value: 10Mi
+  - name: MEMORY_LIMIT
+    displayName: Resources Memory Limit
+    description: The resources Memory limit (in Mi, Gi, etc) for this build.
+    required: true
+    value: 512Mi

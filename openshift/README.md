@@ -125,7 +125,7 @@ Use `-h` to get advanced usage information.  Use the `-l` option to apply any lo
 
 #### Mandatory Settings:
 
-SITEMINDER_WHITE_LIST
+ALLOW_LIST
 
 While running `genDepls.sh` you will be prompted for a list of IP addresses that make up the white-list of hosts allowed to access the service.
 
@@ -133,7 +133,7 @@ The list must be provided as a space delimited list of IP addresses.
 
 The actual values cannot be stored on Github because this would violate BC Government Github policies. The addresses are different for each environment (dev, test, and prod).
 
-An example of the [nginx-proxy-deploy.overrides.sh](./nginx-proxy-deploy.overrides.sh) script prompting for the value to use for SITEMINDER_WHITE_LIST;
+An example of the [nginx-proxy-deploy.overrides.sh](./nginx-proxy-deploy.overrides.sh) script prompting for the value to use for ALLOW_LIST;
 ```
 Processing deployment configuration; templates/nginx-proxy/nginx-proxy-deploy.yaml ...
 Loading parameter overrides for templates/nginx-proxy/nginx-proxy-deploy.yaml ...
@@ -161,7 +161,7 @@ The result looks something like this;
         "name": "nginx-proxy-siteminder-route"
     },
     "spec": {
-        "host": "edivorce-dev.pathfinder.bcgov",
+        "host": "edivorce-dev.silver.devops.bcgov",
         "port": {
             "targetPort": "8080-tcp"
         },
@@ -237,18 +237,18 @@ There are three deployment environments set up for different purposes within Ope
 
 | Environment |  URL  | Justice URL |
 | ----------- | ----- | ----------- |
-| DEV | http://edivorce-dev.pathfinder.bcgov | https://dev.justice.gov.bc.ca/divorce |
-| TEST | https://edivorce-test.pathfinder.bcgov | https://test.justice.gov.bc.ca/divorce |
-| PROD | https://edivorce-prod.pathfinder.bcgov | https://justice.gov.bc.ca/divorce |
+| DEV | http://edivorce-dev.silver.devops.bcgov | https://dev.justice.gov.bc.ca/divorce |
+| TEST | https://edivorce-test.silver.devops.bcgov | https://test.justice.gov.bc.ca/divorce |
+| PROD | https://edivorce-prod.silver.devops.bcgov | https://justice.gov.bc.ca/divorce |
 
 *Environments are typically only accessible through the associated Justice URL due to white-list applied to the pathfinder routes.*
 
 These instructions assume you have 4 EMPTY projects created in OpenShift:
 
-- jag-csb-edivorce-tools (BUILD)
-- jag-csb-edivorce-dev (DEV)
-- jag-csb-edivorce-test (TEST)
-- jag-csb-edivorce-prod (PROD)
+- ed44ad-tools (BUILD)
+- ed44ad-dev (DEV)
+- ed44ad-test (TEST)
+- ed44ad-prod (PROD)
 
 # Backups
 
@@ -257,10 +257,10 @@ Daily rolling database backups are performed in the production environment only 
 # How to Access OpenShift for eDivorce
 
 ## Web UI
-- Login to https://console.pathfinder.gov.bc.ca:8443; you'll be prompted for GitHub authorization.  You must be part of the BCDevOps Github organization, and you must have access to the eDivorce projects.
+- Login to https://console.apps.silver.devops.gov.bc.ca/k8s/cluster/projects; you'll be prompted for GitHub authorization.  You must be part of the BCDevOps Github organization, and you must have access to the eDivorce projects.
 
 ## Command-line (```oc```) tools
-- Copy command line login string from https://console.pathfinder.gov.bc.ca:8443/console/command-line.  It will look like ```oc login https://console.pathfinder.gov.bc.ca:8443 --token=xtyz123xtyz123xtyz123xtyz123```
+- Copy command line login string from https://oauth-openshift.apps.silver.devops.gov.bc.ca/oauth/token/display.  It will look like ```oc login --token=<token> --server=https://api.silver.devops.gov.bc.ca:6443```
 - Paste the login string into a terminal session.  You are no authenticated against OpenShift and will be able to execute ```oc``` commands. ```oc -h``` provides a summary of available commands.
 
 # Tips
@@ -297,7 +297,7 @@ exit
 
 ## How to access Jenkins for eDivorce
 
-- Login to https://edivorce-jenkins.pathfinder.gov.bc.ca with the username/password that was provided to you.
+- Login to https://edivorce-jenkins.apps.silver.devops.gov.bc.ca with the username/password that was provided to you.
 
 ## Logs
 

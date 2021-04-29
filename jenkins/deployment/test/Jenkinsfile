@@ -1,0 +1,23 @@
+// This Jenkins file uses a brute force method to promote the application images from DEV to TEST.
+// In other words all of the images that are currently deployed in DEV will be tagged for deployment to TEST.
+node {
+  def source = 'dev'
+  def destination = 'test'
+  def namespace = 'ed44ad'
+  def appSuffix = ''
+  // Define these in the order they should be deployed.
+  def apps = ['postgresql', 'clamav', 'redis', 'nginx-proxy', 'weasyprint', 'edivorce-django', 'backup']
+
+  apps.each { appName ->
+    stage("Deploying ${appName} to ${destination}") {
+      script {
+        openshift.withCluster() {
+          openshift.withProject() {
+            echo "Tagging ${appName}:${source} for deployment to ${destination} ..."
+            openshift.tag("${appName}:${source}", "${appName}:${destination}")
+          }
+        }
+      }
+    }
+  }
+}
