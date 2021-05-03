@@ -1598,7 +1598,9 @@
             "name": "Are you aware of any active civil protection order about you or your spouse?",
             "description": "For step 10, related orders and proceedings, Form 102",
             "summary_order": 144,
-            "required": "Required"
+            "required": "Conditional",
+            "conditional_target": "determine_spousal_support_orders_wanted",
+            "reveal_response": "True"  
         },
         "model": "core.question",
         "pk": "protection_order_against_you_or_spouse"
@@ -1608,7 +1610,9 @@
             "name": "Are you or your spouse involved in any protection order matter?",
             "description": "For step 10, related orders and proceedings, Form 102",
             "summary_order": 145,
-            "required": "Required"
+            "required": "Conditional",
+            "conditional_target": "determine_spousal_support_orders_wanted",
+            "reveal_response": "True"  
         },
         "model": "core.question",
         "pk": "protection_order_involving_you_or_spouse"
@@ -1630,7 +1634,9 @@
             "name": "Are you or your spouse involved with child protection services?",
             "description": "For Step 10, related orders and proceedings, Form 102",
             "summary_order": 147,
-            "required": "Required"
+            "required": "Conditional",
+            "conditional_target": "determine_spousal_support_orders_wanted",
+            "reveal_response": "True"  
         },
         "model": "core.question",
         "pk": "involved_with_child_protective_services"
@@ -1652,7 +1658,9 @@
             "name": "Are you or your spouse facing a criminal charge?",
             "description": "For Step 10, related orders and proceedings, Form 102",
             "summary_order": 149,
-            "required": "Required"
+            "required": "Conditional",
+            "conditional_target": "determine_spousal_support_orders_wanted",
+            "reveal_response": "True"  
         },
         "model": "core.question",
         "pk": "criminal_charge_facing"
@@ -1662,7 +1670,9 @@
             "name": "Are you or your spouse required to follow a court order because of a criminal matter?",
             "description": "For Step 10, related orders and proceedings, Form 102",
             "summary_order": 150,
-            "required": "Required"
+            "required": "Conditional",
+            "conditional_target": "determine_spousal_support_orders_wanted",
+            "reveal_response": "True"  
         },
         "model": "core.question",
         "pk": "criminal_charge_court_order"
@@ -1672,7 +1682,9 @@
             "name": "Are you or your spouse required to follow demands because of a criminal matter?",
             "description": "For Step 10, related orders and proceedings, Form 102",
             "summary_order": 151,
-            "required": "Required"
+            "required": "Conditional",
+            "conditional_target": "determine_spousal_support_orders_wanted",
+            "reveal_response": "True"  
         },
         "model": "core.question",
         "pk": "criminal_charge_demands"
@@ -1682,7 +1694,9 @@
             "name": "Are you or your spouse in prison?",
             "description": "For Step 10, related orders and proceedings, Form 102",
             "summary_order": 152,
-            "required": "Required"
+            "required": "Conditional",
+            "conditional_target": "determine_spousal_support_orders_wanted",
+            "reveal_response": "True"  
         },
         "model": "core.question",
         "pk": "criminal_charge_prison"
